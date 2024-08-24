@@ -106,6 +106,9 @@ Here’s a complete list of available validators you can use:
 - **isNotNull**: Checks if a value is not null.
 - **isEmpty**: Checks if a string is empty.
 - **validCPF**: Checks if a string is a valid CPF (for use in Brazil).
+- **validCNPJ**: Checks if a string is a valid CNPJ (for use in Brazil).
+- **validCEP**: Checks if a string is a valid CEP (for use in Brazil).
+- **validCredCard**: Checks if a string is a valid Credit Card.
 
 ## Usage with Flutter
 

@@ -18,5 +18,8 @@ part 'must_have_uppercase.dart';
 part 'not_empty_validator.dart';
 part 'not_equal_validator.dart';
 part 'range_validator.dart';
+part 'valid_cep_validator.dart';
+part 'valid_cnpj_validator.dart';
 part 'valid_cpf.dart';
+part 'valid_creditcard_validator.dart';
 part 'valid_email_validator.dart';
