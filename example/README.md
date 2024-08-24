@@ -1,16 +1,84 @@
-# example
+# Lucid Validation Example
 
-A new Flutter project.
+Check this!
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+```dart
+import 'package:lucid_validation/lucid_validation.dart';
 
-A few resources to get you started if this is your first Flutter project:
+class UserModel {
+  String email;
+  String password;
+  int age;
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  UserModel({
+    required this.email,
+    required this.password,
+    required this.age,
+  });
+}
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+class UserValidation extends LucidValidation<UserModel> {
+  UserValidation() {
+    ruleFor((user) => user.email, key: 'email')
+        .notEmpty()
+        .validEmail();
+
+    ruleFor((user) => user.password, key: 'password')
+        .notEmpty()
+        .minLength(8, message: 'Must be at least 8 characters long')
+        .mustHaveLowercase()
+        .mustHaveUppercase()
+        .mustHaveNumbers()
+        .mustHaveSpecialCharacter();
+
+    ruleFor((user) => user.age, key: 'age')
+        .min(18, message: 'Minimum age is 18 years');
+  }
+}
+
+void main() {
+  final user = UserModel(email: 'test@example.com', password: 'Passw0rd!', age: 25);
+  final validator = UserValidation();
+
+  final errors = validator.validate(user);
+
+  if (errors.isEmpty) {
+    print('User is valid');
+  } else {
+    print('Validation errors: ${errors.map((e) => e.message).join(', ')}');
+  }
+}
+
+```
+
+## Flutter Integration
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:lucid_validation/lucid_validation.dart';
+
+class LoginForm extends StatelessWidget {
+  final validator = UserValidation();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(hintText: 'Email'),
+            validator: validator.byField('email'),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(hintText: 'Password'),
+            validator: validator.byField('password'),
+            obscureText: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+```
