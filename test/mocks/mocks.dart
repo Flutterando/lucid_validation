@@ -19,8 +19,8 @@ class UserModel {
 class UserValidation extends LucidValidation<UserModel> {
   UserValidation() {
     ruleFor((user) => user.email, key: 'email') //
-        .notEmpty('This field cannot be empty')
-        .validEmail('E-mail in invalid format');
+        .notEmpty()
+        .validEmail();
 
     ruleFor((user) => user.password, key: 'password') //
         .customValidPassword();
@@ -35,17 +35,21 @@ class UserValidation extends LucidValidation<UserModel> {
 
 extension CustomValidPhoneValidator on LucidValidationBuilder<String> {
   LucidValidationBuilder<String> customValidPhone(String message) {
-    return registerRule((value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value), message);
+    return registerRule(
+      (value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
+      message,
+      'invalid_phone_format',
+    );
   }
 }
 
 extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
   LucidValidationBuilder<String> customValidPassword() {
-    return notEmpty('This field cannot be empty')
+    return notEmpty() //
         .minLength(5, message: 'Must be at least 8 characters long')
-        .mustHaveLowercase('Must contain lowercase')
-        .mustHaveUppercase('Must contain uppercase')
-        .mustHaveNumbers('Must contain number')
-        .mustHaveSpecialCharacter('Must contain special character');
+        .mustHaveLowercase()
+        .mustHaveUppercase()
+        .mustHaveNumbers()
+        .mustHaveSpecialCharacter();
   }
 }

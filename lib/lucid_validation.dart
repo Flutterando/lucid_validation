@@ -1,57 +1,59 @@
+/// LucidValidation
+///
+/// A Dart/Flutter package for building strongly typed validation rules, inspired by FluentValidation.
+/// Created by the Flutterando community, this package aims to provide a flexible and powerful way
+/// to validate your models in Flutter and Dart projects.
+///
+/// ## Features
+///
+/// - Strongly typed validation rules.
+/// - Fluent API for defining validations.
+/// - Extensible with custom validators.
+/// - Easy to integrate with any Dart or Flutter project.
+///
+/// ## Example
+///
+/// ```dart
+/// import 'package:lucid_validation/lucid_validation.dart';
+///
+/// class UserModel {
+///   String email;
+///   String password;
+///   int age;
+///   String phone;
+///
+///   UserModel({
+///     required this.email,
+///     required this.password,
+///     required this.age,
+///     required this.phone,
+///   });
+///
+///   factory UserModel.empty() => UserModel(email: '', password: '', age: 18, phone: '');
+/// }
+///
+/// class UserValidation extends LucidValidation<UserModel> {
+///   UserValidation() {
+///     ruleFor((user) => user.email, key: 'email')
+///         .notEmpty()
+///         .validEmail();
+///
+///     ruleFor((user) => user.password, key: 'password')
+///         .customValidPassword();
+///
+///     ruleFor((user) => user.age, key: 'age')
+///         .min(18, message: 'Minimum age is 18 years');
+///
+///     ruleFor((user) => user.phone, key: 'phone')
+///         .customValidPhone('Phone invalid format');
+///   }
+/// }
+/// ```
+///
+/// For more details, check out the full documentation and examples.
+///
 library lucid_validation;
 
-export './extensions/extensions.dart';
-export './lucid_validation_builder/validator_builder.dart';
-
-import './lucid_validation_builder/validator_builder.dart';
-import './dtos/dtos.dart';
-
-abstract class LucidValidation<E> {
-  final List<PropSelector<E, dynamic>> _propSelectors = [];
-
-  LucidValidationBuilder<TProp> ruleFor<TProp>(TProp Function(E entity) func, {String key = ''}) {
-    final builder = LucidValidationBuilder<TProp>(key: key);
-    final propSelector = PropSelector<E, TProp>(selector: func, builder: builder);
-
-    _propSelectors.add(propSelector);
-
-    return builder;
-  }
-
-  String? Function(String?)? byField(String key) {
-    return (value) {
-      final propSelector = _propSelectors //
-          .where((propSelector) => propSelector.builder.key == key)
-          .firstOrNull;
-
-      if (propSelector == null) return null;
-
-      for (var rule in propSelector.builder.rules) {
-        ValidatorResult result = rule(value);
-
-        if (!result.isValid) {
-          return result.error.message;
-        }
-      }
-      return null;
-    };
-  }
-
-  List<ValidatorError> validate(E entity) {
-    List<ValidatorError> errors = [];
-
-    for (var propSelector in _propSelectors) {
-      var propValue = propSelector.selector(entity);
-
-      for (var rule in propSelector.builder.rules) {
-        var result = rule(propValue);
-
-        if (result.isValid == false) {
-          errors.add(result.error);
-        }
-      }
-    }
-
-    return errors;
-  }
-}
+export 'src/lucid_validation.dart';
+export 'src/types/types.dart';
+export 'src/validators/validators.dart';

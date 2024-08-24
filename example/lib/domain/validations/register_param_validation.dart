@@ -5,8 +5,8 @@ import 'package:lucid_validation/lucid_validation.dart';
 class RegisterParamValidation extends LucidValidation<RegisterParamDto> {
   RegisterParamValidation() {
     ruleFor((registerParamDto) => registerParamDto.email, key: 'email') //
-        .notEmpty('This field cannot be empty')
-        .validEmail('E-mail in invalid format');
+        .notEmpty()
+        .validEmail();
 
     ruleFor((registerParamDto) => registerParamDto.password, key: 'password') //
         .customValidPassword();
