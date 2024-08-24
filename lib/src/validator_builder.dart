@@ -1,7 +1,44 @@
 part of 'lucid_validation.dart';
 
+/// Defines the behavior of rule execution when a validation failure occurs.
+///
+/// The `CascadeMode` enum is used to control whether the validation process should
+/// continue executing subsequent rules after a validation failure is encountered,
+/// or stop immediately after the first failure.
+///
+/// This is useful for optimizing validation performance or ensuring that only the
+/// most critical validation rules are checked first, potentially avoiding unnecessary
+/// validations after a failure.
+///
+/// Available Modes:
+///
+/// - `continueExecution`: All validation rules for a property will be executed, even if one fails.
+///   This is the default behavior and is useful when you want to collect all possible validation
+///   errors for a property at once.
+///
+/// - `stopOnFirstFailure`: Validation will stop as soon as the first validation rule fails for
+///   a property. This can be useful when you want to ensure that the most critical validation
+///   rules are checked first and to avoid redundant checks after a failure.
+///
+/// Example:
+///
+/// ```dart
+/// ruleFor((user) => user.password, key: 'password')
+///     .notEmpty()
+///     .minLength(8)
+///     .cascade(CascadeMode.stopOnFirstFailure);
+/// ```
+///
+/// In the example above, if the password is empty, the validation will stop immediately,
+/// and the `minLength(8)` rule will not be executed. This can be useful for optimizing
+/// performance or ensuring that more critical rules are evaluated first.
 enum CascadeMode {
+  /// Continue executing all validation rules for the property, even if one fails.
+  /// This mode is useful when you want to collect all possible validation errors at once.
   continueExecution,
+
+  /// Stop executing validation rules for the property as soon as the first failure is encountered.
+  /// This mode is useful for optimizing validation performance or prioritizing critical checks.
   stopOnFirstFailure,
 }
 

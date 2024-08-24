@@ -1,4 +1,4 @@
-## 0.0.4
+## 0.0.5
 
 * Added must and mustWith
 

@@ -46,7 +46,7 @@ abstract class LucidValidation<E> {
   /// final emailValidator = validator.byField('email');
   /// String? validationResult = emailValidator('user@example.com');
   /// ```
-  String? Function(String?)? byField(E entity, String key) {
+  String? Function([String?])? byField(E entity, String key) {
     final propSelector = _propSelectors
         .where(
           (propSelector) => propSelector.builder.key == key,
@@ -55,9 +55,9 @@ abstract class LucidValidation<E> {
 
     if (propSelector == null) return null;
 
-    return (value) {
-      if (value == null) return null;
+    return ([_]) {
       final builder = propSelector.builder;
+      final value = propSelector.selector(entity);
       final rules = builder._rules.cast<RuleFunc<String, E>>();
       for (var rule in rules) {
         final result = rule(value, entity);

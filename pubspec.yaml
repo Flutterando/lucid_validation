@@ -3,7 +3,7 @@ description: "A Dart/Flutter package for building strongly typed validation rule
 repository: https://github.com/Flutterando/lucid_validation
 homepage: https://pub.dev/documentation/lucid_validation/latest/
 
-version: 0.0.4
+version: 0.0.5
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

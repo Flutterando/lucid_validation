@@ -8,7 +8,7 @@ extension EqualValidator<T, E> on LucidValidationBuilder<T, E> {
   /// Adds a validation rule that checks if the value is equal to [comparison].
   ///
   /// [predicate] is a function that returns the value to compare against.
-  /// [message] is the error message returned if the validation fails. Defaults to "Must be equal to $comparison".
+  /// [message] is the error message returned if the validation fails.
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
