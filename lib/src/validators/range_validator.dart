@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `range` method that can be used to ensure that a number
 /// is within a specified range.
-extension RangeValidator on LucidValidationBuilder<num> {
+extension RangeValidator on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if the [num] is within the range of [min] and [max].
   ///
   /// [min] and [max] define the acceptable range for the number.
@@ -18,8 +18,8 @@ extension RangeValidator on LucidValidationBuilder<num> {
   /// final builder = LucidValidationBuilder<num>(key: 'age');
   /// builder.range(18, 65);
   /// ```
-  LucidValidationBuilder<num> range(num min, num max, {String message = r'Must be between $min and $max', String code = 'range_error'}) {
-    return registerRule(
+  LucidValidationBuilder<num, dynamic> range(num min, num max, {String message = r'Must be between $min and $max', String code = 'range_error'}) {
+    return must(
       (value) => value >= min && value <= max,
       message.replaceAll(r'$min', min.toString()).replaceAll('$max', max.toString()),
       code,

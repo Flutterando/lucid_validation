@@ -1,7 +1,7 @@
 import 'package:lucid_validation/lucid_validation.dart';
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
-  LucidValidationBuilder<String> customValidPassword() {
+extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
+  LucidValidationBuilder<String, dynamic> customValidPassword() {
     return notEmpty() //
         .minLength(5)
         .mustHaveLowercase()
@@ -11,8 +11,8 @@ extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
   }
 }
 
-extension CustomValidPhoneValidator on LucidValidationBuilder<String> {
-  LucidValidationBuilder<String> customValidPhone(String message) {
-    return registerRule((value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value), message, 'invalid_phone');
+extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
+  LucidValidationBuilder<String, dynamic> customValidPhone(String message) {
+    return must((value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value), message, 'invalid_phone');
   }
 }

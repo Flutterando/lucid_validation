@@ -1,6 +1,6 @@
 part of 'validators.dart';
 
-extension ValidCreditCardValidator on LucidValidationBuilder<String> {
+extension ValidCreditCardValidator on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid credit card number.
   ///
   /// This method uses the Luhn algorithm to verify the validity of a credit card number.
@@ -10,8 +10,8 @@ extension ValidCreditCardValidator on LucidValidationBuilder<String> {
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
-  LucidValidationBuilder<String> validCreditCard({String message = 'Invalid credit card number', String code = 'invalid_credit_card'}) {
-    return registerRule(
+  LucidValidationBuilder<String, dynamic> validCreditCard({String message = 'Invalid credit card number', String code = 'invalid_credit_card'}) {
+    return must(
       (value) => _validateCreditCard(value),
       message,
       code,

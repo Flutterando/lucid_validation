@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `mustHaveUppercase` method that can be used to ensure that a string
 /// contains at least one uppercase letter.
-extension MustHaveUppercase on LucidValidationBuilder<String> {
+extension MustHaveUppercase on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] contains at least one uppercase letter.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must contain at least one uppercase letter".
@@ -17,8 +17,8 @@ extension MustHaveUppercase on LucidValidationBuilder<String> {
   /// final builder = LucidValidationBuilder<String>(key: 'password');
   /// builder.mustHaveUppercase();
   /// ```
-  LucidValidationBuilder<String> mustHaveUppercase({String message = 'Must contain at least one uppercase letter', String code = 'must_have_uppercase'}) {
-    return registerRule(
+  LucidValidationBuilder<String, dynamic> mustHaveUppercase({String message = 'Must contain at least one uppercase letter', String code = 'must_have_uppercase'}) {
+    return must(
       (value) => RegExp(r'[A-Z]').hasMatch(value),
       message,
       code,

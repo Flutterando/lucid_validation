@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: loginParamDto.setEmail,
-                validator: validator.byField('email'),
+                validator: validator.byField(loginParamDto, 'email'),
                 decoration: const InputDecoration(
                   hintText: 'Email',
                 ),
@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: loginParamDto.setPassword,
-                validator: validator.byField('password'),
+                validator: validator.byField(loginParamDto, 'password'),
                 obscureText: true,
                 decoration: const InputDecoration(
                   hintText: 'Password',

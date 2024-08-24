@@ -63,14 +63,27 @@ class _RegisterPageState extends State<RegisterPage> {
               style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24),
             ),
             const SizedBox(height: 24),
-            TextField(
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: registerParamDto.setEmail,
+              validator: validator.byField(registerParamDto, 'email'),
               decoration: const InputDecoration(
                 hintText: 'Email',
               ),
             ),
             const SizedBox(height: 12),
-            TextField(
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: validator.byField(registerParamDto, 'phone'),
+              onChanged: registerParamDto.setPhone,
+              decoration: const InputDecoration(
+                hintText: '(11) 99999-9999',
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: validator.byField(registerParamDto, 'password'),
               onChanged: registerParamDto.setPassword,
               obscureText: true,
               decoration: const InputDecoration(
@@ -78,10 +91,13 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(height: 12),
-            TextField(
-              onChanged: registerParamDto.setPhone,
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: validator.byField(registerParamDto, 'confirmPassword'),
+              onChanged: registerParamDto.setConfirmPassword,
+              obscureText: true,
               decoration: const InputDecoration(
-                hintText: '(11) 99999-9999',
+                hintText: 'Confirm Password',
               ),
             ),
             const SizedBox(height: 12),

@@ -8,11 +8,11 @@ enum CascadeMode {
 /// Builder class used to define validation rules for a specific property type [TProp].
 ///
 /// [TProp] represents the type of the property being validated.
-typedef RuleFunc<TProp> = ValidatorResult Function(dynamic value);
+typedef RuleFunc<TProp, Entity> = ValidatorResult Function(dynamic value, dynamic entity);
 
-class LucidValidationBuilder<TProp> {
+class LucidValidationBuilder<TProp, Entity> {
   final String key;
-  final List<RuleFunc<TProp>> _rules = [];
+  final List<RuleFunc<TProp, Entity>> _rules = [];
   var _mode = CascadeMode.continueExecution;
 
   /// Creates a [LucidValidationBuilder] instance with an optional [key].
@@ -30,10 +30,10 @@ class LucidValidationBuilder<TProp> {
   /// Example:
   /// ```dart
   /// final builder = LucidValidationBuilder<String>(key: 'username');
-  /// builder.registerRule((username) => username.isNotEmpty, 'Username cannot be empty');
+  /// builder.must((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
-  LucidValidationBuilder<TProp> registerRule(bool Function(TProp value) validator, String message, String code) {
-    ValidatorResult callback(value) => ValidatorResult(
+  LucidValidationBuilder<TProp, Entity> must(bool Function(TProp value) validator, String message, String code) {
+    ValidatorResult callback(value, entity) => ValidatorResult(
           isValid: validator(value),
           error: ValidatorError(
             message: message,
@@ -47,8 +47,23 @@ class LucidValidationBuilder<TProp> {
     return this;
   }
 
+  LucidValidationBuilder<TProp, Entity> mustWith(bool Function(TProp value, Entity enntity) validator, String message, String code) {
+    ValidatorResult callback(value, entity) => ValidatorResult(
+          isValid: validator(value, entity),
+          error: ValidatorError(
+            message: message,
+            key: key,
+            code: code,
+          ),
+        );
+
+    _rules.add(callback);
+
+    return this;
+  }
+
   /// Changes the cascade mode for this validation.
-  LucidValidationBuilder<TProp> cascaded(CascadeMode mode) {
+  LucidValidationBuilder<TProp, Entity> cascade(CascadeMode mode) {
     _mode = mode;
     return this;
   }

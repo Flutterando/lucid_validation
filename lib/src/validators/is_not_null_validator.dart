@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds an `isNotNull` method that can be used to ensure that a value
 /// is not null.
-extension IsNotNullValidator<T> on LucidValidationBuilder<T?> {
+extension IsNotNullValidator<T, E> on LucidValidationBuilder<T?, E> {
   /// Adds a validation rule that checks if the value is not null.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Cannot be null".
@@ -17,8 +17,8 @@ extension IsNotNullValidator<T> on LucidValidationBuilder<T?> {
   /// final builder = LucidValidationBuilder<String?>(key: 'requiredField');
   /// builder.isNotNull();
   /// ```
-  LucidValidationBuilder<T?> isNotNull({String message = 'Cannot be null', String code = 'cannot_be_null'}) {
-    return registerRule(
+  LucidValidationBuilder<T?, E> isNotNull({String message = 'Cannot be null', String code = 'cannot_be_null'}) {
+    return must(
       (value) => value != null,
       message,
       code,

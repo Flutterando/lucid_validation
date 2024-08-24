@@ -4,10 +4,10 @@ part of 'validators.dart';
 ///
 /// This extension adds a `notEqualTo` method that can be used to ensure that a value
 /// is not equal to a specific value.
-extension NotEqualValidator<T> on LucidValidationBuilder<T> {
+extension NotEqualValidator<T, E> on LucidValidationBuilder<T, E> {
   /// Adds a validation rule that checks if the value is not equal to [comparison].
   ///
-  /// [comparison] is the value that the field must not match.
+  /// [predicate] is the value that the field must not match.
   /// [message] is the error message returned if the validation fails. Defaults to "Must not be equal to $comparison".
   /// [code] is an optional error code for translation purposes.
   ///
@@ -18,10 +18,13 @@ extension NotEqualValidator<T> on LucidValidationBuilder<T> {
   /// final builder = LucidValidationBuilder<String>(key: 'newUsername');
   /// builder.notEqualTo('oldUsername');
   /// ```
-  LucidValidationBuilder<T> notEqualTo(T comparison, {String message = r'Must not be equal to $comparison', String code = 'not_equal_to_error'}) {
-    return registerRule(
-      (value) => value != comparison,
-      message.replaceAll(r'$comparison', comparison.toString()),
+  LucidValidationBuilder<T, dynamic> notEqualTo(T Function(E entity) predicate, {String message = r'Must not be equal', String code = 'not_equal_to_error'}) {
+    return mustWith(
+      (value, entity) {
+        final comparison = predicate(entity);
+        return value != comparison;
+      },
+      message,
       code,
     );
   }

@@ -87,6 +87,8 @@ Note, the validate method returns a list of errors with all validation exception
 
 Here’s a complete list of available validators you can use:
 
+- **must**: custom validation.
+- **mustWith**: custom validation with entity.
 - **equalTo**: checks if value is equal to another value.
 - **greaterThan**: Checks if number is greater than minimum value.
 - **lessThan**: Checks if the number is less than max value.
@@ -114,14 +116,15 @@ Here’s a complete list of available validators you can use:
 
 If you’re using the `lucid_validation` package in a Flutter app, integrating with `TextFormField` is straightforward.
 
-Use the `byField('key')` for this:
+Use the `byField(entity, 'key')` for this:
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:lucid_validation/lucid_validation.dart';
 
 class LoginForm extends StatelessWidget {
-  final validator = UserValidation();
+  final validator = CredentialsValidation();
+  final credentials = CredentialsModel();
 
   @override
   Widget build(BuildContext context) {
@@ -130,11 +133,11 @@ class LoginForm extends StatelessWidget {
         children: [
           TextFormField(
             decoration: const InputDecoration(hintText: 'Email'),
-            validator: validator.byField('email'),
+            validator: validator.byField(credentials, 'email'),
           ),
           TextFormField(
             decoration: const InputDecoration(hintText: 'Password'),
-            validator: validator.byField('password'),
+            validator: validator.byField(credentials, 'password'),
             obscureText: true,
           ),
         ],
@@ -157,12 +160,13 @@ You can apply CascadeMode to your validation chain using the cascaded method:
 
 ```dart
  return notEmpty() //
+        .cascade(CascadeMode.stopOnFirstFailure); // change cascade mode
+
         .minLength(5, message: 'Must be at least 8 characters long')
         .mustHaveLowercase()
         .mustHaveUppercase()
         .mustHaveNumbers()
         .mustHaveSpecialCharacter()
-        .cascaded(CascadeMode.stopOnFirstFailure); // change cascade mode
 ```
 
 
@@ -171,17 +175,17 @@ You can apply CascadeMode to your validation chain using the cascaded method:
 You can easily extend the functionality of `LucidValidation` by creating your own custom rules using `extensions`. Here’s an example of how to create a validation for phone numbers:
 
 ```dart
-extension CustomValidPhoneValidator on LucidValidationBuilder<String> {
+extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
   LucidValidationBuilder<String> customValidPhone({String message = 'Invalid phone number format'}) {
-    return registerRule(
-      (value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}\$').hasMatch(value),
+    return matchesPattern(
+      r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}\$',
       message,
       'invalid_phone_format',
     );
   }
 }
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
+extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
   LucidValidationBuilder<String> customValidPassword() {
     return notEmpty()
         .minLength(8)

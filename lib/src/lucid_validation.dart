@@ -4,7 +4,7 @@ part 'validator_builder.dart';
 
 class _PropSelector<E, TProp> {
   final TProp Function(E entity) selector;
-  final LucidValidationBuilder<TProp> builder;
+  final LucidValidationBuilder<TProp, E> builder;
 
   _PropSelector({required this.selector, required this.builder});
 }
@@ -27,8 +27,8 @@ abstract class LucidValidation<E> {
   /// final validator = UserValidation();
   /// validator.ruleFor((user) => user.email).validEmail();
   /// ```
-  LucidValidationBuilder<TProp> ruleFor<TProp>(TProp Function(E entity) func, {String key = ''}) {
-    final builder = LucidValidationBuilder<TProp>(key: key);
+  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) func, {String key = ''}) {
+    final builder = LucidValidationBuilder<TProp, E>(key: key);
     final propSelector = _PropSelector<E, TProp>(selector: func, builder: builder);
 
     _propSelectors.add(propSelector);
@@ -46,7 +46,7 @@ abstract class LucidValidation<E> {
   /// final emailValidator = validator.byField('email');
   /// String? validationResult = emailValidator('user@example.com');
   /// ```
-  String? Function(String?)? byField(String key) {
+  String? Function(String?)? byField(E entity, String key) {
     final propSelector = _propSelectors
         .where(
           (propSelector) => propSelector.builder.key == key,
@@ -58,9 +58,9 @@ abstract class LucidValidation<E> {
     return (value) {
       if (value == null) return null;
       final builder = propSelector.builder;
-      final rules = builder._rules.cast<RuleFunc<String>>();
+      final rules = builder._rules.cast<RuleFunc<String, E>>();
       for (var rule in rules) {
-        final result = rule(value);
+        final result = rule(value, entity);
 
         if (!result.isValid) {
           return result.error.message;
@@ -92,7 +92,7 @@ abstract class LucidValidation<E> {
       final mode = propSelector.builder._mode;
 
       for (var rule in propSelector.builder._rules) {
-        final result = rule(propValue);
+        final result = rule(propValue, entity);
 
         if (!result.isValid) {
           errors.add(result.error);

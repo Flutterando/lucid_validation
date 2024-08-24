@@ -4,10 +4,10 @@ part of 'validators.dart';
 ///
 /// This extension adds an `equalTo` method that can be used to ensure that a value
 /// is equal to a specific value.
-extension EqualValidator<T> on LucidValidationBuilder<T> {
+extension EqualValidator<T, E> on LucidValidationBuilder<T, E> {
   /// Adds a validation rule that checks if the value is equal to [comparison].
   ///
-  /// [comparison] is the value that the field must match.
+  /// [predicate] is a function that returns the value to compare against.
   /// [message] is the error message returned if the validation fails. Defaults to "Must be equal to $comparison".
   /// [code] is an optional error code for translation purposes.
   ///
@@ -18,10 +18,13 @@ extension EqualValidator<T> on LucidValidationBuilder<T> {
   /// final builder = LucidValidationBuilder<String>(key: 'confirmPassword');
   /// builder.equalTo('password123');
   /// ```
-  LucidValidationBuilder<T> equalTo(T comparison, {String message = r'Must be equal to $comparison', String code = 'equal_to_error'}) {
-    return registerRule(
-      (value) => value == comparison,
-      message.replaceAll(r'$comparison', comparison.toString()),
+  LucidValidationBuilder<T, E> equalTo(T Function(E entity) predicate, {String message = r'Must be equal', String code = 'equal_error'}) {
+    return mustWith(
+      (value, entity) {
+        final comparison = predicate(entity);
+        return value == comparison;
+      },
+      message,
       code,
     );
   }

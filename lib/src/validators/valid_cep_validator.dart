@@ -1,6 +1,6 @@
 part of 'validators.dart';
 
-extension ValidCEPValidator on LucidValidationBuilder<String> {
+extension ValidCEPValidator on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid CEP (Brazilian postal code).
   ///
   /// This method verifies that the CEP is in the correct format (#####-###) and consists
@@ -10,8 +10,8 @@ extension ValidCEPValidator on LucidValidationBuilder<String> {
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
-  LucidValidationBuilder<String> validCEP({String message = 'Invalid CEP', String code = 'invalid_cep'}) {
-    return registerRule(
+  LucidValidationBuilder<String, dynamic> validCEP({String message = 'Invalid CEP', String code = 'invalid_cep'}) {
+    return must(
       (value) => RegExp(r'^\d{5}-?\d{3}$').hasMatch(value),
       message,
       code,

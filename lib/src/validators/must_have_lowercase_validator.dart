@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `mustHaveLowercase` method that can be used to ensure that a string
 /// contains at least one lowercase letter.
-extension MustHaveLowercase on LucidValidationBuilder<String> {
+extension MustHaveLowercase on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] contains at least one lowercase letter.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must contain at least one lowercase letter".
@@ -17,8 +17,8 @@ extension MustHaveLowercase on LucidValidationBuilder<String> {
   /// final builder = LucidValidationBuilder<String>(key: 'password');
   /// builder.mustHaveLowercase();
   /// ```
-  LucidValidationBuilder<String> mustHaveLowercase({String message = 'Must contain at least one lowercase letter', String code = 'must_have_lowercase'}) {
-    return registerRule(
+  LucidValidationBuilder<String, dynamic> mustHaveLowercase({String message = 'Must contain at least one lowercase letter', String code = 'must_have_lowercase'}) {
+    return must(
       (value) => RegExp(r'[a-z]').hasMatch(value),
       message,
       code,

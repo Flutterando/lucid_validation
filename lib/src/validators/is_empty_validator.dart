@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds an `isEmpty` method that can be used to ensure that a string
 /// is empty.
-extension IsEmptyValidator on LucidValidationBuilder<String> {
+extension IsEmptyValidator on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is empty.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must be empty".
@@ -17,8 +17,8 @@ extension IsEmptyValidator on LucidValidationBuilder<String> {
   /// final builder = LucidValidationBuilder<String>(key: 'field');
   /// builder.isEmpty();
   /// ```
-  LucidValidationBuilder<String> isEmpty({String message = 'Must be empty', String code = 'must_be_empty'}) {
-    return registerRule(
+  LucidValidationBuilder<String, dynamic> isEmpty({String message = 'Must be empty', String code = 'must_be_empty'}) {
+    return must(
       (value) => value.isEmpty,
       message,
       code,

@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `lessThan` method that can be used to ensure that a number
 /// is less than a specified value.
-extension LessThanValidator on LucidValidationBuilder<num> {
+extension LessThanValidator on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if the [num] is less than [maxValue].
   ///
   /// [maxValue] is the value that the number must be less than.
@@ -18,8 +18,8 @@ extension LessThanValidator on LucidValidationBuilder<num> {
   /// final builder = LucidValidationBuilder<num>(key: 'discount');
   /// builder.lessThan(100);
   /// ```
-  LucidValidationBuilder<num> lessThan(num maxValue, {String message = r'Must be less than $maxValue', String code = 'less_than'}) {
-    return registerRule(
+  LucidValidationBuilder<num, dynamic> lessThan(num maxValue, {String message = r'Must be less than $maxValue', String code = 'less_than'}) {
+    return must(
       (value) => value < maxValue,
       message.replaceAll('$maxValue', maxValue.toString()),
       code,

@@ -90,4 +90,22 @@ void main() {
       {'email', 'password', 'age', 'phone'},
     );
   });
+
+  test('EqualTo', () {
+    var credentials = CredentialsRegister(
+      email: 'test@test.com',
+      confirmPassword: '123asdASD@',
+      password: '123asdASD@',
+    );
+    final registerValidator = CredentialsRegisterValidation();
+
+    var errors = registerValidator.validate(credentials);
+
+    expect(errors.length, 0);
+
+    credentials = credentials.copyWith(confirmPassword: '123asdASDsdsdw');
+    errors = registerValidator.validate(credentials);
+
+    expect(errors.length, 2);
+  });
 }

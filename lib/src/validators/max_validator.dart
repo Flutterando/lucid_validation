@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `max` method that can be used to ensure that a numerical value
 /// does not exceed a specified maximum.
-extension MaxValidator on LucidValidationBuilder<num> {
+extension MaxValidator on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if a [num] value is less than or equal to [num].
   ///
   /// [num] is the maximum allowed value.
@@ -18,8 +18,8 @@ extension MaxValidator on LucidValidationBuilder<num> {
   /// final builder = LucidValidationBuilder<num>(key: 'age');
   /// builder.max(18);
   /// ```
-  LucidValidationBuilder<num> max(num num, {String message = r'Must be less than or equal to $num', String code = 'max_value'}) {
-    return registerRule(
+  LucidValidationBuilder<num, dynamic> max(num num, {String message = r'Must be less than or equal to $num', String code = 'max_value'}) {
+    return must(
       (value) => value <= num,
       message.replaceAll(r'$num', num.toString()),
       code,

@@ -4,7 +4,7 @@ part of 'validators.dart';
 ///
 /// This extension adds a `greaterThan` method that can be used to ensure that a number
 /// is greater than a specified value.
-extension GreaterThanValidator on LucidValidationBuilder<num> {
+extension GreaterThanValidator on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if the [num] is greater than [minValue].
   ///
   /// [minValue] is the value that the number must be greater than.
@@ -18,8 +18,8 @@ extension GreaterThanValidator on LucidValidationBuilder<num> {
   /// final builder = LucidValidationBuilder<num>(key: 'age');
   /// builder.greaterThan(18);
   /// ```
-  LucidValidationBuilder<num> greaterThan(num minValue, {String message = r'Must be greater than $minValue', String code = 'greater_than'}) {
-    return registerRule(
+  LucidValidationBuilder<num, dynamic> greaterThan(num minValue, {String message = r'Must be greater than $minValue', String code = 'greater_than'}) {
+    return must(
       (value) => value > minValue,
       message.replaceAll('$minValue', minValue.toString()),
       code,

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:lucid_validation/lucid_validation.dart';
 
 class UserModel {
@@ -33,9 +34,9 @@ class UserValidation extends LucidValidation<UserModel> {
   }
 }
 
-extension CustomValidPhoneValidator on LucidValidationBuilder<String> {
-  LucidValidationBuilder<String> customValidPhone(String message) {
-    return registerRule(
+extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
+  LucidValidationBuilder<String, dynamic> customValidPhone(String message) {
+    return must(
       (value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
       message,
       'invalid_phone_format',
@@ -43,14 +44,52 @@ extension CustomValidPhoneValidator on LucidValidationBuilder<String> {
   }
 }
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
-  LucidValidationBuilder<String> customValidPassword() {
+extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
+  LucidValidationBuilder<String, dynamic> customValidPassword() {
     return notEmpty() //
         .minLength(5, message: 'Must be at least 8 characters long')
         .mustHaveLowercase()
         .mustHaveUppercase()
         .mustHaveNumbers()
-        .mustHaveSpecialCharacter()
-        .cascaded(CascadeMode.stopOnFirstFailure);
+        .mustHaveSpecialCharacter();
+  }
+}
+
+class CredentialsRegister {
+  String email;
+  String password;
+  String confirmPassword;
+
+  CredentialsRegister({
+    required this.email,
+    required this.password,
+    required this.confirmPassword,
+  });
+
+  CredentialsRegister copyWith({
+    String? email,
+    String? password,
+    String? confirmPassword,
+  }) {
+    return CredentialsRegister(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
+    );
+  }
+}
+
+class CredentialsRegisterValidation extends LucidValidation<CredentialsRegister> {
+  CredentialsRegisterValidation() {
+    ruleFor((credentials) => credentials.email, key: 'email') //
+        .notEmpty()
+        .validEmail();
+
+    ruleFor((credentials) => credentials.password, key: 'password') //
+        .customValidPassword()
+        .equalTo((entity) => entity.confirmPassword, message: 'Must be equal to confirmPassword');
+
+    ruleFor((credentials) => credentials.confirmPassword, key: 'confirmPassword') //
+        .equalTo((entity) => entity.password, message: 'Must be equal to password');
   }
 }
