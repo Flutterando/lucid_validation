@@ -1,23 +1,45 @@
-class RegisterParamDto {
-  String email;
-  String phone;
-  String password;
-  String confirmPassword;
+import 'package:flutter/material.dart';
+
+class RegisterParamDto extends ChangeNotifier {
+  String _email;
+  String _phone;
+  String _password;
+  String _confirmPassword;
+
+  String get email => _email;
+  String get phone => _phone;
+  String get password => _password;
+  String get confirmPassword => _confirmPassword;
 
   RegisterParamDto({
-    required this.email,
-    required this.phone,
-    required this.password,
-    required this.confirmPassword,
-  });
+    required String email,
+    required String phone,
+    required String password,
+    required String confirmPassword,
+  })  : _email = email,
+        _phone = phone,
+        _password = password,
+        _confirmPassword = confirmPassword;
 
   factory RegisterParamDto.empty() => RegisterParamDto(email: '', password: '', phone: '', confirmPassword: '');
 
-  setEmail(String value) => email = value;
+  void setEmail(String value) {
+    _email = value;
+    notifyListeners();
+  }
 
-  setPassword(String value) => password = value;
+  void setPassword(String value) {
+    _password = value;
+    notifyListeners();
+  }
 
-  setConfirmPassword(String value) => confirmPassword = value;
+  void setConfirmPassword(String value) {
+    _confirmPassword = value;
+    notifyListeners();
+  }
 
-  setPhone(String value) => phone = value;
+  void setPhone(String value) {
+    _phone = value;
+    notifyListeners();
+  }
 }

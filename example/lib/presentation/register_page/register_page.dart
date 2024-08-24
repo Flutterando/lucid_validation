@@ -101,16 +101,23 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: signIn,
-              child: const Text('Sign up'),
+            ListenableBuilder(
+              listenable: registerParamDto,
+              builder: (context, child) {
+                final errors = validator.validate(registerParamDto);
+
+                return ElevatedButton(
+                  onPressed: errors.isEmpty ? signIn : null,
+                  child: const Text('Register'),
+                );
+              },
             ),
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Sign In'),
+              child: const Text('Back'),
             ),
             const Spacer(),
           ],
