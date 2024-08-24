@@ -163,6 +163,15 @@ extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
 }
 ```
 
+Use directly!
+
+```dart
+
+ ruleFor((user) => user.password, key: 'password')
+        .customValidPassword();
+
+```
+
 ## Contributing
 
 Feel free to open issues or pull requests on the [GitHub repository](https://github.com/Flutterando/lucid_validation) if you find any issues or have suggestions for improvements.
