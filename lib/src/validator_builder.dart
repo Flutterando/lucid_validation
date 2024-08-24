@@ -1,5 +1,10 @@
 part of 'lucid_validation.dart';
 
+enum CascadeMode {
+  continueExecution,
+  stopOnFirstFailure,
+}
+
 /// Builder class used to define validation rules for a specific property type [TProp].
 ///
 /// [TProp] represents the type of the property being validated.
@@ -8,6 +13,7 @@ typedef RuleFunc<TProp> = ValidatorResult Function(dynamic value);
 class LucidValidationBuilder<TProp> {
   final String key;
   final List<RuleFunc<TProp>> _rules = [];
+  var _mode = CascadeMode.continueExecution;
 
   /// Creates a [LucidValidationBuilder] instance with an optional [key].
   ///
@@ -38,6 +44,12 @@ class LucidValidationBuilder<TProp> {
 
     _rules.add(callback);
 
+    return this;
+  }
+
+  /// Changes the cascade mode for this validation.
+  LucidValidationBuilder<TProp> cascaded(CascadeMode mode) {
+    _mode = mode;
     return this;
   }
 }

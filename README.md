@@ -144,6 +144,28 @@ class LoginForm extends StatelessWidget {
 }
 ```
 
+## Cascate Mode
+
+CascadeMode in LucidValidation controls the behavior of rule execution when a validation failure occurs for a property. By default, the validation rules continue to execute even if a previous rule for the same property fails. However, you can change this behavior using the CascadeMode.
+
+### Available Modes
+`CascadeMode.continueExecution (Default)`: All validation rules for a property are executed, even if one fails. This mode is useful when you want to collect all validation errors at once.
+
+`CascadeMode.stopOnFirstFailure`: Stops executing further validation rules for a property as soon as a failure is detected. This is useful when you want to prevent unnecessary validation checks after an error has been found.
+
+You can apply CascadeMode to your validation chain using the cascaded method:
+
+```dart
+ return notEmpty() //
+        .minLength(5, message: 'Must be at least 8 characters long')
+        .mustHaveLowercase()
+        .mustHaveUppercase()
+        .mustHaveNumbers()
+        .mustHaveSpecialCharacter()
+        .cascaded(CascadeMode.stopOnFirstFailure); // change cascade mode
+```
+
+
 ## Creating Custom Rules
 
 You can easily extend the functionality of `LucidValidation` by creating your own custom rules using `extensions`. Here’s an example of how to create a validation for phone numbers:

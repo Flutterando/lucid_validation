@@ -1,3 +1,8 @@
+## 0.0.3
+
+* Added Cascade Mode
+
+
 ## 0.0.2
 
 * Added valid CEP, CNPJ and CreditCard

@@ -50,6 +50,7 @@ extension CustomValidPasswordValidator on LucidValidationBuilder<String> {
         .mustHaveLowercase()
         .mustHaveUppercase()
         .mustHaveNumbers()
-        .mustHaveSpecialCharacter();
+        .mustHaveSpecialCharacter()
+        .cascaded(CascadeMode.stopOnFirstFailure);
   }
 }

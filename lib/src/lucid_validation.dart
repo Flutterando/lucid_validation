@@ -89,12 +89,16 @@ abstract class LucidValidation<E> {
 
     for (var propSelector in _propSelectors) {
       final propValue = propSelector.selector(entity);
+      final mode = propSelector.builder._mode;
 
       for (var rule in propSelector.builder._rules) {
         final result = rule(propValue);
 
         if (!result.isValid) {
           errors.add(result.error);
+          if (mode == CascadeMode.stopOnFirstFailure) {
+            break;
+          }
         }
       }
     }
