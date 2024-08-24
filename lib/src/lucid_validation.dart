@@ -13,7 +13,7 @@ class _PropSelector<E, TProp> {
 ///
 /// [E] represents the type of the entity being validated.
 abstract class LucidValidation<E> {
-  final List<_PropSelector> _propSelectors = [];
+  final List<_PropSelector<E, dynamic>> _propSelectors = [];
 
   /// Registers a validation rule for a specific property of the entity.
   ///

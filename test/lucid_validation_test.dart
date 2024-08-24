@@ -16,8 +16,8 @@ void main() {
 
     expect(errors.length, 2);
     expect(errors.first.key, 'email');
-    expect(errors.first.message, 'This field cannot be empty');
-    expect(errors[1].message, 'E-mail in invalid format');
+    expect(errors.first.message, 'Cannot be empty');
+    expect(errors[1].message, 'Invalid email address');
   });
 
   test('when validating [UserModel] should return a list of error messages for the password field', () {
@@ -33,12 +33,12 @@ void main() {
 
     expect(errors.length, 6);
     expect(errors.first.key, 'password');
-    expect(errors.first.message, 'This field cannot be empty');
+    expect(errors.first.message, 'Cannot be empty');
     expect(errors[1].message, 'Must be at least 8 characters long');
-    expect(errors[2].message, 'Must contain lowercase');
-    expect(errors[3].message, 'Must contain uppercase');
-    expect(errors[4].message, 'Must contain number');
-    expect(errors[5].message, 'Must contain special character');
+    expect(errors[2].message, 'Must contain at least one lowercase letter');
+    expect(errors[3].message, 'Must contain at least one uppercase letter');
+    expect(errors[4].message, 'Must contain at least one numeric digit');
+    expect(errors[5].message, 'Must contain at least one special character');
   });
 
   test('when validating [UserModel] should return a list of error messages for the age field', () {
