@@ -87,7 +87,28 @@ class LucidValidationBuilder<TProp, Entity> {
     return this;
   }
 
-  /// Changes the cascade mode for this validation.
+  /// Sets the [CascadeMode] for the validation rules associated with this property.
+  ///
+  /// The [cascade] method allows you to control the behavior of rule execution when a validation failure occurs.
+  /// By default, all validation rules are executed even if one fails. However, by setting the [CascadeMode],
+  /// you can specify whether validation should stop after the first failure (`CascadeMode.stopOnFirstFailure`)
+  /// or continue executing all rules (`CascadeMode.continueExecution`).
+  ///
+  /// [mode] is the [CascadeMode] that determines whether to continue or stop validation after a failure.
+  ///
+  /// Returns the [LucidValidationBuilder] to allow for method chaining.
+  ///
+  /// Example:
+  /// ```dart
+  /// ruleFor((user) => user.password, key: 'password')
+  ///     .notEmpty()
+  ///     .minLength(8)
+  ///     .cascade(CascadeMode.stopOnFirstFailure);
+  /// ```
+  ///
+  /// In the example above, if the password is empty, the validation will stop immediately, and the `minLength(8)` rule
+  /// will not be executed. This can be useful for optimizing performance or ensuring that more critical rules are
+  /// evaluated first.
   LucidValidationBuilder<TProp, Entity> cascade(CascadeMode mode) {
     _mode = mode;
     return this;
