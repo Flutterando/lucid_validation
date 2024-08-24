@@ -87,7 +87,12 @@ Note, the validate method returns a list of errors with all validation exception
 
 Here’s a complete list of available validators you can use:
 
+- **equalTo**: checks if value is equal to another value.
+- **greaterThan**: Checks if number is greater than minimum value.
+- **lessThan**: Checks if the number is less than max value.
 - **notEmpty**: Checks if a string is not empty.
+- **matchesPattern**: Checks if the a string matches the pattern (Regex).
+- **range**: Checks whether a number is within the range of a minimum and maximum value.
 - **validEmail**: Checks if a string is a valid email address.
 - **minLength**: Checks if a string has a minimum length.
 - **maxLength**: Checks if a string does not exceed a maximum length.
