@@ -3,7 +3,7 @@ part of 'lucid_validation.dart';
 /// Builder class used to define validation rules for a specific property type [TProp].
 ///
 /// [TProp] represents the type of the property being validated.
-typedef RuleFunc<TProp> = ValidatorResult Function(TProp value);
+typedef RuleFunc<TProp> = ValidatorResult Function(dynamic value);
 
 class LucidValidationBuilder<TProp> {
   final String key;
@@ -27,16 +27,16 @@ class LucidValidationBuilder<TProp> {
   /// builder.registerRule((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
   LucidValidationBuilder<TProp> registerRule(bool Function(TProp value) validator, String message, String code) {
-    _rules.add(
-      (value) => ValidatorResult(
-        isValid: validator(value),
-        error: ValidatorError(
-          message: message,
-          key: key,
-          code: code,
-        ),
-      ),
-    );
+    ValidatorResult callback(value) => ValidatorResult(
+          isValid: validator(value),
+          error: ValidatorError(
+            message: message,
+            key: key,
+            code: code,
+          ),
+        );
+
+    _rules.add(callback);
 
     return this;
   }

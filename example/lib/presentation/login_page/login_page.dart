@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (formKey.currentState!.validate()) {
-      /// call to api passing the parameter loginParamDto
       ScaffoldMessenger.of(context).showSnackBar(snackBarSuccess);
     }
   }
@@ -49,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 24),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: loginParamDto.setEmail,
                 validator: validator.byField('email'),
                 decoration: const InputDecoration(
@@ -57,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 12),
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: loginParamDto.setPassword,
                 validator: validator.byField('password'),
                 obscureText: true,

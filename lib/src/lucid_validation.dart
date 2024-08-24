@@ -13,7 +13,7 @@ class _PropSelector<E, TProp> {
 ///
 /// [E] represents the type of the entity being validated.
 abstract class LucidValidation<E> {
-  final List<_PropSelector<E, dynamic>> _propSelectors = [];
+  final List<_PropSelector> _propSelectors = [];
 
   /// Registers a validation rule for a specific property of the entity.
   ///
@@ -56,7 +56,10 @@ abstract class LucidValidation<E> {
     if (propSelector == null) return null;
 
     return (value) {
-      for (var rule in propSelector.builder._rules) {
+      if (value == null) return null;
+      final builder = propSelector.builder;
+      final rules = builder._rules.cast<RuleFunc<String>>();
+      for (var rule in rules) {
         final result = rule(value);
 
         if (!result.isValid) {
