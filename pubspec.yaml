@@ -2,7 +2,6 @@ name: lucid_validation
 description: "A Flutter package for building strongly typed validation rules inspired by FluentValidation and created by the Flutterando community."
 repository: https://github.com/Flutterando/lucid_validation
 homepage: https://pub.dev/packages/lucid_validation
-publish_to: "https://pub.dev"
 
 version: 0.0.1
 
