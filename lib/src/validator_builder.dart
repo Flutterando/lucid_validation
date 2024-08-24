@@ -47,7 +47,32 @@ class LucidValidationBuilder<TProp, Entity> {
     return this;
   }
 
-  LucidValidationBuilder<TProp, Entity> mustWith(bool Function(TProp value, Entity enntity) validator, String message, String code) {
+  /// Adds a validation rule that checks if the [TProp] value satisfies the [validator] condition,
+  /// considering the entire [Entity].
+  ///
+  /// The [mustWith] method allows you to create complex validation rules where the value of a property
+  /// is validated in the context of the entire entity. This is useful for scenarios where the validation
+  /// of one property depends on the value of another property in the same entity.
+  ///
+  /// [validator] is a function that takes the current value of the property being validated and the entire entity,
+  /// and returns a boolean indicating whether the value is valid.
+  /// [message] is the error message that will be returned if the validation fails.
+  /// [code] is an optional error code that can be used for translation or error handling purposes.
+  ///
+  /// Returns the [LucidValidationBuilder] to allow for method chaining.
+  ///
+  /// Example:
+  /// ```dart
+  /// ruleFor((user) => user.confirmPassword, key: 'confirmPassword')
+  ///     .mustWith((confirmPassword, user) => confirmPassword == user.password,
+  ///               'Passwords do not match',
+  ///               'password_mismatch');
+  /// ```
+  LucidValidationBuilder<TProp, Entity> mustWith(
+    bool Function(TProp value, Entity entity) validator,
+    String message,
+    String code,
+  ) {
     ValidatorResult callback(value, entity) => ValidatorResult(
           isValid: validator(value, entity),
           error: ValidatorError(
