@@ -54,6 +54,7 @@
 ///
 library lucid_validation;
 
+export 'src/lucid_validation_builder.dart';
 export 'src/lucid_validator.dart';
 export 'src/types/types.dart';
 export 'src/validations/validations.dart';

@@ -40,13 +40,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void signIn() {
-    final errors = validator.validate(registerParamDto);
+    final result = validator.validate(registerParamDto);
 
-    if (errors.isEmpty) {
+    if (result.isValid) {
       /// call to api passing the parameter loginParamDto
       ScaffoldMessenger.of(context).showSnackBar(sucessSnackBar());
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(failureSnackBar(errors.first.message));
+      ScaffoldMessenger.of(context).showSnackBar(failureSnackBar(result.errors.first.message));
     }
   }
 
@@ -104,10 +104,10 @@ class _RegisterPageState extends State<RegisterPage> {
             ListenableBuilder(
               listenable: registerParamDto,
               builder: (context, child) {
-                final errors = validator.validate(registerParamDto);
+                final result = validator.validate(registerParamDto);
 
                 return ElevatedButton(
-                  onPressed: errors.isEmpty ? signIn : null,
+                  onPressed: result.isValid ? signIn : null,
                   child: const Text('Register'),
                 );
               },

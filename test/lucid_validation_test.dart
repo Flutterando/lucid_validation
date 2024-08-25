@@ -12,7 +12,8 @@ void main() {
       phone: '(11) 99999-9999',
     );
 
-    final errors = validator.validate(userEntity);
+    final result = validator.validate(userEntity);
+    final errors = result.errors;
 
     expect(errors.length, 2);
     expect(errors.first.key, 'email');
@@ -29,7 +30,8 @@ void main() {
       phone: '(11) 99999-9999',
     );
 
-    final errors = validator.validate(userEntity);
+    final result = validator.validate(userEntity);
+    final errors = result.errors;
 
     expect(errors.length, 6);
     expect(errors.first.key, 'password');
@@ -50,7 +52,8 @@ void main() {
       phone: '(11) 99999-9999',
     );
 
-    final errors = validator.validate(userEntity);
+    final result = validator.validate(userEntity);
+    final errors = result.errors;
 
     expect(errors.length, 1);
     expect(errors.first.key, 'age');
@@ -66,7 +69,8 @@ void main() {
       phone: '',
     );
 
-    final errors = validator.validate(userEntity);
+    final result = validator.validate(userEntity);
+    final errors = result.errors;
 
     expect(errors.length, 1);
     expect(errors.first.key, 'phone');
@@ -82,7 +86,8 @@ void main() {
       phone: '',
     );
 
-    final errors = validator.validate(userEntity);
+    final result = validator.validate(userEntity);
+    final errors = result.errors;
 
     expect(errors.length, 10);
     expect(
@@ -97,15 +102,46 @@ void main() {
       confirmPassword: '123asdASD@',
       password: '123asdASD@',
     );
-    final registerValidator = CredentialsRegisterValidator();
+    final validator = CredentialsRegisterValidator();
 
-    var errors = registerValidator.validate(credentials);
+    var result = validator.validate(credentials);
+    var errors = result.errors;
 
     expect(errors.length, 0);
 
     credentials = credentials.copyWith(confirmPassword: '123asdASDsdsdw');
-    errors = registerValidator.validate(credentials);
-
+    result = validator.validate(credentials);
+    errors = result.errors;
     expect(errors.length, 2);
+
+    final stringError = validator.byField(credentials, 'confirmPassword')();
+    expect(stringError, 'Must be equal to password');
+  });
+
+  test('setValidator', () {
+    var customer = Customer(
+      name: 'John Doe',
+      address: Address(
+        country: 'Brazil',
+        postcode: '12345-678',
+      ),
+    );
+
+    final validator = CustomerValidator();
+
+    var result = validator.validate(customer);
+    expect(result.isValid, isTrue);
+
+    customer.address = Address(
+      country: 'Brazil',
+      postcode: '',
+    );
+
+    result = validator.validate(customer);
+
+    expect(result.isValid, isFalse);
+
+    final stringError = validator.byField(customer, 'address')();
+    expect(stringError, 'Cannot be empty');
   });
 }

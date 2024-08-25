@@ -1,19 +1,10 @@
 import '../lucid_validation.dart';
 
-part 'lucid_validation_builder.dart';
-
-class _PropSelector<E, TProp> {
-  final TProp Function(E entity) selector;
-  final LucidValidationBuilder<TProp, E> builder;
-
-  _PropSelector({required this.selector, required this.builder});
-}
-
 /// Abstract class for creating validation logic for a specific entity type [E].
 ///
 /// [E] represents the type of the entity being validated.
 abstract class LucidValidator<E> {
-  final List<_PropSelector<E, dynamic>> _propSelectors = [];
+  final List<LucidValidationBuilder<dynamic, E>> _builders = [];
 
   /// Registers a validation rule for a specific property of the entity.
   ///
@@ -27,11 +18,9 @@ abstract class LucidValidator<E> {
   /// final validator = UserValidation();
   /// validator.ruleFor((user) => user.email).validEmail();
   /// ```
-  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) func, {String key = ''}) {
-    final builder = LucidValidationBuilder<TProp, E>(key: key);
-    final propSelector = _PropSelector<E, TProp>(selector: func, builder: builder);
-
-    _propSelectors.add(propSelector);
+  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) selector, {String key = ''}) {
+    final builder = _LucidValidationBuilder<TProp, E>(key, selector);
+    _builders.add(builder);
 
     return builder;
   }
@@ -46,31 +35,27 @@ abstract class LucidValidator<E> {
   /// final emailValidator = validator.byField('email');
   /// String? validationResult = emailValidator('user@example.com');
   /// ```
-  String? Function([String?])? byField(E entity, String key) {
-    final propSelector = _propSelectors
+  String? Function([String?]) byField(E entity, String key) {
+    final builder = _builders
         .where(
-          (propSelector) => propSelector.builder.key == key,
+          (builder) => builder.key == key,
         )
         .firstOrNull;
 
-    if (propSelector == null) return null;
+    if (builder == null) {
+      return ([_]) => null;
+    }
 
     return ([_]) {
-      final builder = propSelector.builder;
-      final value = propSelector.selector(entity);
-      final rules = builder._rules.cast<RuleFunc<String, E>>();
-      for (var rule in rules) {
-        final result = rule(value, entity);
-
-        if (!result.isValid) {
-          return result.error.message;
-        }
+      final errors = builder.executeRules(entity);
+      if (errors.isNotEmpty) {
+        return errors.first.message;
       }
       return null;
     };
   }
 
-  /// Validates the entire entity [E] and returns a list of [ValidatorError]s if any rules fail.
+  /// Validates the entire entity [E] and returns a list of [ValidationError]s if any rules fail.
   ///
   /// This method iterates through all registered rules and checks if the entity meets all of them.
   ///
@@ -84,25 +69,18 @@ abstract class LucidValidator<E> {
   ///   print('Validation failed: ${errors.map((e) => e.message).join(', ')}');
   /// }
   /// ```
-  List<ValidatorError> validate(E entity) {
-    final List<ValidatorError> errors = [];
+  ValidationResult validate(E entity) {
+    final errors = _builders.fold(<ValidationError>[], (previousErrors, errors) {
+      return previousErrors..addAll(errors.executeRules(entity));
+    });
 
-    for (var propSelector in _propSelectors) {
-      final propValue = propSelector.selector(entity);
-      final mode = propSelector.builder._mode;
-
-      for (var rule in propSelector.builder._rules) {
-        final result = rule(propValue, entity);
-
-        if (!result.isValid) {
-          errors.add(result.error);
-          if (mode == CascadeMode.stopOnFirstFailure) {
-            break;
-          }
-        }
-      }
-    }
-
-    return errors;
+    return ValidationResult(
+      isValid: errors.isEmpty,
+      errors: errors,
+    );
   }
+}
+
+class _LucidValidationBuilder<TProp, Entity> extends LucidValidationBuilder<TProp, Entity> {
+  _LucidValidationBuilder(super.key, super.selector);
 }

@@ -93,3 +93,45 @@ class CredentialsRegisterValidator extends LucidValidator<CredentialsRegister> {
         .equalTo((entity) => entity.password, message: 'Must be equal to password');
   }
 }
+
+class Address {
+  String country;
+  String postcode;
+
+  Address({
+    required this.country,
+    required this.postcode,
+  });
+}
+
+class AddressValidator extends LucidValidator<Address> {
+  AddressValidator() {
+    ruleFor((address) => address.country, key: 'country') //
+        .notEmpty();
+
+    ruleFor((address) => address.postcode, key: 'postcode') //
+        .notEmpty();
+  }
+}
+
+class Customer {
+  String name;
+  Address address;
+
+  Customer({
+    required this.name,
+    required this.address,
+  });
+}
+
+class CustomerValidator extends LucidValidator<Customer> {
+  final addressValidator = AddressValidator();
+
+  CustomerValidator() {
+    ruleFor((customer) => customer.name, key: 'name') //
+        .notEmpty();
+
+    ruleFor((customer) => customer.address, key: 'address') //
+        .setValidator(addressValidator);
+  }
+}

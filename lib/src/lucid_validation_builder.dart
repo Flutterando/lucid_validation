@@ -1,4 +1,4 @@
-part of 'lucid_validator.dart';
+import '../lucid_validation.dart';
 
 /// Defines the behavior of rule execution when a validation failure occurs.
 ///
@@ -45,17 +45,23 @@ enum CascadeMode {
 /// Builder class used to define validation rules for a specific property type [TProp].
 ///
 /// [TProp] represents the type of the property being validated.
-typedef RuleFunc<TProp, Entity> = ValidatorResult Function(dynamic value, dynamic entity);
+typedef RuleFunc<Entity> = ValidationError? Function(Entity entity);
 
-class LucidValidationBuilder<TProp, Entity> {
+typedef SimpleValidationBuilder<T> = LucidValidationBuilder<T, dynamic>;
+
+abstract class LucidValidationBuilder<TProp, Entity> {
   final String key;
-  final List<RuleFunc<TProp, Entity>> _rules = [];
+  final TProp Function(Entity entity) _selector;
+  final List<RuleFunc<Entity>> _rules = [];
   var _mode = CascadeMode.continueExecution;
+  LucidValidator<TProp>? _nestedValidator;
+
+  bool Function(Entity entity)? _condition;
 
   /// Creates a [LucidValidationBuilder] instance with an optional [key].
   ///
   /// The [key] can be used to identify this specific validation in a larger validation context.
-  LucidValidationBuilder({this.key = ''});
+  LucidValidationBuilder(this.key, this._selector);
 
   /// Registers a validation rule for the property.
   ///
@@ -70,14 +76,17 @@ class LucidValidationBuilder<TProp, Entity> {
   /// builder.must((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
   LucidValidationBuilder<TProp, Entity> must(bool Function(TProp value) validator, String message, String code) {
-    ValidatorResult callback(value, entity) => ValidatorResult(
-          isValid: validator(value),
-          error: ValidatorError(
-            message: message,
-            key: key,
-            code: code,
-          ),
-        );
+    ValidationError? callback(entity) {
+      final value = _selector(entity);
+      if (validator(value)) {
+        return null;
+      }
+      return ValidationError(
+        message: message,
+        key: key,
+        code: code,
+      );
+    }
 
     _rules.add(callback);
 
@@ -110,14 +119,18 @@ class LucidValidationBuilder<TProp, Entity> {
     String message,
     String code,
   ) {
-    ValidatorResult callback(value, entity) => ValidatorResult(
-          isValid: validator(value, entity),
-          error: ValidatorError(
-            message: message,
-            key: key,
-            code: code,
-          ),
-        );
+    ValidationError? callback(entity) {
+      final value = _selector(entity);
+      if (validator(value, entity)) {
+        return null;
+      }
+
+      return ValidationError(
+        message: message,
+        key: key,
+        code: code,
+      );
+    }
 
     _rules.add(callback);
 
@@ -149,5 +162,83 @@ class LucidValidationBuilder<TProp, Entity> {
   LucidValidationBuilder<TProp, Entity> cascade(CascadeMode mode) {
     _mode = mode;
     return this;
+  }
+
+  /// Allows the integration of another `LucidValidator` to validate nested properties.
+  ///
+  /// The `setValidator` method enables you to nest another `LucidValidator` within the current validation context.
+  /// This is particularly useful when dealing with complex models that contain nested objects or properties.
+  /// By setting a nested validator, you can apply validation rules to the properties of the nested object
+  /// within the context of the parent object.
+  ///
+  /// [validator] is an instance of `LucidValidator` that will be applied to the nested property.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  ///   .ruleFor((user) => user.address, key: 'address')
+  ///       .setValidator(AddressValidator()); // Integrating the nested validator
+  ///
+  /// ```
+  void setValidator(LucidValidator<TProp> validator) {
+    _nestedValidator = validator;
+  }
+
+  /// Adds a conditional execution rule for the validation logic based on the given [condition].
+  ///
+  /// The `when` method allows you to specify a condition that must be met for the validation rules
+  /// within this builder to be executed. If the condition is not met, the validation rules are skipped,
+  /// and the property is considered valid by default.
+  ///
+  /// This is particularly useful for scenarios where certain validation rules should only apply
+  /// under specific circumstances, such as when a certain property is set to a particular value.
+  ///
+  /// [condition] is a function that takes the entire entity and returns a boolean indicating whether
+  /// the validation rules should be applied.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
+  ///     .when((user) => user.requiresPhoneNumber)
+  ///     .must((value) => value.isNotEmpty, 'Phone number is required', 'phone_required')
+  ///     .must((value) => value.length == 10, 'Phone number must be 10 digits', 'phone_length');
+  /// ```
+  ///
+  /// In the example above, the phone number validation rules are only applied if the user's `requiresPhoneNumber`
+  /// property is true. If the condition is false, the phone number field will be considered valid, and the
+  /// associated rules will not be executed.
+  LucidValidationBuilder<TProp, Entity> when(bool Function(Entity entity) condition) {
+    _condition = condition;
+    return this;
+  }
+
+  /// Executes all validation rules associated with this property and returns a list of [ValidationError]s.
+  List<ValidationError> executeRules(Entity entity) {
+    final byPass = _condition?.call(entity) ?? true;
+    if (!byPass) {
+      return [];
+    }
+
+    final errors = <ValidationError>[];
+
+    if (_nestedValidator != null) {
+      final nestedErrors = _nestedValidator!.validate(_selector(entity)).errors;
+      errors.addAll(nestedErrors);
+    } else {
+      for (var rule in _rules) {
+        final error = rule(entity);
+
+        if (error != null) {
+          errors.add(error);
+
+          if (_mode == CascadeMode.stopOnFirstFailure) {
+            break;
+          }
+        }
+      }
+    }
+
+    return errors;
   }
 }

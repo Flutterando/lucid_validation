@@ -71,12 +71,12 @@ void main() {
   final user = UserModel(email: 'test@example.com', password: 'Passw0rd!', age: 25);
   final validator = UserValidator();
 
-  final errors = validator.validate(user);
+  final result = validator.validate(user);
   
-  if (errors.isEmpty) {
+  if (result.isValid) {
     print('User is valid');
   } else {
-    print('Validation errors: \${errors.map((e) => e.message).join(', ')}');
+    print('Validation errors: \${result.errors.map((e) => e.message).join(', ')}');
   }
 }
 ```
@@ -169,14 +169,114 @@ You can apply CascadeMode to your validation chain using the cascaded method:
         .mustHaveSpecialCharacter()
 ```
 
+## When condition
+
+Adds a conditional execution rule for the validation logic based on the given [condition].
+
+The `when` method allows you to specify a condition that must be met for the validation rules
+within this builder to be executed. If the condition is not met, the validation rules areskipped,
+and the property is considered valid by default.
+
+This is particularly useful for scenarios where certain validation rules should only apply
+under specific circumstances, such as when a certain property is set to a particular value.
+
+[condition] is a function that takes the entire entity and returns a boolean indicating whether
+the validation rules should be applied.
+
+Example:
+ 
+```dart
+ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
+    .when((user) => user.requiresPhoneNumber)
+    .must((value) => value.isNotEmpty, 'Phone number is required', 'phone_required')
+    .must((value) => value.length == 10, 'Phone number must be 10 digits', 'phone_length');
+```
+
+In the example above, the phone number validation rules are only applied if the user's`requiresPhoneNumber`
+property is true. If the condition is false, the phone number field will be considered valid,and the
+associated rules will not be executed.
+
+## Complex Validations
+
+When working with complex models that contain nested objects, it’s often necessary to apply validation rules not only to the parent model but also to its nested properties. The `setValidator` method allows you to integrate a nested `LucidValidator` within another validator, enabling a modular and scalable approach to validation.
+
+See this example: 
+```dart
+// Models
+class Customer {
+  String name;
+  Address address;
+
+  Customer({
+    required this.name,
+    required this.address,
+  });
+}
+
+class Address {
+  String country;
+  String postcode;
+
+  Address({
+    required this.country,
+    required this.postcode,
+  });
+}
+
+```
+
+Now, we can create two validators, `CustomerValidator` and `AddressValidator`.
+Use `setValidator` to integrate `AddressValidor` into `CustomerValidator`;
+
+```dart
+class AddressValidator extends LucidValidator<Address> {
+  AddressValidator() {
+    ruleFor((address) => address.country, key: 'country') //
+        .notEmpty();
+
+    ruleFor((address) => address.postcode, key: 'postcode') //
+        .notEmpty();
+  }
+}
+
+class CustomerValidator extends LucidValidator<Customer> {
+  final addressValidator = AddressValidator();
+
+  CustomerValidator() {
+    ruleFor((customer) => customer.name, key: 'name') //
+        .notEmpty();
+
+    ruleFor((customer) => customer.address, key: 'address') //
+        .setValidator(addressValidator);
+  }
+}
+```
+
+After that, execute a validation normaly:
+
+```dart
+ var customer = Customer(
+      name: 'John Doe',
+      address: Address(
+        country: 'Brazil',
+        postcode: '12345-678',
+      ),
+    );
+
+  final validator = CustomerValidator();
+
+  var result = validator.validate(customer);
+  expect(result.isValid, isTrue);
+```
+
 
 ## Creating Custom Rules
 
-You can easily extend the functionality of `LucidValidation` by creating your own custom rules using `extensions`. Here’s an example of how to create a validation for phone numbers:
+You can easily extend the functionality of `LucidValidator` by creating your own custom rules using `extensions`. Here’s an example of how to create a validation for phone numbers:
 
 ```dart
-extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
-  LucidValidationBuilder<String> customValidPhone({String message = 'Invalid phone number format'}) {
+extension CustomValidPhoneValidator on SimpleValidationBuilder<String> {
+  SimpleValidationBuilder<String> customValidPhone({String message = 'Invalid phone number format'}) {
     return matchesPattern(
       r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}\$',
       message,
@@ -185,8 +285,8 @@ extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
   }
 }
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
-  LucidValidationBuilder<String> customValidPassword() {
+extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
+  SimpleValidationBuilder<String> customValidPassword() {
     return notEmpty()
         .minLength(8)
         .mustHaveLowercase()

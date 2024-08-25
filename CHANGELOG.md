@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Added `when` and `setValidator`
+
 ## 0.0.5
 
 * Added must and mustWith
