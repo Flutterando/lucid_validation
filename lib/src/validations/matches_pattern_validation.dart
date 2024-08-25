@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add a regex pattern match validation.
 ///
 /// This extension adds a `matchesPattern` method that can be used to ensure that a string
 /// matches a specific regex pattern.
-extension MatchesPatternValidator on LucidValidationBuilder<String, dynamic> {
+extension MatchesPatternValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] matches the [pattern].
   ///
   /// [pattern] is the regex pattern that the string must match.

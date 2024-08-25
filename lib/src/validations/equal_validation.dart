@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [T] properties to add an equality validation.
 ///
 /// This extension adds an `equalTo` method that can be used to ensure that a value
 /// is equal to a specific value.
-extension EqualValidator<T, E> on LucidValidationBuilder<T, E> {
+extension EqualValidation<T, E> on LucidValidationBuilder<T, E> {
   /// Adds a validation rule that checks if the value is equal to [comparison].
   ///
   /// [predicate] is a function that returns the value to compare against.

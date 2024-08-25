@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [num] properties to add a less than validation.
 ///
 /// This extension adds a `lessThan` method that can be used to ensure that a number
 /// is less than a specified value.
-extension LessThanValidator on LucidValidationBuilder<num, dynamic> {
+extension LessThanValidation on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if the [num] is less than [maxValue].
   ///
   /// [maxValue] is the value that the number must be less than.

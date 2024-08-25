@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [num] properties to add a minimum value validation.
 ///
 /// This extension adds a `min` method that can be used to ensure that a numerical value
 /// meets or exceeds a specified minimum.
-extension MinValidator on LucidValidationBuilder<num, dynamic> {
+extension MinValidation on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if a [num] value is greater than or equal to [num].
   ///
   /// [num] is the minimum allowed value.

@@ -1,6 +1,6 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
-extension ValidCEPValidator on LucidValidationBuilder<String, dynamic> {
+extension ValidCEPValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid CEP (Brazilian postal code).
   ///
   /// This method verifies that the CEP is in the correct format (#####-###) and consists

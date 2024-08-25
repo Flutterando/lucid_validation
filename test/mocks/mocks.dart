@@ -17,8 +17,8 @@ class UserModel {
   factory UserModel.empty() => UserModel(email: '', password: '', age: 18, phone: '');
 }
 
-class UserValidation extends LucidValidation<UserModel> {
-  UserValidation() {
+class UserValidator extends LucidValidator<UserModel> {
+  UserValidator() {
     ruleFor((user) => user.email, key: 'email') //
         .notEmpty()
         .validEmail();
@@ -79,8 +79,8 @@ class CredentialsRegister {
   }
 }
 
-class CredentialsRegisterValidation extends LucidValidation<CredentialsRegister> {
-  CredentialsRegisterValidation() {
+class CredentialsRegisterValidator extends LucidValidator<CredentialsRegister> {
+  CredentialsRegisterValidator() {
     ruleFor((credentials) => credentials.email, key: 'email') //
         .notEmpty()
         .validEmail();

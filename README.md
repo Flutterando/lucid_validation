@@ -37,13 +37,13 @@ class UserModel {
 }
 ```
 
-After that, create a `Validation` class and extends to `LucidValidation`:
+After that, create a `LucidValidator` class and extends to `LucidValidator`:
 
 ```dart
 import 'package:lucid_validation/lucid_validation.dart';
 
-class UserValidation extends LucidValidation<UserModel> {
-  UserValidation() {
+class UserValidator extends LucidValidator<UserModel> {
+  UserValidator() {
     ruleFor((user) => user.email, key: 'email')
         .notEmpty()
         .validEmail();
@@ -69,7 +69,7 @@ Now, just validate!
 
 void main() {
   final user = UserModel(email: 'test@example.com', password: 'Passw0rd!', age: 25);
-  final validator = UserValidation();
+  final validator = UserValidator();
 
   final errors = validator.validate(user);
   
@@ -83,7 +83,7 @@ void main() {
 
 Note, the validate method returns a list of errors with all validation exceptions.
 
-### Available Validators
+### Available Validations
 
 Here’s a complete list of available validators you can use:
 

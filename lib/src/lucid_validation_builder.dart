@@ -1,4 +1,4 @@
-part of 'lucid_validation.dart';
+part of 'lucid_validator.dart';
 
 /// Defines the behavior of rule execution when a validation failure occurs.
 ///

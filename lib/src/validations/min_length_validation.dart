@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add a minimum length validation.
 ///
 /// This extension adds a `minLength` method that can be used to ensure that the length of a string
 /// meets a specified minimum number of characters.
-extension MinLengthValidator on LucidValidationBuilder<String, dynamic> {
+extension MinLengthValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the length of a [String] is greater than or equal to [num].
   ///
   /// [num] is the minimum required length for the string.

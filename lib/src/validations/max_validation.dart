@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [num] properties to add a maximum value validation.
 ///
 /// This extension adds a `max` method that can be used to ensure that a numerical value
 /// does not exceed a specified maximum.
-extension MaxValidator on LucidValidationBuilder<num, dynamic> {
+extension MaxValidation on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if a [num] value is less than or equal to [num].
   ///
   /// [num] is the maximum allowed value.

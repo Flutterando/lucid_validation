@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add a special character validation.
 ///
 /// This extension adds a `mustHaveSpecialCharacter` method that can be used to ensure that a string
 /// contains at least one special character.
-extension MustHaveSpecialCharacter on LucidValidationBuilder<String, dynamic> {
+extension MustHaveSpecialCharacterValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] contains at least one special character.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must contain at least one special character".

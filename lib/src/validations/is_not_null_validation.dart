@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [T?] properties to add a not null validation.
 ///
 /// This extension adds an `isNotNull` method that can be used to ensure that a value
 /// is not null.
-extension IsNotNullValidator<T, E> on LucidValidationBuilder<T?, E> {
+extension IsNotNullValidation<T, E> on LucidValidationBuilder<T?, E> {
   /// Adds a validation rule that checks if the value is not null.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Cannot be null".

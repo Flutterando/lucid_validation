@@ -1,6 +1,6 @@
 import '../lucid_validation.dart';
 
-part 'validator_builder.dart';
+part 'lucid_validation_builder.dart';
 
 class _PropSelector<E, TProp> {
   final TProp Function(E entity) selector;
@@ -12,7 +12,7 @@ class _PropSelector<E, TProp> {
 /// Abstract class for creating validation logic for a specific entity type [E].
 ///
 /// [E] represents the type of the entity being validated.
-abstract class LucidValidation<E> {
+abstract class LucidValidator<E> {
   final List<_PropSelector<E, dynamic>> _propSelectors = [];
 
   /// Registers a validation rule for a specific property of the entity.

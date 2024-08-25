@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add a valid email validation.
 ///
 /// This extension adds a `validEmail` method that can be used to ensure that a string
 /// is a valid email address.
-extension ValidEmailValidator on LucidValidationBuilder<String, dynamic> {
+extension ValidEmailValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid email address.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Invalid email address".

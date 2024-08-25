@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [num] properties to add a range validation.
 ///
 /// This extension adds a `range` method that can be used to ensure that a number
 /// is within a specified range.
-extension RangeValidator on LucidValidationBuilder<num, dynamic> {
+extension RangeValidation on LucidValidationBuilder<num, dynamic> {
   /// Adds a validation rule that checks if the [num] is within the range of [min] and [max].
   ///
   /// [min] and [max] define the acceptable range for the number.

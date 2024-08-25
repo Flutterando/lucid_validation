@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add a valid CPF validation.
 ///
 /// This extension adds a `validCPF` method that can be used to ensure that a string
 /// is a valid CPF number.
-extension ValidCPFValidator on LucidValidationBuilder<String, dynamic> {
+extension ValidCPFValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid CPF number.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Invalid CPF".

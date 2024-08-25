@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [T] properties to add a non-equality validation.
 ///
 /// This extension adds a `notEqualTo` method that can be used to ensure that a value
 /// is not equal to a specific value.
-extension NotEqualValidator<T, E> on LucidValidationBuilder<T, E> {
+extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
   /// Adds a validation rule that checks if the value is not equal to [comparison].
   ///
   /// [predicate] is the value that the field must not match.

@@ -1,10 +1,10 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
 /// Extension on [LucidValidationBuilder] for [String] properties to add an empty string validation.
 ///
 /// This extension adds an `isEmpty` method that can be used to ensure that a string
 /// is empty.
-extension IsEmptyValidator on LucidValidationBuilder<String, dynamic> {
+extension IsEmptyValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is empty.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must be empty".

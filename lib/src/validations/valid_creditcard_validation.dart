@@ -1,6 +1,6 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
-extension ValidCreditCardValidator on LucidValidationBuilder<String, dynamic> {
+extension ValidCreditCardValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid credit card number.
   ///
   /// This method uses the Luhn algorithm to verify the validity of a credit card number.

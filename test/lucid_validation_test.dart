@@ -4,7 +4,7 @@ import 'mocks/mocks.dart';
 
 void main() {
   test('when validating [UserEntityMock] should return a list of error messages for the email field', () {
-    final validator = UserValidation();
+    final validator = UserValidator();
     final userEntity = UserModel(
       email: '',
       password: 'Teste@1234',
@@ -21,7 +21,7 @@ void main() {
   });
 
   test('when validating [UserModel] should return a list of error messages for the password field', () {
-    final validator = UserValidation();
+    final validator = UserValidator();
     final userEntity = UserModel(
       email: 'teste@gmail.com',
       password: '',
@@ -42,7 +42,7 @@ void main() {
   });
 
   test('when validating [UserModel] should return a list of error messages for the age field', () {
-    final validator = UserValidation();
+    final validator = UserValidator();
     final userEntity = UserModel(
       email: 'teste@gmail.com',
       password: 'Teste@1234',
@@ -58,7 +58,7 @@ void main() {
   });
 
   test('when validating [UserModel] should return a list of error messages for the phone field', () {
-    final validator = UserValidation();
+    final validator = UserValidator();
     final userEntity = UserModel(
       email: 'teste@gmail.com',
       password: 'Teste@1234',
@@ -74,7 +74,7 @@ void main() {
   });
 
   test('when validating [UserModel] should return a list of error messages for all fields', () {
-    final validator = UserValidation();
+    final validator = UserValidator();
     final userEntity = UserModel(
       email: '',
       password: '',
@@ -97,7 +97,7 @@ void main() {
       confirmPassword: '123asdASD@',
       password: '123asdASD@',
     );
-    final registerValidator = CredentialsRegisterValidation();
+    final registerValidator = CredentialsRegisterValidator();
 
     var errors = registerValidator.validate(credentials);
 

@@ -1,6 +1,6 @@
-part of 'validators.dart';
+part of 'validations.dart';
 
-extension ValidCNPJValidator on LucidValidationBuilder<String, dynamic> {
+extension ValidCnpjValidation on LucidValidationBuilder<String, dynamic> {
   /// Adds a validation rule that checks if the [String] is a valid CNPJ number.
   ///
   /// The CNPJ is the national identifier for Brazilian companies. This method
