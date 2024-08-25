@@ -11,5 +11,5 @@ class LoginParamDto {
 
   setEmail(String value) => email = value;
 
-  setPassword(String value) => email = value;
+  setPassword(String value) => password = value;
 }

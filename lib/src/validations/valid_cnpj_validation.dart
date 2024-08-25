@@ -1,6 +1,6 @@
 part of 'validations.dart';
 
-extension ValidCnpjValidation on LucidValidationBuilder<String, dynamic> {
+extension ValidCnpjValidation on SimpleValidationBuilder<String> {
   /// Adds a validation rule that checks if the [String] is a valid CNPJ number.
   ///
   /// The CNPJ is the national identifier for Brazilian companies. This method
@@ -11,7 +11,14 @@ extension ValidCnpjValidation on LucidValidationBuilder<String, dynamic> {
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
-  LucidValidationBuilder<String, dynamic> validCNPJ({String message = 'Invalid CNPJ', String code = 'invalid_cnpj'}) {
+  ///
+  /// Example:
+  /// ```dart
+  /// ...
+  /// ruleFor((user) => user.cnpj, key: 'cnpj')
+  ///  .validCNPJ();
+  /// ```
+  SimpleValidationBuilder<String> validCNPJ({String message = 'Invalid CNPJ', String code = 'invalid_cnpj'}) {
     return must(
       (value) => _validateCNPJ(value),
       message,

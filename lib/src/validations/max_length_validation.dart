@@ -4,7 +4,7 @@ part of 'validations.dart';
 ///
 /// This extension adds a `maxLength` method that can be used to ensure that the length of a string
 /// does not exceed a specified maximum number of characters.
-extension MaxLengthValidation on LucidValidationBuilder<String, dynamic> {
+extension MaxLengthValidation on SimpleValidationBuilder<String> {
   /// Adds a validation rule that checks if the length of a [String] is less than or equal to [num].
   ///
   /// [num] is the maximum allowed length for the string.
@@ -15,10 +15,11 @@ extension MaxLengthValidation on LucidValidationBuilder<String, dynamic> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<String>(key: 'username');
-  /// builder.maxLength(10);
+  /// ...
+  /// ruleFor((user) => user.username, key: 'username')
+  ///   .maxLength(10);
   /// ```
-  LucidValidationBuilder<String, dynamic> maxLength(int num, {String message = r'Must be at most $num characters long', String code = 'max_length'}) {
+  SimpleValidationBuilder<String> maxLength(int num, {String message = r'Must be at most $num characters long', String code = 'max_length'}) {
     return must(
       (value) => value.length <= num,
       message.replaceAll(r'$num', num.toString()),

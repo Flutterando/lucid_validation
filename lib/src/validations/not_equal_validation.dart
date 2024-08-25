@@ -15,8 +15,9 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<String>(key: 'newUsername');
-  /// builder.notEqualTo('oldUsername');
+  /// ...
+  /// ruleFor((user) => user.newUsername, key: 'newUsername')
+  ///   .notEqualTo((user) => user.oldUsername);
   /// ```
   LucidValidationBuilder<T, dynamic> notEqualTo(T Function(E entity) predicate, {String message = r'Must not be equal', String code = 'not_equal_to_error'}) {
     return mustWith(

@@ -15,8 +15,10 @@ extension EqualValidation<T, E> on LucidValidationBuilder<T, E> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<String>(key: 'confirmPassword');
-  /// builder.equalTo('password123');
+  /// ...
+  /// ruleFor((user) => user.confirmPassword, key: 'confirmPassword')
+  ///   .equalTo((user) => user.password);
+  ///
   /// ```
   LucidValidationBuilder<T, E> equalTo(T Function(E entity) predicate, {String message = r'Must be equal', String code = 'equal_error'}) {
     return mustWith(

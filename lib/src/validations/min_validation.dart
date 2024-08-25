@@ -4,7 +4,7 @@ part of 'validations.dart';
 ///
 /// This extension adds a `min` method that can be used to ensure that a numerical value
 /// meets or exceeds a specified minimum.
-extension MinValidation on LucidValidationBuilder<num, dynamic> {
+extension MinValidation on SimpleValidationBuilder<num> {
   /// Adds a validation rule that checks if a [num] value is greater than or equal to [num].
   ///
   /// [num] is the minimum allowed value.
@@ -15,10 +15,11 @@ extension MinValidation on LucidValidationBuilder<num, dynamic> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<num>(key: 'age');
-  /// builder.min(18);
+  /// ...
+  /// ruleFor((user) => user.age, key: 'age')
+  ///   .maxLength(18);
   /// ```
-  LucidValidationBuilder<num, dynamic> min(num num, {String message = r'Must be greater than or equal to $num', String code = 'min_value'}) {
+  SimpleValidationBuilder<num> min(num num, {String message = r'Must be greater than or equal to $num', String code = 'min_value'}) {
     return must(
       (value) => value >= num,
       message.replaceAll(r'$num', num.toString()),

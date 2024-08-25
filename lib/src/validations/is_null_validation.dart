@@ -4,7 +4,7 @@ part of 'validations.dart';
 ///
 /// This extension adds an `isNull` method that can be used to ensure that a value
 /// is null.
-extension IsNullValidation<T, E> on LucidValidationBuilder<T?, E> {
+extension IsNullValidation<T> on SimpleValidationBuilder<T?> {
   /// Adds a validation rule that checks if the value is null.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must be null".
@@ -14,10 +14,11 @@ extension IsNullValidation<T, E> on LucidValidationBuilder<T?, E> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<String?>(key: 'optionalField');
-  /// builder.isNull();
+  /// ...
+  /// ruleFor((user) => user.name, key: 'name') // optional field
+  ///   .isNull();
   /// ```
-  LucidValidationBuilder<T?, E> isNull({String message = 'Must be null', String code = 'must_be_null'}) {
+  SimpleValidationBuilder<T?> isNull({String message = 'Must be null', String code = 'must_be_null'}) {
     return must(
       (value) => value == null,
       message,

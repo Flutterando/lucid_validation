@@ -4,7 +4,7 @@ part of 'validations.dart';
 ///
 /// This extension adds a `matchesPattern` method that can be used to ensure that a string
 /// matches a specific regex pattern.
-extension MatchesPatternValidation on LucidValidationBuilder<String, dynamic> {
+extension MatchesPatternValidation on SimpleValidationBuilder<String> {
   /// Adds a validation rule that checks if the [String] matches the [pattern].
   ///
   /// [pattern] is the regex pattern that the string must match.
@@ -15,10 +15,11 @@ extension MatchesPatternValidation on LucidValidationBuilder<String, dynamic> {
   ///
   /// Example:
   /// ```dart
-  /// final builder = LucidValidationBuilder<String>(key: 'phoneNumber');
-  /// builder.matchesPattern(r'^\d{3}-\d{3}-\d{4}$');
+  /// ...
+  /// ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
+  ///   .matchesPattern(r'^\d{3}-\d{3}-\d{4}$');
   /// ```
-  LucidValidationBuilder<String, dynamic> matchesPattern(String pattern, {String message = 'Invalid format', String code = 'invalid_format'}) {
+  SimpleValidationBuilder<String> matchesPattern(String pattern, {String message = 'Invalid format', String code = 'invalid_format'}) {
     return must(
       (value) => RegExp(pattern).hasMatch(value),
       message,
