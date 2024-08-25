@@ -160,13 +160,12 @@ You can apply CascadeMode to your validation chain using the cascaded method:
 
 ```dart
  return notEmpty() //
-        .cascade(CascadeMode.stopOnFirstFailure); // change cascade mode
-
         .minLength(5, message: 'Must be at least 8 characters long')
         .mustHaveLowercase()
         .mustHaveUppercase()
         .mustHaveNumbers()
         .mustHaveSpecialCharacter()
+        .cascade(CascadeMode.stopOnFirstFailure); // change cascade mode
 ```
 
 ## When condition
