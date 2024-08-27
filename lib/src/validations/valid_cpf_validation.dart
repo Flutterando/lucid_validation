@@ -18,12 +18,25 @@ extension ValidCPFValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.cpf, key: 'cpf')
   ///   .validCPF();
   /// ```
-  SimpleValidationBuilder<String> validCPF({String message = 'Invalid CPF', String code = 'invalid_cpf'}) {
-    return must(
-      (value) => _validateCPF(value),
-      message,
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> validCPF({String? message, String? code}) {
+    return use((value, entity) {
+      if (_validateCPF(value)) return null;
+
+      final currentCode = code ?? Language.code.validCPF;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 
   bool _validateCPF(String cpf) {
