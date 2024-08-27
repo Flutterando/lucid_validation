@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lucid_validation/lucid_validation.dart';
 
+import 'domain/validations/language_manager.dart';
+
 void main() {
+  LucidValidation.global.languageManager = CustomLanguageManager();
+
   runApp(const MyApp());
 }
 
