@@ -18,11 +18,26 @@ extension ValidEmailValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.email, key: 'email')
   ///  .validEmail();
   /// ```
-  SimpleValidationBuilder<String> validEmail({String message = 'Invalid email address', String code = 'invalid_email'}) {
-    return must(
-      (value) => RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$').hasMatch(value),
-      message,
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> validEmail({String? message, String? code}) {
+    return use((value, entity) {
+      if (RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+        return null;
+      }
+
+      final currentCode = code ?? Language.code.validEmail;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 }

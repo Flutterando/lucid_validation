@@ -19,11 +19,33 @@ extension RangeValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.age, key: 'age')
   ///   .range(18, 65);
   /// ```
-  SimpleValidationBuilder<num> range(num min, num max, {String message = r'Must be between $min and $max', String code = 'range_error'}) {
-    return must(
-      (value) => value >= min && value <= max,
-      message.replaceAll(r'$min', min.toString()).replaceAll('$max', max.toString()),
-      code,
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{From}**: The minimum value of the range.
+  /// - **{To}**: The maximum value of the range.
+  /// - **{PropertyValue}**: The value of the property.
+  ///
+  SimpleValidationBuilder<num> range(num min, num max,
+      {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value >= min && value <= max) return null;
+
+        final currentCode = code ?? Language.code.range;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'From': '$min',
+            'To': '$max',
+            'PropertyValue': '$value',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

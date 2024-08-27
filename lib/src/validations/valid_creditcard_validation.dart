@@ -17,18 +17,34 @@ extension ValidCreditCardValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.creditCard, key: 'creditCard')
   ///  .validCreditCard();
   /// ```
-  SimpleValidationBuilder<String> validCreditCard({String message = 'Invalid credit card number', String code = 'invalid_credit_card'}) {
-    return must(
-      (value) => _validateCreditCard(value),
-      message,
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> validCreditCard(
+      {String? message, String? code}) {
+    return use((value, entity) {
+      if (_validateCreditCard(value)) return null;
+
+      final currentCode = code ?? Language.code.validCreditCard;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 
   bool _validateCreditCard(String number) {
     // Remove non-numeric characters
     number = number.replaceAll(RegExp(r'[^0-9]'), '');
-    if (number.isEmpty || number.length < 13 || number.length > 19) return false;
+    if (number.isEmpty || number.length < 13 || number.length > 19) {
+      return false;
+    }
 
     int sum = 0;
     bool alternate = false;

@@ -18,12 +18,25 @@ extension ValidCnpjValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.cnpj, key: 'cnpj')
   ///  .validCNPJ();
   /// ```
-  SimpleValidationBuilder<String> validCNPJ({String message = 'Invalid CNPJ', String code = 'invalid_cnpj'}) {
-    return must(
-      (value) => _validateCNPJ(value),
-      message,
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> validCNPJ({String? message, String? code}) {
+    return use((value, entity) {
+      if (_validateCNPJ(value)) return null;
+
+      final currentCode = code ?? Language.code.validCNPJ;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 
   bool _validateCNPJ(String cnpj) {
