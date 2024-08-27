@@ -27,10 +27,13 @@ extension IsNotNullValidation<T> on SimpleValidationBuilder<T?> {
         if (value != null) return null;
 
         final currentCode = code ?? Language.code.isNotNull;
-        final currentMessage = message ??
-            LucidValidation.global.languageManager.translate(currentCode, {
-              'PropertyName': key,
-            });
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
 
         return ValidationError(message: currentMessage, code: currentCode);
       },

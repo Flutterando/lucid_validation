@@ -12,10 +12,10 @@ abstract class LanguageManager {
     _globalTranslations[culture]![code] = value;
   }
 
-  String translate(String key, [Map<String, String> parameters = const {}]) {
+  String translate(String key, {Map<String, String> parameters = const {}, String? defaultMessage}) {
     final culture = currentLanguage.culture;
     final translations = _globalTranslations[culture] ?? {};
-    var message = translations[key] ?? currentLanguage.getTranslation(key) ?? key;
+    var message = defaultMessage ?? translations[key] ?? currentLanguage.getTranslation(key) ?? key;
     for (var key in parameters.keys) {
       final value = parameters[key]!;
       message = message.replaceAll('{$key}', value);

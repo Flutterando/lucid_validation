@@ -36,11 +36,14 @@ extension EqualValidation<T, E> on LucidValidationBuilder<T, E> {
         if (value == comparison) return null;
 
         final currentCode = code ?? Language.code.equalTo;
-        final currentMessage = message ??
-            LucidValidation.global.languageManager.translate(currentCode, {
-              'PropertyName': key,
-              'ComparisonValue': '$comparison',
-            });
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'ComparisonValue': '$comparison',
+          },
+          defaultMessage: message,
+        );
 
         return ValidationError(message: currentMessage, code: currentCode);
       },

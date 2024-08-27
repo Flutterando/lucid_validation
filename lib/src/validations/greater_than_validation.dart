@@ -33,11 +33,14 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
       if (value > minValue) return null;
 
       final currentCode = code ?? Language.code.greaterThan;
-      final currentMessage = message ??
-          LucidValidation.global.languageManager.translate(currentCode, {
-            'PropertyName': key,
-            'ComparisonValue': '$minValue',
-          });
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+          'ComparisonValue': '$minValue',
+        },
+        defaultMessage: message,
+      );
 
       return ValidationError(message: currentMessage, code: currentCode);
     });
