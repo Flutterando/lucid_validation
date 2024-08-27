@@ -27,7 +27,9 @@ abstract class Language {
     validEmail: 'validEmail',
   );
 
-  Language(this.culture);
+  Language(this.culture, [Map<String, String> translations = const {}]) {
+    _translations.addAll(translations);
+  }
 
   final _translations = <String, String>{
     code.equalTo: "'{PropertyName}' must be equal to '{ComparisonValue}'.",
