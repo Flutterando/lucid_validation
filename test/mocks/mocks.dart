@@ -5,6 +5,7 @@ class UserModel {
   String email = '';
   String password = '';
   String confirmPassword = '';
+  String? description;
   int age = 0;
   String phone = '';
 }

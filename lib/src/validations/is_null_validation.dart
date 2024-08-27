@@ -18,11 +18,25 @@ extension IsNullValidation<T> on SimpleValidationBuilder<T?> {
   /// ruleFor((user) => user.name, key: 'name') // optional field
   ///   .isNull();
   /// ```
-  SimpleValidationBuilder<T?> isNull({String message = 'Must be null', String code = 'must_be_null'}) {
-    return must(
-      (value) => value == null,
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<T?> isNull({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value == null) return null;
+
+        final currentCode = code ?? Language.code.isNull;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }
