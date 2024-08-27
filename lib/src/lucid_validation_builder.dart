@@ -63,6 +63,14 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// The [key] can be used to identify this specific validation in a larger validation context.
   LucidValidationBuilder(this.key, this._selector);
 
+  String? Function([String?]) nestedByField(Entity entity, String key) {
+    if (_nestedValidator == null) {
+      return ([_]) => null;
+    }
+
+    return _nestedValidator!.byField(_selector(entity), key);
+  }
+
   /// Registers a validation rule for the property.
   ///
   /// [validator] is a function that returns `true` if the property is valid and `false` otherwise.
