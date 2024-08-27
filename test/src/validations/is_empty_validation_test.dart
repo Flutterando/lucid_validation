@@ -16,8 +16,8 @@ void main() {
 
     expect(result.isValid, false);
 
-    expect(result.errors.length, 1);
+    expect(result.exceptions.length, 1);
 
-    expect(result.errors.first.message, "'email' must be empty.");
+    expect(result.exceptions.first.message, "'email' must be empty.");
   });
 }

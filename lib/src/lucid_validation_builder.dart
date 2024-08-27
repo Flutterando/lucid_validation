@@ -45,7 +45,7 @@ enum CascadeMode {
 /// Builder class used to define validation rules for a specific property type [TProp].
 ///
 /// [TProp] represents the type of the property being validated.
-typedef RuleFunc<Entity> = ValidationError? Function(Entity entity);
+typedef RuleFunc<Entity> = ValidationException? Function(Entity entity);
 
 typedef SimpleValidationBuilder<T> = LucidValidationBuilder<T, dynamic>;
 
@@ -84,11 +84,11 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// builder.must((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
   LucidValidationBuilder<TProp, Entity> must(bool Function(TProp value) validator, String message, String code) {
-    ValidationError? callback(value, entity) {
+    ValidationException? callback(value, entity) {
       if (validator(value)) {
         return null;
       }
-      return ValidationError(
+      return ValidationException(
         message: message,
         key: key,
         code: code,
@@ -130,7 +130,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
           return null;
         }
 
-        return ValidationError(
+        return ValidationException(
           message: message,
           key: key,
           code: code,
@@ -141,12 +141,12 @@ abstract class LucidValidationBuilder<TProp, Entity> {
 
   /// Adds a validation rule to the LucidValidationBuilder.
   ///
-  /// The [rule] parameter is a function that takes an [Entity] object as input and returns a [ValidationError] object.
+  /// The [rule] parameter is a function that takes an [Entity] object as input and returns a [ValidationException] object.
   /// This method adds the [rule] to the list of validation rules in the LucidValidationBuilder.
   ///
   /// Returns the current instance of the LucidValidationBuilder.
   LucidValidationBuilder<TProp, Entity> use(
-    ValidationError? Function(TProp value, Entity entity) rule,
+    ValidationException? Function(TProp value, Entity entity) rule,
   ) {
     _rules.add((entity) => rule(_selector(entity), entity));
     return this;
@@ -228,24 +228,24 @@ abstract class LucidValidationBuilder<TProp, Entity> {
     return this;
   }
 
-  /// Executes all validation rules associated with this property and returns a list of [ValidationError]s.
-  List<ValidationError> executeRules(Entity entity) {
+  /// Executes all validation rules associated with this property and returns a list of [ValidationException]s.
+  List<ValidationException> executeRules(Entity entity) {
     final byPass = _condition?.call(entity) ?? true;
     if (!byPass) {
       return [];
     }
 
-    final errors = <ValidationError>[];
+    final exceptions = <ValidationException>[];
 
     if (_nestedValidator != null) {
-      final nestedErrors = _nestedValidator!.validate(_selector(entity)).errors;
-      errors.addAll(nestedErrors);
+      final nestedExceptions = _nestedValidator!.validate(_selector(entity)).exceptions;
+      exceptions.addAll(nestedExceptions);
     } else {
       for (var rule in _rules) {
-        final error = rule(entity);
+        final exception = rule(entity);
 
-        if (error != null) {
-          errors.add(error);
+        if (exception != null) {
+          exceptions.add(exception);
 
           if (_mode == CascadeMode.stopOnFirstFailure) {
             break;
@@ -254,6 +254,6 @@ abstract class LucidValidationBuilder<TProp, Entity> {
       }
     }
 
-    return errors;
+    return exceptions;
   }
 }

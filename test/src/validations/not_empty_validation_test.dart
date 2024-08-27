@@ -15,7 +15,7 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
-    expect(result.errors.first.message, "'password' must not be empty.");
+    expect(result.exceptions.length, 1);
+    expect(result.exceptions.first.message, "'password' must not be empty.");
   });
 }

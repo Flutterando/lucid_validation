@@ -15,7 +15,7 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
-    expect(result.errors.first.message, "The length of 'password' must be 8 characters or fewer. You entered 9 characters.");
+    expect(result.exceptions.length, 1);
+    expect(result.exceptions.first.message, "The length of 'password' must be 8 characters or fewer. You entered 9 characters.");
   });
 }

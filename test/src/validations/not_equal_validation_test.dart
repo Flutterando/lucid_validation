@@ -17,7 +17,7 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
-    expect(result.errors.first.message, "'confirmPassword' must not be equal to 'teste123'.");
+    expect(result.exceptions.length, 1);
+    expect(result.exceptions.first.message, "'confirmPassword' must not be equal to 'teste123'.");
   });
 }

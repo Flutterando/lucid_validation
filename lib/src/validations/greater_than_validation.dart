@@ -42,7 +42,7 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
         defaultMessage: message,
       );
 
-      return ValidationError(message: currentMessage, code: currentCode);
+      return ValidationException(message: currentMessage, code: currentCode);
     });
   }
 }

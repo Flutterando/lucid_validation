@@ -15,7 +15,7 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
-    expect(result.errors.first.message, "'email' is not in the correct format.");
+    expect(result.exceptions.length, 1);
+    expect(result.exceptions.first.message, "'email' is not in the correct format.");
   });
 }

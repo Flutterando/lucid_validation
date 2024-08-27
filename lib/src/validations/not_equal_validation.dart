@@ -40,7 +40,7 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
           defaultMessage: message,
         );
 
-        return ValidationError(message: currentMessage, code: currentCode);
+        return ValidationException(message: currentMessage, code: currentCode);
       },
     );
   }

@@ -15,7 +15,7 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
-    expect(result.errors.first.message, "'password' must have at least one digit ('0'-'9').");
+    expect(result.exceptions.length, 1);
+    expect(result.exceptions.first.message, "'password' must have at least one digit ('0'-'9').");
   });
 }

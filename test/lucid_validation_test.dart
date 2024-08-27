@@ -12,9 +12,9 @@ void main() {
       ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
-    final errors = result.errors;
+    final exceptions = result.exceptions;
 
-    expect(errors.length, 4);
+    expect(exceptions.length, 4);
   });
 
   test('when validating [UserModel] should return a list of error messages for the password field', () {
@@ -26,9 +26,9 @@ void main() {
       ..password = '';
 
     final result = validator.validate(userEntity);
-    final errors = result.errors;
+    final exceptions = result.exceptions;
 
-    expect(errors.length, 8);
+    expect(exceptions.length, 8);
   });
 
   test('when validating [UserModel] should return a list of error messages for the age field', () {
@@ -40,9 +40,9 @@ void main() {
       ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
-    final errors = result.errors;
+    final exceptions = result.exceptions;
 
-    expect(errors.length, 3);
+    expect(exceptions.length, 3);
   });
 
   test('when validating [UserModel] should return a list of error messages for the phone field', () {
@@ -55,9 +55,9 @@ void main() {
       ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
-    final errors = result.errors;
+    final exceptions = result.exceptions;
 
-    expect(errors.length, 3);
+    expect(exceptions.length, 3);
   });
 
   test('when validating [UserModel] should return a list of error messages for all fields', () {
@@ -65,9 +65,9 @@ void main() {
     final userEntity = UserModel()..age = 15;
 
     final result = validator.validate(userEntity);
-    final errors = result.errors;
+    final exceptions = result.exceptions;
 
-    expect(errors.length, 12);
+    expect(exceptions.length, 12);
   });
 
   test('EqualTo', () {
@@ -79,14 +79,14 @@ void main() {
     final validator = CredentialsRegisterValidator();
 
     var result = validator.validate(credentials);
-    var errors = result.errors;
+    var exceptions = result.exceptions;
 
-    expect(errors.length, 0);
+    expect(exceptions.length, 0);
 
     credentials = credentials.copyWith(confirmPassword: '123asdASDsdsdw');
     result = validator.validate(credentials);
-    errors = result.errors;
-    expect(errors.length, 2);
+    exceptions = result.exceptions;
+    expect(exceptions.length, 2);
   });
 
   test('setValidator', () {
