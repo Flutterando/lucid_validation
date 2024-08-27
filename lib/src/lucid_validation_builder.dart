@@ -76,8 +76,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// builder.must((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
   LucidValidationBuilder<TProp, Entity> must(bool Function(TProp value) validator, String message, String code) {
-    ValidationError? callback(entity) {
-      final value = _selector(entity);
+    ValidationError? callback(value, entity) {
       if (validator(value)) {
         return null;
       }
@@ -88,9 +87,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
       );
     }
 
-    _rules.add(callback);
-
-    return this;
+    return use(callback);
   }
 
   /// Adds a validation rule that checks if the [TProp] value satisfies the [validator] condition,
@@ -119,21 +116,31 @@ abstract class LucidValidationBuilder<TProp, Entity> {
     String message,
     String code,
   ) {
-    ValidationError? callback(entity) {
-      final value = _selector(entity);
-      if (validator(value, entity)) {
-        return null;
-      }
+    return use(
+      (value, entity) {
+        if (validator(value, entity)) {
+          return null;
+        }
 
-      return ValidationError(
-        message: message,
-        key: key,
-        code: code,
-      );
-    }
+        return ValidationError(
+          message: message,
+          key: key,
+          code: code,
+        );
+      },
+    );
+  }
 
-    _rules.add(callback);
-
+  /// Adds a validation rule to the LucidValidationBuilder.
+  ///
+  /// The [rule] parameter is a function that takes an [Entity] object as input and returns a [ValidationError] object.
+  /// This method adds the [rule] to the list of validation rules in the LucidValidationBuilder.
+  ///
+  /// Returns the current instance of the LucidValidationBuilder.
+  LucidValidationBuilder<TProp, Entity> use(
+    ValidationError? Function(TProp value, Entity entity) rule,
+  ) {
+    _rules.add((entity) => rule(_selector(entity), entity));
     return this;
   }
 

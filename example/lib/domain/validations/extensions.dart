@@ -6,7 +6,7 @@ extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
         .minLength(5)
         .mustHaveLowercase()
         .mustHaveUppercase()
-        .mustHaveNumbers()
+        .mustHaveNumber()
         .mustHaveSpecialCharacter();
   }
 }

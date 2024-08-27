@@ -18,7 +18,7 @@ extension MustHaveNumbersValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.password, key: 'password')
   ///   .mustHaveNumbers();
   /// ```
-  SimpleValidationBuilder<String> mustHaveNumbers({String message = 'Must contain at least one numeric digit', String code = 'must_have_numbers'}) {
+  SimpleValidationBuilder<String> mustHaveNumber({String message = 'Must contain at least one numeric digit', String code = 'must_have_numbers'}) {
     return must(
       (value) => RegExp(r'[0-9]').hasMatch(value),
       message,

@@ -7,7 +7,7 @@ part of 'validations.dart';
 extension IsEmptyValidation on SimpleValidationBuilder<String> {
   /// Adds a validation rule that checks if the [String] is empty.
   ///
-  /// [message] is the error message returned if the validation fails. Defaults to "Must be empty".
+  /// [message] is the error message returned if the validation fails.
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
@@ -18,11 +18,20 @@ extension IsEmptyValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.name, key: 'name')
   ///   .isEmpty();
   /// ```
-  SimpleValidationBuilder<String> isEmpty({String message = 'Must be empty', String code = 'must_be_empty'}) {
-    return must(
-      (value) => value.isEmpty,
-      message,
-      code,
-    );
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> isEmpty({String? message, String? code}) {
+    return use((value, entity) {
+      if (value.isEmpty) return null;
+
+      final currentCode = code ?? Language.code.isEmpty;
+      final currentMessage = message ??
+          LucidValidation.global.languageManager.translate(currentCode, {
+            'PropertyName': key,
+          });
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 }

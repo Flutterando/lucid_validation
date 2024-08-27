@@ -54,7 +54,31 @@
 ///
 library lucid_validation;
 
+import 'lucid_validation.dart';
+
+export 'src/localization/language_manager.dart';
+export 'src/localization/localization.dart';
 export 'src/lucid_validation_builder.dart';
 export 'src/lucid_validator.dart';
 export 'src/types/types.dart';
 export 'src/validations/validations.dart';
+
+sealed class LucidValidation {
+  static final global = _GlobalConfig(
+    language: EnglishLanguage(),
+    languageManager: DefaultLanguageManager(),
+    cascadeMode: CascadeMode.continueExecution,
+  );
+}
+
+class _GlobalConfig {
+  LanguageManager languageManager;
+  CascadeMode cascadeMode;
+  Language language;
+
+  _GlobalConfig({
+    required this.languageManager,
+    required this.cascadeMode,
+    required this.language,
+  });
+}

@@ -12,7 +12,7 @@ part 'max_validation.dart';
 part 'min_length_validation.dart';
 part 'min_validation.dart';
 part 'must_have_lowercase_validation.dart';
-part 'must_have_numbers_validation.dart';
+part 'must_have_number_validation.dart';
 part 'must_have_special_character_validation.dart';
 part 'must_have_uppercase_validation.dart';
 part 'not_empty_validation.dart';

@@ -8,7 +8,7 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
   /// Adds a validation rule that checks if the [num] is greater than [minValue].
   ///
   /// [minValue] is the value that the number must be greater than.
-  /// [message] is the error message returned if the validation fails. Defaults to "Must be greater than $minValue".
+  /// [message] is the error message returned if the validation fails.
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
@@ -19,11 +19,27 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.age, key: 'age')
   ///   .greaterThan(18);
   /// ```
-  SimpleValidationBuilder<num> greaterThan(num minValue, {String message = r'Must be greater than $minValue', String code = 'greater_than'}) {
-    return must(
-      (value) => value > minValue,
-      message.replaceAll('$minValue', minValue.toString()),
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{ComparisonValue}**: The value to compare against.
+  ///
+  SimpleValidationBuilder<num> greaterThan(
+    num minValue, {
+    String? message,
+    String? code,
+  }) {
+    return use((value, entity) {
+      if (value > minValue) return null;
+
+      final currentCode = code ?? Language.code.greaterThan;
+      final currentMessage = message ??
+          LucidValidation.global.languageManager.translate(currentCode, {
+            'PropertyName': key,
+            'ComparisonValue': '$minValue',
+          });
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 }

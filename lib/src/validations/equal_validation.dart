@@ -20,14 +20,30 @@ extension EqualValidation<T, E> on LucidValidationBuilder<T, E> {
   ///   .equalTo((user) => user.password);
   ///
   /// ```
-  LucidValidationBuilder<T, E> equalTo(T Function(E entity) predicate, {String message = r'Must be equal', String code = 'equal_error'}) {
-    return mustWith(
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{ComparisonValue}**: The value to compare against.
+  ///
+  LucidValidationBuilder<T, E> equalTo(
+    T Function(E entity) predicate, {
+    String? message,
+    String? code,
+  }) {
+    return use(
       (value, entity) {
         final comparison = predicate(entity);
-        return value == comparison;
+        if (value == comparison) return null;
+
+        final currentCode = code ?? Language.code.equalTo;
+        final currentMessage = message ??
+            LucidValidation.global.languageManager.translate(currentCode, {
+              'PropertyName': key,
+              'ComparisonValue': '$comparison',
+            });
+
+        return ValidationError(message: currentMessage, code: currentCode);
       },
-      message,
-      code,
     );
   }
 }

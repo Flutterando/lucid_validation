@@ -5,12 +5,11 @@ import 'mocks/mocks.dart';
 void main() {
   test('when validating [UserEntityMock] should return a list of error messages for the email field', () {
     final validator = UserValidator();
-    final userEntity = UserModel(
-      email: '',
-      password: 'Teste@1234',
-      age: 18,
-      phone: '(11) 99999-9999',
-    );
+    final userEntity = UserModel()
+      ..age = 18
+      ..email = ''
+      ..phone = '(11) 99999-9999'
+      ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
     final errors = result.errors;
@@ -23,12 +22,11 @@ void main() {
 
   test('when validating [UserModel] should return a list of error messages for the password field', () {
     final validator = UserValidator();
-    final userEntity = UserModel(
-      email: 'teste@gmail.com',
-      password: '',
-      age: 18,
-      phone: '(11) 99999-9999',
-    );
+    final userEntity = UserModel()
+      ..age = 18
+      ..email = 'teste@gmail.com'
+      ..phone = '(11) 99999-9999'
+      ..password = '';
 
     final result = validator.validate(userEntity);
     final errors = result.errors;
@@ -45,12 +43,11 @@ void main() {
 
   test('when validating [UserModel] should return a list of error messages for the age field', () {
     final validator = UserValidator();
-    final userEntity = UserModel(
-      email: 'teste@gmail.com',
-      password: 'Teste@1234',
-      age: 15,
-      phone: '(11) 99999-9999',
-    );
+    final userEntity = UserModel()
+      ..age = 15
+      ..email = 'teste@gmail.com'
+      ..phone = '(11) 99999-9999'
+      ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
     final errors = result.errors;
@@ -62,12 +59,12 @@ void main() {
 
   test('when validating [UserModel] should return a list of error messages for the phone field', () {
     final validator = UserValidator();
-    final userEntity = UserModel(
-      email: 'teste@gmail.com',
-      password: 'Teste@1234',
-      age: 18,
-      phone: '',
-    );
+
+    final userEntity = UserModel()
+      ..age = 18
+      ..email = 'teste@gmail.com'
+      ..phone = ''
+      ..password = 'Teste@1234';
 
     final result = validator.validate(userEntity);
     final errors = result.errors;
@@ -79,12 +76,7 @@ void main() {
 
   test('when validating [UserModel] should return a list of error messages for all fields', () {
     final validator = UserValidator();
-    final userEntity = UserModel(
-      email: '',
-      password: '',
-      age: 15,
-      phone: '',
-    );
+    final userEntity = UserModel()..age = 15;
 
     final result = validator.validate(userEntity);
     final errors = result.errors;
@@ -113,9 +105,6 @@ void main() {
     result = validator.validate(credentials);
     errors = result.errors;
     expect(errors.length, 2);
-
-    final stringError = validator.byField(credentials, 'confirmPassword')();
-    expect(stringError, 'Must be equal to password');
   });
 
   test('setValidator', () {

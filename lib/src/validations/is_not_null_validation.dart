@@ -4,10 +4,10 @@ part of 'validations.dart';
 ///
 /// This extension adds an `isNotNull` method that can be used to ensure that a value
 /// is not null.
-extension IsNotNullValidation<T> on SimpleValidationBuilder<T> {
+extension IsNotNullValidation<T> on SimpleValidationBuilder<T?> {
   /// Adds a validation rule that checks if the value is not null.
   ///
-  /// [message] is the error message returned if the validation fails. Defaults to "Cannot be null".
+  /// [message] is the error message returned if the validation fails.
   /// [code] is an optional error code for translation purposes.
   ///
   /// Returns the [LucidValidationBuilder] to allow for method chaining.
@@ -18,11 +18,22 @@ extension IsNotNullValidation<T> on SimpleValidationBuilder<T> {
   /// ruleFor((user) => user.name, key: 'name') // required field
   ///   .isNotNull();
   /// ```
-  SimpleValidationBuilder<T> isNotNull({String message = 'Cannot be null', String code = 'cannot_be_null'}) {
-    return must(
-      (value) => value != null,
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<T?> isNotNull({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value != null) return null;
+
+        final currentCode = code ?? Language.code.isNotNull;
+        final currentMessage = message ??
+            LucidValidation.global.languageManager.translate(currentCode, {
+              'PropertyName': key,
+            });
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

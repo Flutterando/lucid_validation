@@ -2,19 +2,11 @@
 import 'package:lucid_validation/lucid_validation.dart';
 
 class UserModel {
-  String email;
-  String password;
-  int age;
-  String phone;
-
-  UserModel({
-    required this.email,
-    required this.password,
-    required this.age,
-    required this.phone,
-  });
-
-  factory UserModel.empty() => UserModel(email: '', password: '', age: 18, phone: '');
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
+  int age = 0;
+  String phone = '';
 }
 
 class UserValidator extends LucidValidator<UserModel> {
@@ -50,7 +42,7 @@ extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic
         .minLength(5, message: 'Must be at least 8 characters long')
         .mustHaveLowercase()
         .mustHaveUppercase()
-        .mustHaveNumbers()
+        .mustHaveNumber()
         .mustHaveSpecialCharacter();
   }
 }
@@ -135,3 +127,5 @@ class CustomerValidator extends LucidValidator<Customer> {
         .setValidator(addressValidator);
   }
 }
+
+class TestLucidValidator<T> extends LucidValidator<T> {}
