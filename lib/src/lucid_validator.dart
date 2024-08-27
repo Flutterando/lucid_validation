@@ -71,7 +71,7 @@ abstract class LucidValidator<E> {
         .firstOrNull;
   }
 
-  /// Validates the entire entity [E] and returns a list of [ValidationError]s if any rules fail.
+  /// Validates the entire entity [E] and returns a list of [ValidationException]s if any rules fail.
   ///
   /// This method iterates through all registered rules and checks if the entity meets all of them.
   ///
@@ -86,13 +86,13 @@ abstract class LucidValidator<E> {
   /// }
   /// ```
   ValidationResult validate(E entity) {
-    final errors = _builders.fold(<ValidationError>[], (previousErrors, builder) {
+    final exceptions = _builders.fold(<ValidationException>[], (previousErrors, builder) {
       return previousErrors..addAll(builder.executeRules(entity));
     });
 
     return ValidationResult(
-      isValid: errors.isEmpty,
-      errors: errors,
+      isValid: exceptions.isEmpty,
+      exceptions: exceptions,
     );
   }
 }

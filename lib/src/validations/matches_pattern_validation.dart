@@ -19,11 +19,28 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
   ///   .matchesPattern(r'^\d{3}-\d{3}-\d{4}$');
   /// ```
-  SimpleValidationBuilder<String> matchesPattern(String pattern, {String message = 'Invalid format', String code = 'invalid_format'}) {
-    return must(
-      (value) => RegExp(pattern).hasMatch(value),
-      message,
-      code,
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> matchesPattern(String pattern, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        final isValid = RegExp(pattern).hasMatch(value);
+
+        if (isValid) return null;
+
+        final currentCode = code ?? Language.code.matchesPattern;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationException(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

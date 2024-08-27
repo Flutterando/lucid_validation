@@ -18,6 +18,7 @@ extension IsEmptyValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.name, key: 'name')
   ///   .isEmpty();
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
@@ -34,7 +35,7 @@ extension IsEmptyValidation on SimpleValidationBuilder<String> {
         defaultMessage: message,
       );
 
-      return ValidationError(message: currentMessage, code: currentCode);
+      return ValidationException(message: currentMessage, code: currentCode);
     });
   }
 }

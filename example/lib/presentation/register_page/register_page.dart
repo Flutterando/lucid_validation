@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
       /// call to api passing the parameter loginParamDto
       ScaffoldMessenger.of(context).showSnackBar(sucessSnackBar());
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(failureSnackBar(result.errors.first.message));
+      ScaffoldMessenger.of(context).showSnackBar(failureSnackBar(result.exceptions.first.message));
     }
   }
 

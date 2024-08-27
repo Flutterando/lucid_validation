@@ -16,9 +16,9 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
+    expect(result.exceptions.length, 1);
 
-    final error = result.errors.first;
+    final error = result.exceptions.first;
     expect(error.message, r"'confirmPassword' must be equal to 'password'.");
   });
 
@@ -34,9 +34,9 @@ void main() {
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-    expect(result.errors.length, 1);
+    expect(result.exceptions.length, 1);
 
-    final error = result.errors.first;
+    final error = result.exceptions.first;
     expect(error.message, r"Campo 'confirmPassword' deve ser igual ao campo 'password'.");
   });
 }

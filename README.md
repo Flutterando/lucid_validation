@@ -76,7 +76,7 @@ void main() {
   if (result.isValid) {
     print('User is valid');
   } else {
-    print('Validation errors: \${result.errors.map((e) => e.message).join(', ')}');
+    print('Validation errors: \${result.exceptions.map((e) => e.message).join(', ')}');
   }
 }
 ```

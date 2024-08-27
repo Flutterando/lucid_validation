@@ -19,11 +19,29 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.password, key: 'password')
   ///   .maxLength(8);
   /// ```
-  SimpleValidationBuilder<String> minLength(int num, {String message = r'Must be at least $num characters long', String code = 'min_length'}) {
-    return must(
-      (value) => value.length >= num,
-      message.replaceAll(r'$num', num.toString()),
-      code,
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{MinLength}**: The value to compare against.
+  /// - **{TotalLength}**: total characters entered.
+  SimpleValidationBuilder<String> minLength(int num, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value.length >= num) return null;
+
+        final currentCode = code ?? Language.code.minLength;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'MinLength': '$num',
+            'TotalLength': '${value.length}',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationException(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

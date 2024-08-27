@@ -4,20 +4,18 @@ import 'package:test/test.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
-  test('is empty validation ...', () {
+  test('not empty validation...', () {
     final validator = TestLucidValidator<UserModel>();
     validator
-        .ruleFor((user) => user.email, key: 'email') //
-        .isEmpty();
+        .ruleFor((user) => user.password, key: 'password') //
+        .notEmpty();
 
-    final user = UserModel()..email = 'ss';
+    final user = UserModel()..password = '';
 
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-
     expect(result.exceptions.length, 1);
-
-    expect(result.exceptions.first.message, "'email' must be empty.");
+    expect(result.exceptions.first.message, "'password' must not be empty.");
   });
 }

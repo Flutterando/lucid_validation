@@ -19,11 +19,30 @@ extension MinValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.age, key: 'age')
   ///   .maxLength(18);
   /// ```
-  SimpleValidationBuilder<num> min(num num, {String message = r'Must be greater than or equal to $num', String code = 'min_value'}) {
-    return must(
-      (value) => value >= num,
-      message.replaceAll(r'$num', num.toString()),
-      code,
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{MinValue}**: The minimum value.
+  /// - **{PropertyValue}**: value entered.
+  ///
+  SimpleValidationBuilder<num> min(num num, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value >= num) return null;
+
+        final currentCode = code ?? Language.code.min;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'MinValue': '$num',
+            'PropertyValue': '$value',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationException(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

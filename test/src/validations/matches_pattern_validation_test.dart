@@ -4,20 +4,18 @@ import 'package:test/test.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
-  test('is empty validation ...', () {
+  test('matches pattern validation...', () {
     final validator = TestLucidValidator<UserModel>();
     validator
         .ruleFor((user) => user.email, key: 'email') //
-        .isEmpty();
+        .matchesPattern(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$');
 
-    final user = UserModel()..email = 'ss';
+    final user = UserModel()..email = 'teste.com';
 
     final result = validator.validate(user);
 
     expect(result.isValid, false);
-
     expect(result.exceptions.length, 1);
-
-    expect(result.exceptions.first.message, "'email' must be empty.");
+    expect(result.exceptions.first.message, "'email' is not in the correct format.");
   });
 }

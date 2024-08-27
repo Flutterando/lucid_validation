@@ -26,8 +26,7 @@ extension RangeValidation on SimpleValidationBuilder<num> {
   /// - **{To}**: The maximum value of the range.
   /// - **{PropertyValue}**: The value of the property.
   ///
-  SimpleValidationBuilder<num> range(num min, num max,
-      {String? message, String? code}) {
+  SimpleValidationBuilder<num> range(num min, num max, {String? message, String? code}) {
     return use(
       (value, entity) {
         if (value >= min && value <= max) return null;
@@ -44,7 +43,7 @@ extension RangeValidation on SimpleValidationBuilder<num> {
           defaultMessage: message,
         );
 
-        return ValidationError(message: currentMessage, code: currentCode);
+        return ValidationException(message: currentMessage, code: currentCode);
       },
     );
   }

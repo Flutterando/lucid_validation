@@ -1,2 +1,2 @@
-export 'validation_error.dart';
+export 'validation_exception.dart';
 export 'validation_result.dart';

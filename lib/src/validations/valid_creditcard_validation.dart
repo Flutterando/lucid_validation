@@ -21,8 +21,7 @@ extension ValidCreditCardValidation on SimpleValidationBuilder<String> {
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
-  SimpleValidationBuilder<String> validCreditCard(
-      {String? message, String? code}) {
+  SimpleValidationBuilder<String> validCreditCard({String? message, String? code}) {
     return use((value, entity) {
       if (_validateCreditCard(value)) return null;
 
@@ -35,7 +34,7 @@ extension ValidCreditCardValidation on SimpleValidationBuilder<String> {
         defaultMessage: message,
       );
 
-      return ValidationError(message: currentMessage, code: currentCode);
+      return ValidationException(message: currentMessage, code: currentCode);
     });
   }
 
