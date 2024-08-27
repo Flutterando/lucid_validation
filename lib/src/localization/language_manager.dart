@@ -1,27 +1,34 @@
 import '../../lucid_validation.dart';
 import 'languages/portuguese_brazillian_language.dart';
 
-final _avaliableLanguages = <String, Language>{
-  'pt_BR': PortugueseBrasillianLanguage(),
-  'pt': PortugueseBrasillianLanguage(),
-  'en': EnglishLanguage(),
-  'en_US': EnglishLanguage(),
+final _avaliableLanguages = <Culture, Language>{
+  Culture('pt', 'BR'): PortugueseBrasillianLanguage(),
+  Culture('pt'): PortugueseBrasillianLanguage(),
+  Culture('en'): EnglishLanguage(),
+  Culture('en', 'US'): EnglishLanguage(),
 };
 
 abstract class LanguageManager {
-  final _globalTranslations = <String, Map<String, String>>{};
+  final _globalTranslations = <Culture, Map<String, String>>{};
 
-  Language get currentLanguage => LucidValidation.global.language;
-
-  void addTranslation(String culture, String code, String value) {
+  void addTranslation(Culture culture, String code, String value) {
     if (!_globalTranslations.containsKey(culture)) {
       _globalTranslations[culture] = {};
     }
     _globalTranslations[culture]![code] = value;
   }
 
+  List<Culture> avaliableCultures() {
+    return _avaliableLanguages.keys.toList();
+  }
+
+  bool isSupported(String languageCode, String? countryCode) {
+    return _avaliableLanguages.containsKey(Culture(languageCode, countryCode ?? ''));
+  }
+
   String translate(String key, {Map<String, String> parameters = const {}, String? defaultMessage}) {
-    final culture = currentLanguage.culture;
+    final culture = LucidValidation.global.culture;
+    final currentLanguage = getLanguage(culture);
     final translations = _globalTranslations[culture] ?? {};
     var message = defaultMessage ?? translations[key] ?? currentLanguage.getTranslation(key) ?? key;
     for (var key in parameters.keys) {
@@ -31,8 +38,8 @@ abstract class LanguageManager {
     return message;
   }
 
-  Language getLanguage(String culture) {
-    return _avaliableLanguages[culture] ?? LucidValidation.global.language;
+  Language getLanguage(Culture culture) {
+    return _avaliableLanguages[culture] ?? _avaliableLanguages[Culture('en')]!;
   }
 }
 

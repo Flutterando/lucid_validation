@@ -268,6 +268,56 @@ After that, execute a validation normaly:
   expect(result.isValid, isTrue);
 ```
 
+You can use `byField` using nested params syntax:
+
+```dart
+final validator = CustomerValidator();
+
+final postCodeValidator = validator.byField(customer, 'address.postcode')();
+expect(postCodeValidator, null); // is valid
+
+```
+
+There are several ways to customize or internationalize the failure message in validation.
+
+All validations have the `message` parameter for customization, with the possibility of receiving arguments to make the message more dynamic.
+
+```dart
+  ruleFor((entity) => entity.name, key: 'name')
+      .isEmpty(message: "'{PropertyName}' can not be empty." )
+```
+
+Please note that the `{PropertyName}` is an exclusive parameter of the `isEmpty` validation that will be internally changed to the validation's `key`, which in this case is `name`.
+Each validation can have different parameters such as `{PropertyValue}` or `{ComparisonValue}`, so please check the documentation of each one to know the available parameters.
+
+### Default Messages
+
+By default, validation messages are in English, but you can change the language in the global properties of `LucidValidation`.
+
+
+```dart
+LucidValidation.global.culture = Culture('pt', 'BR');
+```
+
+If you’d like to contribute a translation of `LucidValidation’s` default messages, please open a pull request that adds a language file to the project.
+
+
+You can also customize the default messages by overriding the `LanguageManager`:
+
+```dart
+class CustomLanguageManager extends LanguageManager {
+  CustomLanguageManager(){
+    addTranslation(Culture('pt', 'PR'), Language.code.equalTo, 'Custom message here');
+  }
+}
+...
+// change manager
+LucidValidation.global.languageManager = CustomLanguageManager();
+
+```
+
+
+
 
 ## Creating Custom Rules
 

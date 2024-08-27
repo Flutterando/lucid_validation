@@ -65,20 +65,20 @@ export 'src/validations/validations.dart';
 
 sealed class LucidValidation {
   static final global = _GlobalConfig(
-    language: EnglishLanguage(),
     languageManager: DefaultLanguageManager(),
     cascadeMode: CascadeMode.continueExecution,
+    culture: Culture('en'),
   );
 }
 
 class _GlobalConfig {
   LanguageManager languageManager;
+  Culture culture;
   CascadeMode cascadeMode;
-  Language language;
 
   _GlobalConfig({
     required this.languageManager,
     required this.cascadeMode,
-    required this.language,
+    required this.culture,
   });
 }
