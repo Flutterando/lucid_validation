@@ -18,11 +18,25 @@ extension NotEmptyValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.username, key: 'username')
   ///   .notEmpty();
   /// ```
-  SimpleValidationBuilder<String> notEmpty({String message = 'Cannot be empty', String code = 'not_empty'}) {
-    return must(
-      (value) => value.isNotEmpty,
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> notEmpty({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value.isNotEmpty) return null;
+
+        final currentCode = code ?? Language.code.notEmpty;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

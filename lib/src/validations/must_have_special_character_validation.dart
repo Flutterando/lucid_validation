@@ -18,11 +18,26 @@ extension MustHaveSpecialCharacterValidation on SimpleValidationBuilder<String> 
   /// ruleFor((user) => user.password, key: 'password')
   ///   .mustHaveSpecialCharacter();
   /// ```
-  SimpleValidationBuilder<String> mustHaveSpecialCharacter({String message = 'Must contain at least one special character', String code = 'must_have_special_character'}) {
-    return must(
-      (value) => RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value),
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> mustHaveSpecialCharacter({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        final isValid = RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value);
+        if (isValid) return null;
+
+        final currentCode = code ?? Language.code.mustHaveSpecialCharacter;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

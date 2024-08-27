@@ -19,11 +19,29 @@ extension MaxValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.age, key: 'age')
   ///   .maxLength(18);
   /// ```
-  SimpleValidationBuilder<num> max(num num, {String message = r'Must be less than or equal to $num', String code = 'max_value'}) {
-    return must(
-      (value) => value <= num,
-      message.replaceAll(r'$num', num.toString()),
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{MaxValue}**: The maximum value.
+  /// - **{PropertyValue}**: value entered.
+  ///
+  SimpleValidationBuilder<num> max(num num, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value <= num) return null;
+
+        final currentCode = code ?? Language.code.max;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'MaxValue': '$num',
+            'PropertyValue': '$value',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

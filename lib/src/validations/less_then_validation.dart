@@ -19,11 +19,27 @@ extension LessThanValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.discount, key: 'discount')
   ///   .lessThan(100);
   /// ```
-  SimpleValidationBuilder<num> lessThan(num maxValue, {String message = r'Must be less than $maxValue', String code = 'less_than'}) {
-    return must(
-      (value) => value < maxValue,
-      message.replaceAll('$maxValue', maxValue.toString()),
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{ComparisonValue}**: The value to compare against.
+  ///
+  SimpleValidationBuilder<num> lessThan(num maxValue, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value < maxValue) return null;
+
+        final currentCode = code ?? Language.code.lessThan;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'ComparisonValue': '$maxValue',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

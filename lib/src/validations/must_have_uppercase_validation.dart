@@ -18,11 +18,26 @@ extension MustHaveUppercaseValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.password, key: 'password')
   ///   .mustHaveUppercase();
   /// ```
-  SimpleValidationBuilder<String> mustHaveUppercase({String message = 'Must contain at least one uppercase letter', String code = 'must_have_uppercase'}) {
-    return must(
-      (value) => RegExp(r'[A-Z]').hasMatch(value),
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> mustHaveUppercase({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        final isValid = RegExp(r'[A-Z]').hasMatch(value);
+        if (isValid) return null;
+
+        final currentCode = code ?? Language.code.mustHaveUppercase;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

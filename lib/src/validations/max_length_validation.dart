@@ -19,11 +19,29 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.username, key: 'username')
   ///   .maxLength(10);
   /// ```
-  SimpleValidationBuilder<String> maxLength(int num, {String message = r'Must be at most $num characters long', String code = 'max_length'}) {
-    return must(
-      (value) => value.length <= num,
-      message.replaceAll(r'$num', num.toString()),
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  /// - **{MaxLength}**: The value to compare against.
+  /// - **{TotalLength}**: total characters entered.
+  ///
+  SimpleValidationBuilder<String> maxLength(int num, {String? message, String? code}) {
+    return use(
+      (value, entity) {
+        if (value.length <= num) return null;
+
+        final currentCode = code ?? Language.code.maxLength;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+            'MaxLength': '$num',
+            'TotalLength': '${value.length}',
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }

@@ -18,11 +18,26 @@ extension MustHaveNumbersValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.password, key: 'password')
   ///   .mustHaveNumbers();
   /// ```
-  SimpleValidationBuilder<String> mustHaveNumber({String message = 'Must contain at least one numeric digit', String code = 'must_have_numbers'}) {
-    return must(
-      (value) => RegExp(r'[0-9]').hasMatch(value),
-      message,
-      code,
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> mustHaveNumber({String? message, String? code}) {
+    return use(
+      (value, entity) {
+        final isValid = RegExp(r'[0-9]').hasMatch(value);
+        if (isValid) return null;
+
+        final currentCode = code ?? Language.code.mustHaveNumber;
+        final currentMessage = LucidValidation.global.languageManager.translate(
+          currentCode,
+          parameters: {
+            'PropertyName': key,
+          },
+          defaultMessage: message,
+        );
+
+        return ValidationError(message: currentMessage, code: currentCode);
+      },
     );
   }
 }
