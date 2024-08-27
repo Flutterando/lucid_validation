@@ -18,6 +18,7 @@ extension IsNotNullValidation<T> on SimpleValidationBuilder<T?> {
   /// ruleFor((user) => user.name, key: 'name') // required field
   ///   .isNotNull();
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///

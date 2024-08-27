@@ -18,6 +18,7 @@ extension MustHaveSpecialCharacterValidation on SimpleValidationBuilder<String> 
   /// ruleFor((user) => user.password, key: 'password')
   ///   .mustHaveSpecialCharacter();
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///

@@ -18,6 +18,7 @@ extension NotEmptyValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.username, key: 'username')
   ///   .notEmpty();
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///

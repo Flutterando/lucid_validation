@@ -19,6 +19,7 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
   /// ruleFor((user) => user.newUsername, key: 'newUsername')
   ///   .notEqualTo((user) => user.oldUsername);
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   /// - **{ComparisonValue}**: The value to compare against.

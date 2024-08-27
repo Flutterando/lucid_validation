@@ -19,6 +19,7 @@ extension MaxValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.age, key: 'age')
   ///   .maxLength(18);
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   /// - **{MaxValue}**: The maximum value.

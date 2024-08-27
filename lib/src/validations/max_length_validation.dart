@@ -19,6 +19,7 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.username, key: 'username')
   ///   .maxLength(10);
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   /// - **{MaxLength}**: The value to compare against.

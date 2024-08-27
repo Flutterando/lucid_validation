@@ -19,6 +19,7 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.password, key: 'password')
   ///   .maxLength(8);
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   /// - **{MinLength}**: The value to compare against.

@@ -19,6 +19,7 @@ extension LessThanValidation on SimpleValidationBuilder<num> {
   /// ruleFor((user) => user.discount, key: 'discount')
   ///   .lessThan(100);
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   /// - **{ComparisonValue}**: The value to compare against.

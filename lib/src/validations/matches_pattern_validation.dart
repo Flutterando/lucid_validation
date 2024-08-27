@@ -19,6 +19,7 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
   ///   .matchesPattern(r'^\d{3}-\d{3}-\d{4}$');
   /// ```
+  ///
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
