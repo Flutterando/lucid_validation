@@ -3,7 +3,9 @@ import 'package:test/test.dart';
 import 'mocks/mocks.dart';
 
 void main() {
-  test('when validating [UserEntityMock] should return a list of error messages for the email field', () {
+  test(
+      'when validating [UserEntityMock] should return a list of error messages for the email field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -20,7 +22,9 @@ void main() {
     expect(errors[1].message, 'Invalid email address');
   });
 
-  test('when validating [UserModel] should return a list of error messages for the password field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the password field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -41,7 +45,9 @@ void main() {
     expect(errors[5].message, 'Must contain at least one special character');
   });
 
-  test('when validating [UserModel] should return a list of error messages for the age field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the age field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 15
@@ -57,7 +63,9 @@ void main() {
     expect(errors.first.message, 'Minimum age is 18 years');
   });
 
-  test('when validating [UserModel] should return a list of error messages for the phone field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the phone field',
+      () {
     final validator = UserValidator();
 
     final userEntity = UserModel()
@@ -74,7 +82,9 @@ void main() {
     expect(errors.first.message, 'Phone invalid format');
   });
 
-  test('when validating [UserModel] should return a list of error messages for all fields', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for all fields',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()..age = 15;
 
@@ -114,6 +124,7 @@ void main() {
         country: 'Brazil',
         postcode: '12345-678',
       ),
+      cnpj: '12345678901234',
     );
 
     final validator = CustomerValidator();

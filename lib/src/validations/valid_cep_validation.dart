@@ -17,11 +17,24 @@ extension ValidCEPValidation on SimpleValidationBuilder<String> {
   /// ruleFor((user) => user.cep, key: 'cep')
   ///  .validCEP();
   /// ```
-  SimpleValidationBuilder<String> validCEP({String message = 'Invalid CEP', String code = 'invalid_cep'}) {
-    return must(
-      (value) => RegExp(r'^\d{5}-?\d{3}$').hasMatch(value),
-      message,
-      code,
-    );
+  ///
+  /// String format args:
+  /// - **{PropertyName}**: The name of the property.
+  ///
+  SimpleValidationBuilder<String> validCEP({String? message, String? code}) {
+    return use((value, entity) {
+      if (RegExp(r'^\d{5}-?\d{3}$').hasMatch(value)) return null;
+
+      final currentCode = code ?? Language.code.validCEP;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationError(message: currentMessage, code: currentCode);
+    });
   }
 }

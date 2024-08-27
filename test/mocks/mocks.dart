@@ -8,6 +8,7 @@ class UserModel {
   String? description;
   int age = 0;
   String phone = '';
+  String cpf = '';
 }
 
 class UserValidator extends LucidValidator<UserModel> {
@@ -24,6 +25,10 @@ class UserValidator extends LucidValidator<UserModel> {
 
     ruleFor((user) => user.phone, key: 'phone') //
         .customValidPhone('Phone invalid format');
+
+    ruleFor((user) => user.cpf, key: 'cpf') //
+        .notEmpty()
+        .validCPF();
   }
 }
 
@@ -37,7 +42,8 @@ extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
   }
 }
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
+extension CustomValidPasswordValidator
+    on LucidValidationBuilder<String, dynamic> {
   LucidValidationBuilder<String, dynamic> customValidPassword() {
     return notEmpty() //
         .minLength(5, message: 'Must be at least 8 characters long')
@@ -80,10 +86,13 @@ class CredentialsRegisterValidator extends LucidValidator<CredentialsRegister> {
 
     ruleFor((credentials) => credentials.password, key: 'password') //
         .customValidPassword()
-        .equalTo((entity) => entity.confirmPassword, message: 'Must be equal to confirmPassword');
+        .equalTo((entity) => entity.confirmPassword,
+            message: 'Must be equal to confirmPassword');
 
-    ruleFor((credentials) => credentials.confirmPassword, key: 'confirmPassword') //
-        .equalTo((entity) => entity.password, message: 'Must be equal to password');
+    ruleFor((credentials) => credentials.confirmPassword,
+            key: 'confirmPassword') //
+        .equalTo((entity) => entity.password,
+            message: 'Must be equal to password');
   }
 }
 
@@ -110,10 +119,12 @@ class AddressValidator extends LucidValidator<Address> {
 class Customer {
   String name;
   Address address;
+  String cnpj;
 
   Customer({
     required this.name,
     required this.address,
+    required this.cnpj,
   });
 }
 
@@ -126,6 +137,22 @@ class CustomerValidator extends LucidValidator<Customer> {
 
     ruleFor((customer) => customer.address, key: 'address') //
         .setValidator(addressValidator);
+
+    ruleFor((customer) => customer.cnpj, key: 'cnpj') //
+        .notEmpty()
+        .validCNPJ();
+  }
+}
+
+class CreditCardModel {
+  String number = '';
+}
+
+class CreditCardValidator extends LucidValidator<CreditCardModel> {
+  CreditCardValidator() {
+    ruleFor((card) => card.number, key: 'number') //
+        .notEmpty()
+        .validCreditCard();
   }
 }
 
