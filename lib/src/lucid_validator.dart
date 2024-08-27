@@ -18,7 +18,7 @@ abstract class LucidValidator<E> {
   /// final validator = UserValidation();
   /// validator.ruleFor((user) => user.email).validEmail();
   /// ```
-  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) selector, {String key = ''}) {
+  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) selector, {required String key}) {
     final builder = _LucidValidationBuilder<TProp, E>(key, selector);
     _builders.add(builder);
 
@@ -36,23 +36,39 @@ abstract class LucidValidator<E> {
   /// String? validationResult = emailValidator('user@example.com');
   /// ```
   String? Function([String?]) byField(E entity, String key) {
-    final builder = _builders
+    if (key.contains('.')) {
+      final keys = key.split('.');
+
+      final firstKey = keys.removeAt(0);
+      final builder = _getBuilderByKey(firstKey);
+      if (builder == null) {
+        return ([_]) => null;
+      }
+
+      return builder.nestedByField(entity, keys.join('.'));
+    } else {
+      final builder = _getBuilderByKey(key);
+
+      if (builder == null) {
+        return ([_]) => null;
+      }
+
+      return ([_]) {
+        final errors = builder.executeRules(entity);
+        if (errors.isNotEmpty) {
+          return errors.first.message;
+        }
+        return null;
+      };
+    }
+  }
+
+  LucidValidationBuilder? _getBuilderByKey(String key) {
+    return _builders
         .where(
           (builder) => builder.key == key,
         )
         .firstOrNull;
-
-    if (builder == null) {
-      return ([_]) => null;
-    }
-
-    return ([_]) {
-      final errors = builder.executeRules(entity);
-      if (errors.isNotEmpty) {
-        return errors.first.message;
-      }
-      return null;
-    };
   }
 
   /// Validates the entire entity [E] and returns a list of [ValidationError]s if any rules fail.
@@ -70,8 +86,8 @@ abstract class LucidValidator<E> {
   /// }
   /// ```
   ValidationResult validate(E entity) {
-    final errors = _builders.fold(<ValidationError>[], (previousErrors, errors) {
-      return previousErrors..addAll(errors.executeRules(entity));
+    final errors = _builders.fold(<ValidationError>[], (previousErrors, builder) {
+      return previousErrors..addAll(builder.executeRules(entity));
     });
 
     return ValidationResult(
