@@ -12,11 +12,10 @@ extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
 }
 
 extension CustomValidPhoneValidator on SimpleValidationBuilder<String> {
-  SimpleValidationBuilder<String> customValidPhone(String message) {
+  SimpleValidationBuilder<String> customValidPhone() {
     return matchesPattern(
       r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$',
-      message: message,
-      code: 'invalid_phone',
+      code: 'validPhone',
     );
   }
 }

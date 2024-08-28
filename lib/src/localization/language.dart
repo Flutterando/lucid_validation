@@ -1,6 +1,4 @@
 abstract class Language {
-  final String culture;
-
   static const code = (
     equalTo: 'equalTo',
     greaterThan: 'greaterThan',
@@ -33,7 +31,7 @@ abstract class Language {
     exclusiveBetweenDatetime: 'exclusiveBetweenDatetime',
   );
 
-  Language(this.culture, [Map<String, String> translations = const {}]) {
+  Language([Map<String, String> translations = const {}]) {
     _translations.addAll(translations);
   }
 

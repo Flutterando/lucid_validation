@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Production release
+
 ## 0.0.7
 
 * Added `when` and `setValidator`

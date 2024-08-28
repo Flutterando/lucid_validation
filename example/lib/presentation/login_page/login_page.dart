@@ -1,5 +1,6 @@
 import 'package:example/domain/dtos/login_param_dto.dart';
 import 'package:example/domain/validations/login_param_validation.dart';
+import 'package:example/main.dart';
 import 'package:example/presentation/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,27 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+        actions: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Is English'),
+              ValueListenableBuilder<Locale>(
+                  valueListenable: globalLocale,
+                  builder: (context, _, __) {
+                    return Switch(
+                      value: globalLocale.value.languageCode == 'en',
+                      onChanged: (value) {
+                        globalLocale.value = value ? Locale('en', 'US') : Locale('pt', 'BR');
+                      },
+                    );
+                  }),
+            ],
+          )
+        ],
+      ),
       body: Form(
         key: formKey,
         child: Padding(
