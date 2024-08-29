@@ -26,5 +26,11 @@ class PortugueseBrasillianLanguage extends Language {
           Language.code.validCNPJ: "'{PropertyName}' não é um CNPJ válido.",
           Language.code.validCreditCard: "'{PropertyName}' não é um número de cartão de crédito válido.",
           Language.code.validEmail: "'{PropertyName}' não é um endereço de e-mail válido.",
+          Language.code.greaterThanOrEqualToDateTime: "'{PropertyName}' deve ser maior ou igual à data '{ComparisonValue}'.",
+          Language.code.greaterThanDatetime: "'{PropertyName}' deve ser maior que a data '{ComparisonValue}'.",
+          Language.code.lessThanOrEqualToDateTime: "'{PropertyName}' deve ser menor ou igual à data '{ComparisonValue}'.",
+          Language.code.lessThanDateTime: "'{PropertyName}' deve ser menor que a data '{ComparisonValue}'.",
+          Language.code.inclusiveBetweenDatetime: "'{PropertyName}' deve ser maior ou igual à data '{StartValue}' e menor ou igual à data '{EndValue}'.",
+          Language.code.exclusiveBetweenDatetime: "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'."
         });
 }

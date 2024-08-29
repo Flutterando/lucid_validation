@@ -63,8 +63,8 @@ abstract class Language {
     code.greaterThanDatetime: "'{PropertyName}' must be greater than date '{ComparisonValue}'.",
     code.lessThanOrEqualToDateTime: "'{PropertyName}' must be less than or equal to date '{ComparisonValue}'.",
     code.lessThanDateTime: "'{PropertyName}' must be less than date '{ComparisonValue}'.",
-    code.inclusiveBetweenDatetime: "'{PropertyName}' must be less than or equal to '{StartValue}' date and less than or equal to '{EndValue}' date.",
-    code.exclusiveBetweenDatetime: "'{PropertyName}' must be less than the '{StartValue}' date and less than the '{EndValue}' date."
+    code.inclusiveBetweenDatetime: "'{PropertyName}' must be greater than or equal to '{StartValue}' date and less than or equal to '{EndValue}' date.",
+    code.exclusiveBetweenDatetime: "'{PropertyName}' must be greater than the '{StartValue}' date and less than the '{EndValue}' date."
   };
 
   String? getTranslation(String key) => _translations[key];

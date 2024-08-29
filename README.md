@@ -27,11 +27,13 @@ class UserModel {
   String email;
   String password;
   int age;
+  DateTime dateOfBirth;
 
   UserModel({
     required this.email,
     required this.password,
     required this.age,
+    required this.dateOfBirth,
   });
 
 }
@@ -44,6 +46,8 @@ import 'package:lucid_validation/lucid_validation.dart';
 
 class UserValidator extends LucidValidator<UserModel> {
   UserValidator() {
+    final now = DateTime.now();
+
     ruleFor((user) => user.email, key: 'email')
         .notEmpty()
         .validEmail();
@@ -58,6 +62,9 @@ class UserValidator extends LucidValidator<UserModel> {
 
     ruleFor((user) => user.age, key: 'age')
         .min(18, message: 'Minimum age is 18 years');
+
+    ruleFor((user) => user.dateOfBirth, key: 'dateOfBirth')
+        .lessThan(DateTime(now.year - 18, now.month, now.day));
   }
 }
 
@@ -111,6 +118,12 @@ Here’s a complete list of available validators you can use:
 - **validCNPJ**: Checks if a string is a valid CNPJ (for use in Brazil).
 - **validCEP**: Checks if a string is a valid CEP (for use in Brazil).
 - **validCredCard**: Checks if a string is a valid Credit Card.
+- **greaterThanOrEqualTo**: Checks if the datetime value is greater than or equal to a specified minimum datetime.
+- **greaterThan**: Checks if the datetime value is greater than a specified minimum datetime.
+- **lessThanOrEqualTo**: Checks if the datetime value is less than or equal to a specified maximum datetime.
+- **lessThan**: Checks if the datetime value is less than a specified maximum datetime.
+- **inclusiveBetween**: Checks if the datetime value is between two datetime values, including both bounds.
+- **exclusiveBetween**: Checks if the datetime value is between two datetime values, excluding both bounds.
 
 ## Usage with Flutter
 

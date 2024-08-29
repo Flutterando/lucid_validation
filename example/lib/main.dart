@@ -11,7 +11,7 @@ void main() {
   runApp(const MyApp());
 }
 
-final globalLocale = ValueNotifier(Locale('en'));
+final globalLocale = ValueNotifier(const Locale('en'));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             Locale('en', 'US'),
             Locale('pt', 'BR'),
           ],
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 class LucidLocalizationDelegate extends LocalizationsDelegate<Culture> {
   const LucidLocalizationDelegate();
 
-  static final delegate = LucidLocalizationDelegate();
+  static const delegate = LucidLocalizationDelegate();
 
   @override
   bool isSupported(Locale locale) {
@@ -61,7 +61,6 @@ class LucidLocalizationDelegate extends LocalizationsDelegate<Culture> {
 
   @override
   Future<Culture> load(Locale locale) async {
-    print(locale);
     final culture = Culture(locale.languageCode, locale.countryCode ?? '');
     LucidValidation.global.culture = culture;
     return culture;

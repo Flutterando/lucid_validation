@@ -26,5 +26,11 @@ class SpanishLanguage extends Language {
           Language.code.validCNPJ: "'{PropertyName}' no es un CNPJ válido.",
           Language.code.validCreditCard: "'{PropertyName}' no es un número de tarjeta de crédito válido.",
           Language.code.validEmail: "'{PropertyName}' no es una dirección de correo electrónico válida.",
+          Language.code.greaterThanOrEqualToDateTime: "'{PropertyName}' debe ser mayor o igual a la fecha '{ComparisonValue}'.",
+          Language.code.greaterThanDatetime: "'{PropertyName}' debe ser mayor que la fecha '{ComparisonValue}'.",
+          Language.code.lessThanOrEqualToDateTime: "'{PropertyName}' debe ser menor o igual a la fecha '{ComparisonValue}'.",
+          Language.code.lessThanDateTime: "'{PropertyName}' debe ser menor que la fecha '{ComparisonValue}'.",
+          Language.code.inclusiveBetweenDatetime: "'{PropertyName}' debe ser mayor o igual a la fecha '{StartValue}' y menor o igual a la fecha '{EndValue}'.",
+          Language.code.exclusiveBetweenDatetime: "'{PropertyName}' debe ser mayor que la fecha '{StartValue}' y menor que la fecha '{EndValue}'."
         });
 }
