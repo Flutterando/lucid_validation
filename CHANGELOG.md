@@ -1,3 +1,7 @@
+## 1.0.1
+
+* Added valid greaterThanOrEqualTo, greaterThan, lessThanOrEqualTo, lessThan, inclusiveBetween and exclusiveBetween
+  
 ## 1.0.0
 
 * Production release
