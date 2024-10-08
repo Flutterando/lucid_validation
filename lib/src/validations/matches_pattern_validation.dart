@@ -23,7 +23,8 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
-  SimpleValidationBuilder<String> matchesPattern(String pattern, {String? message, String? code}) {
+  SimpleValidationBuilder<String> matchesPattern(String pattern,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         final isValid = RegExp(pattern).hasMatch(value);
@@ -34,7 +35,7 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
           },
           defaultMessage: message,
         );

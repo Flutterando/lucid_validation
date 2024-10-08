@@ -23,7 +23,8 @@ extension MustHaveLowercaseValidation on SimpleValidationBuilder<String> {
   /// - **{PropertyName}**: The name of the property.
   ///
   /// '{PropertyName}' must have at least one lowercase letter.
-  SimpleValidationBuilder<String> mustHaveLowercase({String? message, String? code}) {
+  SimpleValidationBuilder<String> mustHaveLowercase(
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         final isValid = RegExp(r'[a-z]').hasMatch(value);
@@ -33,7 +34,7 @@ extension MustHaveLowercaseValidation on SimpleValidationBuilder<String> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
           },
           defaultMessage: message,
         );

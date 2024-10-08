@@ -18,6 +18,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'start' must be greater than date '${now.toString()}'.");
+    expect(result.exceptions.first.message,
+        "'start' must be greater than date '${now.toString()}'.");
   });
 }

@@ -16,6 +16,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'age' must be less than or equal to 18. You entered 20.");
+    expect(result.exceptions.first.message,
+        "'age' must be less than or equal to 18. You entered 20.");
   });
 }

@@ -16,6 +16,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'password' must have at least one digit ('0'-'9').");
+    expect(result.exceptions.first.message,
+        "'password' must have at least one digit ('0'-'9').");
   });
 }

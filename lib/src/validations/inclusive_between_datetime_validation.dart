@@ -4,7 +4,8 @@ part of 'validations.dart';
 ///
 /// This extension adds an `inclusiveBetween` method that can be used to
 /// ensure that a date is inclusive between two specified dates.
-extension InclusiveBetweenDatetimeValidation on SimpleValidationBuilder<DateTime> {
+extension InclusiveBetweenDatetimeValidation
+    on SimpleValidationBuilder<DateTime> {
   /// Adds a validation rule that checks if the [DateTime] is greater than [comparison].
   ///
   /// [start] is the date and time value must be greater than or equal to.
@@ -33,13 +34,15 @@ extension InclusiveBetweenDatetimeValidation on SimpleValidationBuilder<DateTime
     String? code,
   }) {
     return use((value, entity) {
-      if (value.isAfter(start) || value.isAtSameMomentAs(start) && value.isBefore(end) || value.isAtSameMomentAs(end)) return null;
+      if (value.isAfter(start) ||
+          value.isAtSameMomentAs(start) && value.isBefore(end) ||
+          value.isAtSameMomentAs(end)) return null;
 
       final currentCode = code ?? Language.code.inclusiveBetweenDatetime;
       final currentMessage = LucidValidation.global.languageManager.translate(
         currentCode,
         parameters: {
-          'PropertyName': key,
+          'PropertyName': label.isNotEmpty ? label : key,
           'StartValue': start.toString(),
           'EndValue': end.toString(),
         },

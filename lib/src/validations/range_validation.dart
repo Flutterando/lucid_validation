@@ -26,7 +26,8 @@ extension RangeValidation on SimpleValidationBuilder<num> {
   /// - **{To}**: The maximum value of the range.
   /// - **{PropertyValue}**: The value of the property.
   ///
-  SimpleValidationBuilder<num> range(num min, num max, {String? message, String? code}) {
+  SimpleValidationBuilder<num> range(num min, num max,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         if (value >= min && value <= max) return null;
@@ -35,7 +36,7 @@ extension RangeValidation on SimpleValidationBuilder<num> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'From': '$min',
             'To': '$max',
             'PropertyValue': '$value',

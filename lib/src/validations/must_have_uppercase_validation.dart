@@ -22,7 +22,8 @@ extension MustHaveUppercaseValidation on SimpleValidationBuilder<String> {
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
-  SimpleValidationBuilder<String> mustHaveUppercase({String? message, String? code}) {
+  SimpleValidationBuilder<String> mustHaveUppercase(
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         final isValid = RegExp(r'[A-Z]').hasMatch(value);
@@ -32,7 +33,7 @@ extension MustHaveUppercaseValidation on SimpleValidationBuilder<String> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
           },
           defaultMessage: message,
         );

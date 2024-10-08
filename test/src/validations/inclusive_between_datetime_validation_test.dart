@@ -20,6 +20,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'dateEvent' must be less than the '${tomorrow.toString()}' date and less than the '${afterTomorrow.toString()}' date.");
+    expect(result.exceptions.first.message,
+        "'dateEvent' must be greater than or equal to '${tomorrow.toString()}' date and less than or equal to '${afterTomorrow.toString()}' date.");
   });
 }

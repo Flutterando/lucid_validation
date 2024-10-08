@@ -18,8 +18,11 @@ abstract class LucidValidator<E> {
   /// final validator = UserValidation();
   /// validator.ruleFor((user) => user.email).validEmail();
   /// ```
-  LucidValidationBuilder<TProp, E> ruleFor<TProp>(TProp Function(E entity) selector, {required String key}) {
-    final builder = _LucidValidationBuilder<TProp, E>(key, selector);
+  LucidValidationBuilder<TProp, E> ruleFor<TProp>(
+      TProp Function(E entity) selector,
+      {required String key,
+      String label = ''}) {
+    final builder = _LucidValidationBuilder<TProp, E>(key, label, selector);
     _builders.add(builder);
 
     return builder;
@@ -86,7 +89,8 @@ abstract class LucidValidator<E> {
   /// }
   /// ```
   ValidationResult validate(E entity) {
-    final exceptions = _builders.fold(<ValidationException>[], (previousErrors, builder) {
+    final exceptions =
+        _builders.fold(<ValidationException>[], (previousErrors, builder) {
       return previousErrors..addAll(builder.executeRules(entity));
     });
 
@@ -97,6 +101,7 @@ abstract class LucidValidator<E> {
   }
 }
 
-class _LucidValidationBuilder<TProp, Entity> extends LucidValidationBuilder<TProp, Entity> {
-  _LucidValidationBuilder(super.key, super.selector);
+class _LucidValidationBuilder<TProp, Entity>
+    extends LucidValidationBuilder<TProp, Entity> {
+  _LucidValidationBuilder(super.key, super.label, super.selector);
 }

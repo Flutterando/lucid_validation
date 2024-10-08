@@ -31,7 +31,7 @@ extension IsNotNullValidation<T> on SimpleValidationBuilder<T?> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
           },
           defaultMessage: message,
         );

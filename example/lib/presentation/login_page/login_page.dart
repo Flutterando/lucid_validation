@@ -49,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
                     return Switch(
                       value: globalLocale.value.languageCode == 'en',
                       onChanged: (value) {
-                        globalLocale.value = value ? Locale('en', 'US') : Locale('pt', 'BR');
+                        globalLocale.value =
+                            value ? Locale('en', 'US') : Locale('pt', 'BR');
                       },
                     );
                   }),
@@ -97,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPage()),
                   );
                 },
                 child: const Text('Sign up'),

@@ -24,7 +24,8 @@ extension LessThanValidation on SimpleValidationBuilder<num> {
   /// - **{PropertyName}**: The name of the property.
   /// - **{ComparisonValue}**: The value to compare against.
   ///
-  SimpleValidationBuilder<num> lessThan(num maxValue, {String? message, String? code}) {
+  SimpleValidationBuilder<num> lessThan(num maxValue,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         if (value < maxValue) return null;
@@ -33,7 +34,7 @@ extension LessThanValidation on SimpleValidationBuilder<num> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'ComparisonValue': '$maxValue',
           },
           defaultMessage: message,

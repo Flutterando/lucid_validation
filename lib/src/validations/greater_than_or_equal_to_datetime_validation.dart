@@ -4,7 +4,8 @@ part of 'validations.dart';
 ///
 /// This extension adds a `greaterThanOrEqualTo` method that can be used to ensure that
 /// a date is greater than or equal to a specified date.
-extension GreaterThanOrEqualToDateTimeValidation on SimpleValidationBuilder<DateTime> {
+extension GreaterThanOrEqualToDateTimeValidation
+    on SimpleValidationBuilder<DateTime> {
   /// Adds a validation rule that checks if the [DateTime] is greater than [comparison].
   ///
   /// [comparison] is the date and time value must be greater than or equal.
@@ -30,13 +31,14 @@ extension GreaterThanOrEqualToDateTimeValidation on SimpleValidationBuilder<Date
     String? code,
   }) {
     return use((value, entity) {
-      if (value.isAfter(comparison) || value.isAtSameMomentAs(comparison)) return null;
+      if (value.isAfter(comparison) || value.isAtSameMomentAs(comparison))
+        return null;
 
       final currentCode = code ?? Language.code.greaterThanOrEqualToDateTime;
       final currentMessage = LucidValidation.global.languageManager.translate(
         currentCode,
         parameters: {
-          'PropertyName': key,
+          'PropertyName': label.isNotEmpty ? label : key,
           'ComparisonValue': comparison.toString(),
         },
         defaultMessage: message,

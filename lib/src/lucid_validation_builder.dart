@@ -51,6 +51,7 @@ typedef SimpleValidationBuilder<T> = LucidValidationBuilder<T, dynamic>;
 
 abstract class LucidValidationBuilder<TProp, Entity> {
   final String key;
+  final String label;
   final TProp Function(Entity entity) _selector;
   final List<RuleFunc<Entity>> _rules = [];
   var _mode = CascadeMode.continueExecution;
@@ -61,7 +62,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// Creates a [LucidValidationBuilder] instance with an optional [key].
   ///
   /// The [key] can be used to identify this specific validation in a larger validation context.
-  LucidValidationBuilder(this.key, this._selector);
+  LucidValidationBuilder(this.key, this.label, this._selector);
 
   String? Function([String?]) nestedByField(Entity entity, String key) {
     if (_nestedValidator == null) {
@@ -83,7 +84,8 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// final builder = LucidValidationBuilder<String>(key: 'username');
   /// builder.must((username) => username.isNotEmpty, 'Username cannot be empty');
   /// ```
-  LucidValidationBuilder<TProp, Entity> must(bool Function(TProp value) validator, String message, String code) {
+  LucidValidationBuilder<TProp, Entity> must(
+      bool Function(TProp value) validator, String message, String code) {
     ValidationException? callback(value, entity) {
       if (validator(value)) {
         return null;
@@ -223,7 +225,8 @@ abstract class LucidValidationBuilder<TProp, Entity> {
   /// In the example above, the phone number validation rules are only applied if the user's `requiresPhoneNumber`
   /// property is true. If the condition is false, the phone number field will be considered valid, and the
   /// associated rules will not be executed.
-  LucidValidationBuilder<TProp, Entity> when(bool Function(Entity entity) condition) {
+  LucidValidationBuilder<TProp, Entity> when(
+      bool Function(Entity entity) condition) {
     _condition = condition;
     return this;
   }
@@ -238,7 +241,8 @@ abstract class LucidValidationBuilder<TProp, Entity> {
     final exceptions = <ValidationException>[];
 
     if (_nestedValidator != null) {
-      final nestedExceptions = _nestedValidator!.validate(_selector(entity)).exceptions;
+      final nestedExceptions =
+          _nestedValidator!.validate(_selector(entity)).exceptions;
       exceptions.addAll(nestedExceptions);
     } else {
       for (var rule in _rules) {

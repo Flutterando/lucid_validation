@@ -36,7 +36,7 @@ extension LessThanDatetimeValidation on SimpleValidationBuilder<DateTime> {
       final currentMessage = LucidValidation.global.languageManager.translate(
         currentCode,
         parameters: {
-          'PropertyName': key,
+          'PropertyName': label.isNotEmpty ? label : key,
           'ComparisonValue': comparison.toString(),
         },
         defaultMessage: message,

@@ -19,6 +19,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'end' must be less than date '${now.toString()}'.");
+    expect(result.exceptions.first.message,
+        "'end' must be less than date '${now.toString()}'.");
   });
 }

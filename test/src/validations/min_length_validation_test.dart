@@ -16,6 +16,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "The length of 'password' must be at least 8 characters. You entered 6 characters.");
+    expect(result.exceptions.first.message,
+        "The length of 'password' must be at least 8 characters. You entered 6 characters.");
   });
 }

@@ -21,7 +21,8 @@ class RegisterParamDto extends ChangeNotifier {
         _password = password,
         _confirmPassword = confirmPassword;
 
-  factory RegisterParamDto.empty() => RegisterParamDto(email: '', password: '', phone: '', confirmPassword: '');
+  factory RegisterParamDto.empty() =>
+      RegisterParamDto(email: '', password: '', phone: '', confirmPassword: '');
 
   void setEmail(String value) {
     _email = value;

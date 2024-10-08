@@ -4,7 +4,8 @@ part of 'validations.dart';
 ///
 /// This extension adds a `mustHaveSpecialCharacter` method that can be used to ensure that a string
 /// contains at least one special character.
-extension MustHaveSpecialCharacterValidation on SimpleValidationBuilder<String> {
+extension MustHaveSpecialCharacterValidation
+    on SimpleValidationBuilder<String> {
   /// Adds a validation rule that checks if the [String] contains at least one special character.
   ///
   /// [message] is the error message returned if the validation fails. Defaults to "Must contain at least one special character".
@@ -22,7 +23,8 @@ extension MustHaveSpecialCharacterValidation on SimpleValidationBuilder<String> 
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
-  SimpleValidationBuilder<String> mustHaveSpecialCharacter({String? message, String? code}) {
+  SimpleValidationBuilder<String> mustHaveSpecialCharacter(
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         final isValid = RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value);
@@ -32,7 +34,7 @@ extension MustHaveSpecialCharacterValidation on SimpleValidationBuilder<String> 
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
           },
           defaultMessage: message,
         );

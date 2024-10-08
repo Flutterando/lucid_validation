@@ -42,7 +42,8 @@ extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
   }
 }
 
-extension CustomValidPasswordValidator on LucidValidationBuilder<String, dynamic> {
+extension CustomValidPasswordValidator
+    on LucidValidationBuilder<String, dynamic> {
   LucidValidationBuilder<String, dynamic> customValidPassword() {
     return notEmpty() //
         .minLength(5, message: 'Must be at least 8 characters long')
@@ -85,10 +86,13 @@ class CredentialsRegisterValidator extends LucidValidator<CredentialsRegister> {
 
     ruleFor((credentials) => credentials.password, key: 'password') //
         .customValidPassword()
-        .equalTo((entity) => entity.confirmPassword, message: 'Must be equal to confirmPassword');
+        .equalTo((entity) => entity.confirmPassword,
+            message: 'Must be equal to confirmPassword');
 
-    ruleFor((credentials) => credentials.confirmPassword, key: 'confirmPassword') //
-        .equalTo((entity) => entity.password, message: 'Must be equal to password');
+    ruleFor((credentials) => credentials.confirmPassword,
+            key: 'confirmPassword') //
+        .equalTo((entity) => entity.password,
+            message: 'Must be equal to password');
   }
 }
 

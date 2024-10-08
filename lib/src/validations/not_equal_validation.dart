@@ -24,7 +24,8 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
   /// - **{PropertyName}**: The name of the property.
   /// - **{ComparisonValue}**: The value to compare against.
   ///
-  LucidValidationBuilder<T, dynamic> notEqualTo(T Function(E entity) predicate, {String? message, String? code}) {
+  LucidValidationBuilder<T, dynamic> notEqualTo(T Function(E entity) predicate,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         final comparison = predicate(entity);
@@ -34,7 +35,7 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'ComparisonValue': '$comparison',
           },
           defaultMessage: message,

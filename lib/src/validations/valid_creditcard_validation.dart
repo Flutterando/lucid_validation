@@ -21,7 +21,8 @@ extension ValidCreditCardValidation on SimpleValidationBuilder<String> {
   /// String format args:
   /// - **{PropertyName}**: The name of the property.
   ///
-  SimpleValidationBuilder<String> validCreditCard({String? message, String? code}) {
+  SimpleValidationBuilder<String> validCreditCard(
+      {String? message, String? code}) {
     return use((value, entity) {
       if (_validateCreditCard(value)) return null;
 
@@ -29,7 +30,7 @@ extension ValidCreditCardValidation on SimpleValidationBuilder<String> {
       final currentMessage = LucidValidation.global.languageManager.translate(
         currentCode,
         parameters: {
-          'PropertyName': key,
+          'PropertyName': label.isNotEmpty ? label : key,
         },
         defaultMessage: message,
       );

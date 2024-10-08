@@ -4,7 +4,9 @@ import 'package:test/test.dart';
 import '../../mocks/mocks.dart';
 
 void main() {
-  test('should fail exclusive between validation when the event date is exactly on the start boundary', () {
+  test(
+      'should fail exclusive between validation when the event date is exactly on the start boundary',
+      () {
     final validator = TestLucidValidator<EventModel>();
     final now = DateTime.now();
     final tomorrow = now.add(Duration(days: 1));
@@ -20,10 +22,13 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'dateEvent' must be less than the '${tomorrow.toString()}' date and less than the '${afterTomorrow.toString()}' date.");
+    expect(result.exceptions.first.message,
+        "'dateEvent' must be greater than the '${tomorrow.toString()}' date and less than the '${afterTomorrow.toString()}' date.");
   });
 
-  test('should fail exclusive between validation when the event date is exactly on the end boundary', () {
+  test(
+      'should fail exclusive between validation when the event date is exactly on the end boundary',
+      () {
     final validator = TestLucidValidator<EventModel>();
     final now = DateTime.now();
     final tomorrow = now.add(Duration(days: 1));
@@ -39,10 +44,13 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'dateEvent' must be less than the '${tomorrow.toString()}' date and less than the '${afterTomorrow.toString()}' date.");
+    expect(result.exceptions.first.message,
+        "'dateEvent' must be greater than the '${tomorrow.toString()}' date and less than the '${afterTomorrow.toString()}' date.");
   });
 
-  test('should fail exclusive between validation when the event date is exactly on the end boundary', () {
+  test(
+      'should fail exclusive between validation when the event date is exactly on the end boundary',
+      () {
     final validator = TestLucidValidator<EventModel>();
     final now = DateTime.now();
     final tomorrow = now.add(Duration(days: 1));

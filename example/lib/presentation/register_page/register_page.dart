@@ -47,7 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
       /// call to api passing the parameter loginParamDto
       ScaffoldMessenger.of(context).showSnackBar(sucessSnackBar());
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(failureSnackBar(result.exceptions.first.message));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(failureSnackBar(result.exceptions.first.message));
     }
   }
 
@@ -67,7 +68,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     return Switch(
                       value: globalLocale.value.languageCode == 'en',
                       onChanged: (value) {
-                        globalLocale.value = value ? Locale('en', 'US') : Locale('pt', 'BR');
+                        globalLocale.value =
+                            value ? Locale('en', 'US') : Locale('pt', 'BR');
                       },
                     );
                   }),

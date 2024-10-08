@@ -9,7 +9,8 @@ class Culture {
   bool operator ==(covariant Culture other) {
     if (identical(this, other)) return true;
 
-    return other.languageCode == languageCode && other.countryCode == countryCode;
+    return other.languageCode == languageCode &&
+        other.countryCode == countryCode;
   }
 
   @override

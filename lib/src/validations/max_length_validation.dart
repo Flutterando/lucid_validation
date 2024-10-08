@@ -25,7 +25,8 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
   /// - **{MaxLength}**: The value to compare against.
   /// - **{TotalLength}**: total characters entered.
   ///
-  SimpleValidationBuilder<String> maxLength(int num, {String? message, String? code}) {
+  SimpleValidationBuilder<String> maxLength(int num,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         if (value.length <= num) return null;
@@ -34,7 +35,7 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'MaxLength': '$num',
             'TotalLength': '${value.length}',
           },

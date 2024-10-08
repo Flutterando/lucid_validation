@@ -34,7 +34,7 @@ extension MaxValidation on SimpleValidationBuilder<num> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'MaxValue': '$num',
             'PropertyValue': '$value',
           },

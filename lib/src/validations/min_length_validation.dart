@@ -24,7 +24,8 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
   /// - **{PropertyName}**: The name of the property.
   /// - **{MinLength}**: The value to compare against.
   /// - **{TotalLength}**: total characters entered.
-  SimpleValidationBuilder<String> minLength(int num, {String? message, String? code}) {
+  SimpleValidationBuilder<String> minLength(int num,
+      {String? message, String? code}) {
     return use(
       (value, entity) {
         if (value.length >= num) return null;
@@ -33,7 +34,7 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
         final currentMessage = LucidValidation.global.languageManager.translate(
           currentCode,
           parameters: {
-            'PropertyName': key,
+            'PropertyName': label.isNotEmpty ? label : key,
             'MinLength': '$num',
             'TotalLength': '${value.length}',
           },

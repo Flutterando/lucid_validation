@@ -3,7 +3,9 @@ import 'package:test/test.dart';
 import 'mocks/mocks.dart';
 
 void main() {
-  test('when validating [UserEntityMock] should return a list of error messages for the email field', () {
+  test(
+      'when validating [UserEntityMock] should return a list of error messages for the email field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -17,7 +19,9 @@ void main() {
     expect(exceptions.length, 4);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the password field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the password field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -31,7 +35,9 @@ void main() {
     expect(exceptions.length, 8);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the age field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the age field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 15
@@ -45,7 +51,9 @@ void main() {
     expect(exceptions.length, 3);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the phone field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the phone field',
+      () {
     final validator = UserValidator();
 
     final userEntity = UserModel()
@@ -60,7 +68,9 @@ void main() {
     expect(exceptions.length, 3);
   });
 
-  test('when validating [UserModel] should return a list of error messages for all fields', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for all fields',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()..age = 15;
 

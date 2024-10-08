@@ -18,6 +18,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'confirmPassword' must not be equal to 'teste123'.");
+    expect(result.exceptions.first.message,
+        "'confirmPassword' must not be equal to 'teste123'.");
   });
 }

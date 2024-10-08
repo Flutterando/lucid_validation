@@ -26,7 +26,9 @@ void main() {
     final validator = TestLucidValidator<UserModel>();
     validator
         .ruleFor((user) => user.confirmPassword, key: 'confirmPassword') //
-        .equalTo((user) => user.password, message: "Campo '{PropertyName}' deve ser igual ao campo '{ComparisonValue}'.");
+        .equalTo((user) => user.password,
+            message:
+                "Campo '{PropertyName}' deve ser igual ao campo '{ComparisonValue}'.");
 
     final user = UserModel()
       ..password = 'password'
@@ -37,6 +39,7 @@ void main() {
     expect(result.exceptions.length, 1);
 
     final error = result.exceptions.first;
-    expect(error.message, r"Campo 'confirmPassword' deve ser igual ao campo 'password'.");
+    expect(error.message,
+        r"Campo 'confirmPassword' deve ser igual ao campo 'password'.");
   });
 }

@@ -36,7 +36,7 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
       final currentMessage = LucidValidation.global.languageManager.translate(
         currentCode,
         parameters: {
-          'PropertyName': key,
+          'PropertyName': label.isNotEmpty ? label : key,
           'ComparisonValue': '$minValue',
         },
         defaultMessage: message,

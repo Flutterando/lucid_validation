@@ -16,6 +16,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'password' must have at least one non-alphanumeric character.");
+    expect(result.exceptions.first.message,
+        "'password' must have at least one non-alphanumeric character.");
   });
 }

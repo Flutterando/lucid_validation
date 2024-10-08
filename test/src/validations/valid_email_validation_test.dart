@@ -8,7 +8,7 @@ void main() {
     final validator = TestLucidValidator<UserModel>();
 
     validator
-        .ruleFor((e) => e.email, key: 'email') //
+        .ruleFor((e) => e.email, key: 'email', label: 'E-mail') //
         .validEmail();
 
     final user = UserModel()..email = 'testtest.com';
@@ -21,6 +21,6 @@ void main() {
 
     final error = result.exceptions.first;
 
-    expect(error.message, "'email' is not a valid email address.");
+    expect(error.message, "'E-mail' is not a valid email address.");
   });
 }

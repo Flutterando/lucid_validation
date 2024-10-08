@@ -11,9 +11,11 @@ class RegisterParamValidation extends LucidValidator<RegisterParamDto> {
     ruleFor((registerParamDto) => registerParamDto.password, key: 'password') //
         .customValidPassword();
 
-    ruleFor((registerParamDto) => registerParamDto.confirmPassword, key: 'confirmPassword') //
+    ruleFor((registerParamDto) => registerParamDto.confirmPassword,
+            key: 'confirmPassword') //
         .customValidPassword()
-        .equalTo((registerParamDto) => registerParamDto.password, code: 'passwordEqualTo');
+        .equalTo((registerParamDto) => registerParamDto.password,
+            code: 'passwordEqualTo');
 
     ruleFor((registerParamDto) => registerParamDto.phone, key: 'phone') //
         .customValidPhone();

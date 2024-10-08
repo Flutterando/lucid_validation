@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Added Label
+
 ## 1.0.1
 
 * Added valid greaterThanOrEqualTo, greaterThan, lessThanOrEqualTo, lessThan, inclusiveBetween and exclusiveBetween

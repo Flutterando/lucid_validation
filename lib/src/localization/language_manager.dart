@@ -61,14 +61,19 @@ abstract class LanguageManager {
   }
 
   bool isSupported(String languageCode, String? countryCode) {
-    return _avaliableLanguages.containsKey(Culture(languageCode, countryCode ?? ''));
+    return _avaliableLanguages
+        .containsKey(Culture(languageCode, countryCode ?? ''));
   }
 
-  String translate(String key, {Map<String, String> parameters = const {}, String? defaultMessage}) {
+  String translate(String key,
+      {Map<String, String> parameters = const {}, String? defaultMessage}) {
     final culture = LucidValidation.global.culture;
     final currentLanguage = getLanguage(culture);
     final translations = _globalTranslations[culture] ?? {};
-    var message = defaultMessage ?? translations[key] ?? currentLanguage.getTranslation(key) ?? key;
+    var message = defaultMessage ??
+        translations[key] ??
+        currentLanguage.getTranslation(key) ??
+        key;
     for (var key in parameters.keys) {
       final value = parameters[key]!;
       message = message.replaceAll('{$key}', value);

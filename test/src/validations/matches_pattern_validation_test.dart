@@ -16,6 +16,7 @@ void main() {
 
     expect(result.isValid, false);
     expect(result.exceptions.length, 1);
-    expect(result.exceptions.first.message, "'email' is not in the correct format.");
+    expect(result.exceptions.first.message,
+        "'email' is not in the correct format.");
   });
 }
