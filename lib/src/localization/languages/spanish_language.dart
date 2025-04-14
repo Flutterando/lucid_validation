@@ -54,6 +54,9 @@ class SpanishLanguage extends Language {
               "'{PropertyName}' debe ser mayor o igual a la fecha '{StartValue}' y menor o igual a la fecha '{EndValue}'.",
           Language.code.exclusiveBetweenDatetime:
               "'{PropertyName}' debe ser mayor que la fecha '{StartValue}' y menor que la fecha '{EndValue}'.",
+          Language.code.validPhoneBr: "'{PropertyName}' no es un teléfono válido.",
+          Language.code.validPhoneDdiBr: "'{PropertyName}' no es un teléfono DDI válido."
+              "'{PropertyName}' debe ser mayor que la fecha '{StartValue}' y menor que la fecha '{EndValue}'.",
           Language.code.sequentialRepeatedCharacters:
               "'{PropertyName}' no puede tener caracteres repetidos en secuencia.",
           Language.code.sequentialCharactersNotAllowed:

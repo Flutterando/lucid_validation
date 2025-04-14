@@ -1,4 +1,9 @@
+## 1.2.6
+
+* Aded validPhoneWithCountryCodeBR and validPhoneBR
+
 ## 1.2.5
+
 * Aded Exception serialization
 
 ## 1.2.4
@@ -7,7 +12,7 @@
 
 ## 1.2.3
 
-* Added overrideCallback in byField 
+* Added overrideCallback in byField
 
 ## 1.2.2
 
@@ -28,7 +33,7 @@
 ## 1.0.1
 
 * Added valid greaterThanOrEqualTo, greaterThan, lessThanOrEqualTo, lessThan, inclusiveBetween and exclusiveBetween
-  
+
 ## 1.0.0
 
 * Production release
@@ -44,7 +49,6 @@
 ## 0.0.3
 
 * Added Cascade Mode
-
 
 ## 0.0.2
 
