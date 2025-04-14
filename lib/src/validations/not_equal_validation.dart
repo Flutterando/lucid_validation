@@ -42,6 +42,7 @@ extension NotEqualValidation<T, E> on LucidValidationBuilder<T, E> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

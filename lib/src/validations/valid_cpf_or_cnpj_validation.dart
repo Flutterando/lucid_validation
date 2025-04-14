@@ -36,6 +36,7 @@ extension ValidCpfOrCnpjValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -51,6 +52,7 @@ extension ValidCpfOrCnpjValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -67,6 +69,7 @@ extension ValidCpfOrCnpjValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -113,6 +116,7 @@ extension ValidCpfOrCnpjNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -128,6 +132,7 @@ extension ValidCpfOrCnpjNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -144,6 +149,7 @@ extension ValidCpfOrCnpjNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -191,6 +197,7 @@ extension ValidCpfOrCnpjOrNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -206,6 +213,7 @@ extension ValidCpfOrCnpjOrNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -222,6 +230,7 @@ extension ValidCpfOrCnpjOrNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

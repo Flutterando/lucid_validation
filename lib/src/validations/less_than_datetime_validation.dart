@@ -43,6 +43,7 @@ extension LessThanDatetimeValidation on SimpleValidationBuilder<DateTime> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -91,6 +92,7 @@ extension LessThanDatetimeNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -139,6 +141,7 @@ extension LessThanDatetimeOrNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

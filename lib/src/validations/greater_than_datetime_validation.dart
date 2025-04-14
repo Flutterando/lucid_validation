@@ -42,7 +42,12 @@ extension GreaterThanDateTimeValidation on SimpleValidationBuilder<DateTime> {
         defaultMessage: message,
       );
 
-      return ValidationException(message: currentMessage, code: currentCode);
+      return ValidationException(
+        entity: extractClassName(entity.toString()),
+        message: currentMessage,
+        code: currentCode,
+        key: key,
+      );
     });
   }
 }
@@ -87,6 +92,7 @@ extension GreaterThanDateTimeNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -135,6 +141,7 @@ extension GreaterThanDateTimeOrNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

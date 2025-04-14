@@ -42,6 +42,7 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -89,6 +90,7 @@ extension MinLengthNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -136,6 +138,7 @@ extension MinLengthOrNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

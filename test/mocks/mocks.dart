@@ -1,6 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:lucid_validation/lucid_validation.dart';
 
+class Classroom {
+  final String? className;
+  final TeacherModel teacher;
+  final List<StudentModel> students;
+
+  Classroom({required this.students, required this.teacher, this.className});
+}
+
+class TeacherModel {
+  String name = '';
+}
+
+class StudentModel {
+  String email = '';
+  String name = '';
+}
+
 class UserModel {
   String email = '';
   String password = '';
@@ -20,6 +37,23 @@ class UserNullableModel {
   int? age = 0;
   String phone = '';
   String? cpf = '';
+}
+
+class StudentValidator extends LucidValidator<StudentModel> {
+  StudentValidator() {
+    ruleFor((user) => user.email, key: 'email') //
+        .validEmail();
+
+    ruleFor((user) => user.name, key: 'name')
+      .notEmpty();
+  }
+}
+
+class TeacherModelValidator extends LucidValidator<TeacherModel> {
+  TeacherModelValidator() {
+    ruleFor((user) => user.name, key: 'name')
+        .notEmpty();
+  }
 }
 
 class UserValidator extends LucidValidator<UserModel> {

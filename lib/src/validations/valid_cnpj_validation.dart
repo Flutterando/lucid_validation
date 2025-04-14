@@ -36,6 +36,7 @@ extension ValidCnpjValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -80,6 +81,7 @@ extension ValidCnpjNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -126,6 +128,7 @@ extension ValidCnpjOrNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

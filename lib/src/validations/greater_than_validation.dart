@@ -43,6 +43,7 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -90,6 +91,7 @@ extension GreaterThanNullablealidation on SimpleValidationBuilder<num?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -137,6 +139,7 @@ extension GreaterThanOrNullableValidation on SimpleValidationBuilder<num?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

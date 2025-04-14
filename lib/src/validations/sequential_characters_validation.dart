@@ -54,6 +54,7 @@ extension SequentialCharactersValidator on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -130,6 +131,7 @@ extension SequentialCharactersNullableValidator
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -207,6 +209,7 @@ extension SequentialCharactersOrNullValidator
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

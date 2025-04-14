@@ -96,6 +96,7 @@ extension ValidPhoneValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -146,6 +147,7 @@ extension ValidPhoneValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

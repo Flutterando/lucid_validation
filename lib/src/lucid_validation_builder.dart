@@ -1,4 +1,5 @@
 import '../lucid_validation.dart';
+import 'utils/utils.dart';
 
 /// Defines the behavior of rule execution when a validation failure occurs.
 ///
@@ -92,6 +93,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
         return null;
       }
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: message,
         key: key,
         code: code,
@@ -134,6 +136,7 @@ abstract class LucidValidationBuilder<TProp, Entity> {
         }
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: message,
           key: key,
           code: code,
@@ -222,6 +225,23 @@ abstract class LucidValidationBuilder<TProp, Entity> {
     _nestedValidator = validator;
   }
 
+  /// Permite aplicar um validador para cada item de uma coleção de objetos.
+  ///
+  /// O método `setEach` é útil para validar listas ou outras coleções de objetos onde
+  /// cada item da coleção deve ser validado individualmente com o mesmo conjunto de regras.
+  ///
+  /// [itemValidator] é um `LucidValidator` que será aplicado a cada item da lista.
+  ///
+  /// Exemplo:
+  ///
+  /// ```dart
+  /// ruleFor((form) => form.addresses, key: 'addresses')
+  ///   .setEach(AddressValidator());
+  /// ```
+  void setEach(LucidValidator<dynamic> itemValidator) {
+    _nestedValidator = _EachValidatorWrapper<TProp>(itemValidator);
+  }
+
   /// Adds a conditional execution rule for the validation logic based on the given [condition].
   ///
   /// The `when` method allows you to specify a condition that must be met for the validation rules
@@ -286,4 +306,56 @@ abstract class LucidValidationBuilder<TProp, Entity> {
 class _LucidValidationBuilder<TProp, Entity>
     extends LucidValidationBuilder<TProp, Entity> {
   _LucidValidationBuilder(super.key, super.label, super.selector, super.lucid);
+}
+
+class _EachValidatorWrapper<T> extends LucidValidator<T> {
+  final LucidValidator<dynamic> _validator;
+
+  _EachValidatorWrapper(this._validator);
+
+  @override
+  ValidationResult validate(T value) {
+    final exceptions = <ValidationException>[];
+
+    if (value is Iterable) {
+      var index = 0;
+      for (final item in value) {
+        final result = _validator.validate(item);
+        final indexed = result.exceptions.map((e) {
+          return e.copyWith(
+            key: e.key,
+            index: index,
+          );
+        });
+        exceptions.addAll(indexed);
+        index++;
+      }
+    }
+
+    return ValidationResult(
+        exceptions: exceptions, isValid: exceptions.isEmpty);
+  }
+
+  @override
+  String? Function([String?]) byField(
+    T value,
+    String key, {
+    dynamic Function(List<ValidationException>)? overrideCallback,
+  }) {
+    if (value is Iterable) {
+      return ([String? suffix]) {
+        for (final item in value) {
+          final result =
+              _validator.byField(item, key, overrideCallback: overrideCallback);
+          final res = result(suffix);
+          if (res != null) {
+            return res;
+          }
+        }
+        return null;
+      };
+    }
+
+    return ([String? _]) => null;
+  }
 }

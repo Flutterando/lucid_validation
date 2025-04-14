@@ -43,6 +43,7 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -91,6 +92,7 @@ extension MaxLengthNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -139,6 +141,7 @@ extension MaxLengthOrNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

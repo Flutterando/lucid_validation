@@ -41,6 +41,7 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -89,6 +90,7 @@ extension MatchesPatternNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -138,6 +140,7 @@ extension MatchesPatternOrNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

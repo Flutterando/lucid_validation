@@ -35,6 +35,7 @@ extension ValidCEPValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -80,6 +81,7 @@ extension ValidCEPNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -125,6 +127,7 @@ extension ValidCEPOrNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

@@ -37,6 +37,7 @@ extension IsNotNullValidation<T extends Object> on SimpleValidationBuilder<T?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

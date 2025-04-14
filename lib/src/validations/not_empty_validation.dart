@@ -37,6 +37,7 @@ extension NotEmptyValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -79,6 +80,7 @@ extension NotEmptyNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -122,6 +124,7 @@ extension NotEmptyOrNullableValidation on SimpleValidationBuilder<String?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

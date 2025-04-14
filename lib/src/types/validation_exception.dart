@@ -12,6 +12,10 @@ class ValidationException implements Exception {
   /// An optional code that identifies the specific validation error.
   final String code;
 
+  final int? index;
+
+  final String entity;
+
   /// Constructs a [ValidationException].
   ///
   /// [message] provides a description of the error.
@@ -19,14 +23,34 @@ class ValidationException implements Exception {
   const ValidationException({
     required this.message,
     required this.code,
+    required this.entity,
     this.key = '',
+    this.index,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'message': message,
       if (key.isNotEmpty) 'key': key,
+      if (entity.isNotEmpty) 'entity': entity,
       if (code.isNotEmpty) 'code': code,
+      if (index != null) 'index': index,
     };
+  }
+
+  ValidationException copyWith({
+    String? message,
+    String? entity,
+    String? key,
+    String? code,
+    int? index,
+  }) {
+    return ValidationException(
+      message: message ?? this.message,
+      entity: entity ?? this.entity,
+      code: code ?? this.code,
+      key: key ?? this.key,
+      index: index ?? this.index,
+    );
   }
 }

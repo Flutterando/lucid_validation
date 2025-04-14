@@ -36,6 +36,7 @@ extension ValidCPFValidation on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -76,6 +77,7 @@ extension ValidCPFNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -117,6 +119,7 @@ extension ValidCPFOrNullableValidation on SimpleValidationBuilder<String?> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

@@ -52,6 +52,7 @@ extension InclusiveBetweenDatetimeValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -109,6 +110,7 @@ extension InclusiveBetweenDatetimeNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -166,6 +168,7 @@ extension InclusiveBetweenDatetimeOrNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

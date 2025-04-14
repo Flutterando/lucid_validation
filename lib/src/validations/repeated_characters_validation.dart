@@ -45,6 +45,7 @@ extension RepeatedCharactersValidator on SimpleValidationBuilder<String> {
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -99,6 +100,7 @@ extension RepeatedCharactersNullableValidator
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -154,6 +156,7 @@ extension RepeatedCharactersOrNullValidator
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,

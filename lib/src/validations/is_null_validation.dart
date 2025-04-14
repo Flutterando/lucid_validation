@@ -37,6 +37,7 @@ extension IsNullValidation<T> on SimpleValidationBuilder<T?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

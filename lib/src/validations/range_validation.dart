@@ -45,6 +45,7 @@ extension RangeValidation on SimpleValidationBuilder<num> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -95,6 +96,7 @@ extension RangeNullableValidation on SimpleValidationBuilder<num?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -146,6 +148,7 @@ extension RangeOrNullableValidation on SimpleValidationBuilder<num?> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

@@ -40,6 +40,7 @@ extension MustHaveLowercaseValidation on SimpleValidationBuilder<String> {
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -88,6 +89,7 @@ extension MustHaveLowercaseNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -135,6 +137,7 @@ extension MustHaveLowercaseOrNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

@@ -40,6 +40,7 @@ extension MustHaveSpecialCharacterValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -87,6 +88,7 @@ extension MustHaveSpecialCharacterNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,
@@ -133,6 +135,7 @@ extension MustHaveSpecialCharacterOrNullableValidation
         );
 
         return ValidationException(
+          entity: extractClassName(entity.toString()),
           message: currentMessage,
           code: currentCode,
           key: key,

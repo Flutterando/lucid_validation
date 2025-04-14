@@ -46,6 +46,7 @@ extension GreaterThanOrEqualToDateTimeValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -97,6 +98,7 @@ extension GreaterThanOrEqualToDateTimeNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
@@ -148,6 +150,7 @@ extension GreaterThanOrEqualToDateTimeOrNullableValidation
       );
 
       return ValidationException(
+        entity: extractClassName(entity.toString()),
         message: currentMessage,
         code: currentCode,
         key: key,
