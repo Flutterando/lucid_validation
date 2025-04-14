@@ -31,3 +31,5 @@ part 'valid_creditcard_validation.dart';
 part 'valid_email_validation.dart';
 part 'valid_cpf_or_cnpj_validation.dart';
 part 'valid_phone_validation.dart';
+part 'repeated_characters_validation.dart';
+part 'sequential_characters_validation.dart';

@@ -31,7 +31,9 @@ abstract class Language {
     exclusiveBetweenDatetime: 'exclusiveBetweenDatetime',
     validCpfOrCnpj: 'validCpfOrCnpj',
     validPhoneBr: 'validPhoneBr',
-    validPhoneDdiBr: 'validPhoneDdiBr'
+    validPhoneDdiBr: 'validPhoneDdiBr',
+    sequentialRepeatedCharacters: 'sequentialRepeatedCharacters',
+    sequentialCharactersNotAllowed: 'sequentialCharactersNotAllowed',
   );
 
   Language([Map<String, String> translations = const {}]) {
@@ -87,7 +89,12 @@ abstract class Language {
         "'{PropertyName}' must be greater than the '{StartValue}' date and less than the '{EndValue}' date.",
     code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ.",
     code.validPhoneBr: "'{PropertyName}' is not a valid phone number.",
-    code.validPhoneDdiBr: "'{PropertyName}' is not a valid phone number with DDI."
+    code.validPhoneDdiBr: "'{PropertyName}' is not a valid phone number with DDI.",
+    code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ.",
+    code.sequentialRepeatedCharacters:
+        "'{PropertyName}' cannot have repeated characters in sequence.",
+    code.sequentialCharactersNotAllowed:
+        "'{PropertyName}' cannot have sequences like '123' or 'abc'.",
   };
 
   String? getTranslation(String key) => _translations[key];

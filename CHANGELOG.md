@@ -1,3 +1,7 @@
+## 1.2.7
+
+* Aded hasNoSequentialRepeatedCharacters and hasNoSequentialCharacters
+
 ## 1.2.6
 
 * Aded validPhoneWithCountryCodeBR and validPhoneBR

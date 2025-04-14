@@ -126,6 +126,8 @@ Here’s a complete list of available validators you can use:
 - **exclusiveBetween**: Checks if the datetime value is between two datetime values, excluding both bounds.
 - **validPhoneBR:** Check if the strig is a valid brazilian phone number (xx9xxxxxxxx)
 - **validPhoneWithCountryCodeBR:** Check if the strig is a valid brazilian phone number with DDI (55xx9xxxxxxxx)
+- **hasNoSequentialRepeatedCharacters:** Checks if a string does not contain a sequence of repeated characters.
+- **hasNoSequentialCharacters:** Checks if a string does not contain sequential characters.
 
 **Observation: for almost all validators, there is an equivalent with the `OrNull` suffix. Example: `validEmailOrNull`**
 
