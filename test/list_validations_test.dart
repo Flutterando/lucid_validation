@@ -41,15 +41,19 @@ void main() {
     final exceptions = result.exceptions;
 
     expect(exceptions[0].key, "className");
+    expect(exceptions[0].entity, "Classroom");
 
     expect(exceptions[1].key, "name");
     expect(exceptions[1].entity, "TeacherModel");
 
     expect(exceptions[2].key, "name");
+    expect(exceptions[2].entity, "StudentModel");
     expect(exceptions[2].index, 0);
 
     expect(exceptions[3].key, "email");
+    expect(exceptions[3].entity, "StudentModel");
     expect(exceptions[3].index, 1);
+
     expect(exceptions.length, 4);
   });
 }

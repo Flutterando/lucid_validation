@@ -377,8 +377,8 @@ Now we validate a complex model:
 
 ```dart
 final model = Classroom(
-  className: '',
-  teacher: TeacherModel(name: ''),
+  className: '', // invalid name
+  teacher: TeacherModel(name: ''), // invalid name
   students: [
     StudentModel(name: '', email: 'valid@email.com'),    // invalid name
     StudentModel(name: 'Student 2', email: ''),          // invalid email
@@ -395,14 +395,17 @@ The resulting exceptions will contain:
 
 ```dart
 expect(exceptions[0].key, "className");
+expect(exceptions[0].entity, "Classroom");
 
 expect(exceptions[1].key, "name");
 expect(exceptions[1].entity, "TeacherModel");
 
 expect(exceptions[2].key, "name");
-expect(exceptions[2].index, 0); // first student
+expect(exceptions[2].entity, "StudentModel");
+expect(exceptions[2].index, 0);  // first student
 
 expect(exceptions[3].key, "email");
+expect(exceptions[3].entity, "StudentModel");
 expect(exceptions[3].index, 1); // second student
 ```
 
