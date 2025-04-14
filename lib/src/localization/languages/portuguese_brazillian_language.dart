@@ -53,6 +53,8 @@ class PortugueseBrasillianLanguage extends Language {
           Language.code.inclusiveBetweenDatetime:
               "'{PropertyName}' deve ser maior ou igual à data '{StartValue}' e menor ou igual à data '{EndValue}'.",
           Language.code.exclusiveBetweenDatetime:
-              "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'."
+              "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'.",
+          Language.code.validPhoneBr: "'{PropertyName}' não é um telefone válido.",
+          Language.code.validPhoneDdiBr: "'{PropertyName}' não é um telefone DDI válido."
         });
 }

@@ -27,30 +27,25 @@ void main() {
     user.email = 'test@gmail.com';
 
     expect(emailValidator(), null);
+
+    final phoneValidator = validator.byField(user, 'phone');
+    user.phone = '75912345678';
+
+    expect(phoneValidator(), null);
   });
 
   group('nested byfield normal', () {
     final flagValidator = TestLucidValidator<Flag>();
-    flagValidator
-        .ruleFor((flag) => flag.value, key: 'value')
-        .equalTo((entity) => true);
+    flagValidator.ruleFor((flag) => flag.value, key: 'value').equalTo((entity) => true);
 
     final categoryValidator = TestLucidValidator<CategoryModel>();
-    categoryValidator
-        .ruleFor((category) => category.name, key: 'name')
-        .notEmpty();
-    categoryValidator
-        .ruleFor((category) => category.flag, key: 'flag')
-        .setValidator(flagValidator);
+    categoryValidator.ruleFor((category) => category.name, key: 'name').notEmpty();
+    categoryValidator.ruleFor((category) => category.flag, key: 'flag').setValidator(flagValidator);
 
     final productValidator = TestLucidValidator<ProductModel>();
     productValidator.ruleFor((product) => product.name, key: 'name').notEmpty();
-    productValidator
-        .ruleFor((product) => product.price, key: 'price')
-        .greaterThan(0);
-    productValidator
-        .ruleFor((product) => product.category, key: 'category')
-        .setValidator(categoryValidator);
+    productValidator.ruleFor((product) => product.price, key: 'price').greaterThan(0);
+    productValidator.ruleFor((product) => product.category, key: 'category').setValidator(categoryValidator);
 
     final product = ProductModel();
 
@@ -70,26 +65,22 @@ void main() {
     });
 
     test('categoryNameValidator', () {
-      final categoryNameValidatorFn =
-          productValidator.byField(product, 'category.name');
+      final categoryNameValidatorFn = productValidator.byField(product, 'category.name');
       expect(categoryNameValidatorFn(), isNotNull);
     });
 
     test('flagValidator', () {
-      final flagValidatorFn =
-          productValidator.byField(product, 'category.flag');
+      final flagValidatorFn = productValidator.byField(product, 'category.flag');
       expect(flagValidatorFn(), isNotNull);
     });
 
     test('flagValueValidator', () {
-      final flagValueValidatorFn =
-          productValidator.byField(product, 'category.flag.value');
+      final flagValueValidatorFn = productValidator.byField(product, 'category.flag.value');
       expect(flagValueValidatorFn(), isNotNull);
     });
 
     test('must return null if not found key', () {
-      final flagValueValidatorFn =
-          productValidator.byField(product, 'category.flag.notExists');
+      final flagValueValidatorFn = productValidator.byField(product, 'category.flag.notExists');
       expect(flagValueValidatorFn(), null);
     });
 
@@ -102,12 +93,9 @@ void main() {
       final nameValidator = productValidator.byField(product, 'name');
       final priceValidator = productValidator.byField(product, 'price');
       final categoryValidatorFn = productValidator.byField(product, 'category');
-      final categoryNameValidatorFn =
-          productValidator.byField(product, 'category.name');
-      final flagValidatorFn =
-          productValidator.byField(product, 'category.flag');
-      final flagValueValidatorFn =
-          productValidator.byField(product, 'category.flag.value');
+      final categoryNameValidatorFn = productValidator.byField(product, 'category.name');
+      final flagValidatorFn = productValidator.byField(product, 'category.flag');
+      final flagValueValidatorFn = productValidator.byField(product, 'category.flag.value');
 
       expect(nameValidator(), null);
       expect(priceValidator(), null);

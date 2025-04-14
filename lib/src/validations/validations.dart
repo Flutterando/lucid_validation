@@ -30,3 +30,4 @@ part 'valid_cpf_validation.dart';
 part 'valid_creditcard_validation.dart';
 part 'valid_email_validation.dart';
 part 'valid_cpf_or_cnpj_validation.dart';
+part 'valid_phone_validation.dart';

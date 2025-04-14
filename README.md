@@ -1,4 +1,3 @@
-
 # LucidValidation
 
 **LucidValidation** is a pure Dart package for building strongly typed validation rules, inspired by FluentValidation. Created by the Flutterando community, this package offers a fluent and extensible API for validations, both in frontend (with Flutter) and backend applications.
@@ -125,6 +124,8 @@ Here’s a complete list of available validators you can use:
 - **lessThan**: Checks if the datetime value is less than a specified maximum datetime.
 - **inclusiveBetween**: Checks if the datetime value is between two datetime values, including both bounds.
 - **exclusiveBetween**: Checks if the datetime value is between two datetime values, excluding both bounds.
+- **validPhoneBR:** Check if the strig is a valid brazilian phone number (xx9xxxxxxxx)
+- **validPhoneWithCountryCodeBR:** Check if the strig is a valid brazilian phone number with DDI (55xx9xxxxxxxx)
 
 **Observation: for almost all validators, there is an equivalent with the `OrNull` suffix. Example: `validEmailOrNull`**
 
@@ -168,6 +169,7 @@ class LoginForm extends StatelessWidget {
 CascadeMode in LucidValidation controls the behavior of rule execution when a validation failure occurs for a property. By default, the validation rules continue to execute even if a previous rule for the same property fails. However, you can change this behavior using the CascadeMode.
 
 ### Available Modes
+
 `CascadeMode.continueExecution (Default)`: All validation rules for a property are executed, even if one fails. This mode is useful when you want to collect all validation errors at once.
 
 `CascadeMode.stopOnFirstFailure`: Stops executing further validation rules for a property as soon as a failure is detected. This is useful when you want to prevent unnecessary validation checks after an error has been found.
@@ -199,7 +201,7 @@ under specific circumstances, such as when a certain property is set to a partic
 the validation rules should be applied.
 
 Example:
- 
+
 ```dart
 ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
     .when((user) => user.requiresPhoneNumber)
@@ -207,7 +209,7 @@ ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
     .must((value) => value.length == 10, 'Phone number must be 10 digits', 'phone_length');
 ```
 
-In the example above, the phone number validation rules are only applied if the user's`requiresPhoneNumber`
+In the example above, the phone number validation rules are only applied if the user's `requiresPhoneNumber`
 property is true. If the condition is false, the phone number field will be considered valid,and the
 associated rules will not be executed.
 
@@ -215,7 +217,8 @@ associated rules will not be executed.
 
 When working with complex models that contain nested objects, it’s often necessary to apply validation rules not only to the parent model but also to its nested properties. The `setValidator` method allows you to integrate a nested `LucidValidator` within another validator, enabling a modular and scalable approach to validation.
 
-See this example: 
+See this example:
+
 ```dart
 // Models
 class Customer {
@@ -310,13 +313,11 @@ Each validation can have different parameters such as `{PropertyValue}` or `{Com
 
 By default, validation messages are in English, but you can change the language in the global properties of `LucidValidation`.
 
-
 ```dart
 LucidValidation.global.culture = Culture('pt', 'BR');
 ```
 
 If you’d like to contribute a translation of `LucidValidation’s` default messages, please open a pull request that adds a language file to the project.
-
 
 You can also customize the default messages by overriding the `LanguageManager`:
 
@@ -382,13 +383,12 @@ Now just add it to the `MaterialApp` or `CupertinoApp`:
         //
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        
+      
       ],
       ...
     );
   }
 ```
-
 
 ## Creating Custom Rules
 

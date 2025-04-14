@@ -30,6 +30,8 @@ abstract class Language {
     inclusiveBetweenDatetime: 'inclusiveBetweenDatetime',
     exclusiveBetweenDatetime: 'exclusiveBetweenDatetime',
     validCpfOrCnpj: 'validCpfOrCnpj',
+    validPhoneBr: 'validPhoneBr',
+    validPhoneDdiBr: 'validPhoneDdiBr'
   );
 
   Language([Map<String, String> translations = const {}]) {
@@ -83,7 +85,9 @@ abstract class Language {
         "'{PropertyName}' must be greater than or equal to '{StartValue}' date and less than or equal to '{EndValue}' date.",
     code.exclusiveBetweenDatetime:
         "'{PropertyName}' must be greater than the '{StartValue}' date and less than the '{EndValue}' date.",
-    code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ."
+    code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ.",
+    code.validPhoneBr: "'{PropertyName}' is not a valid phone number.",
+    code.validPhoneDdiBr: "'{PropertyName}' is not a valid phone number with DDI."
   };
 
   String? getTranslation(String key) => _translations[key];
