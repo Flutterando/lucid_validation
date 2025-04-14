@@ -311,6 +311,107 @@ All validations have the `message` parameter for customization, with the possibi
 Please note that the `{PropertyName}` is an exclusive parameter of the `isEmpty` validation that will be internally changed to the validation's `key`, which in this case is `name`.
 Each validation can have different parameters such as `{PropertyValue}` or `{ComparisonValue}`, so please check the documentation of each one to know the available parameters.
 
+### Validating Lists with `setEach
+
+When your model contains a list of nested objects—like a list of students or items in a cart—it's essential to validate each element of that list individually. The setEach method allows you to apply a specific validator to every item in a list.
+
+This enables fine-grained error reporting, including support for indexing errors to show exactly which item failed validation.
+
+```dart
+class Classroom {
+  String className;
+  TeacherModel teacher;
+  List<StudentModel> students;
+
+  Classroom({
+    required this.className,
+    required this.teacher,
+    required this.students,
+  });
+}
+
+class StudentModel {
+  String name;
+  String email;
+
+  StudentModel({
+    required this.name,
+    required this.email,
+  });
+}
+
+class TeacherModel {
+  String name;
+
+  TeacherModel({required this.name});
+}
+
+```
+
+Now let's define validators for each class:
+
+```dart
+class StudentValidator extends LucidValidator<StudentModel> {
+  StudentValidator() {
+    ruleFor((s) => s.name, key: 'name').notEmpty();
+    ruleFor((s) => s.email, key: 'email').validEmail();
+  }
+}
+
+class TeacherModelValidator extends LucidValidator<TeacherModel> {
+  TeacherModelValidator() {
+    ruleFor((t) => t.name, key: 'name').notEmpty();
+  }
+}
+
+class ClassroomValidator extends LucidValidator<Classroom> {
+  ClassroomValidator() {
+    ruleFor((c) => c.className, key: 'className').notEmpty();
+    ruleFor((c) => c.teacher, key: 'teacher').setValidator(TeacherModelValidator());
+    ruleFor((c) => c.students, key: 'students').setEach(StudentValidator());
+  }
+}
+```
+
+Now we validate a complex model:
+
+```dart
+final model = Classroom(
+  className: '',
+  teacher: TeacherModel(name: ''),
+  students: [
+    StudentModel(name: '', email: 'valid@email.com'),    // invalid name
+    StudentModel(name: 'Student 2', email: ''),          // invalid email
+    StudentModel(name: 'Student 3', email: 'ok@email'),  // valid
+  ],
+);
+
+final validator = ClassroomValidator();
+final result = validator.validate(model);
+final exceptions = result.exceptions;
+```
+
+The resulting exceptions will contain:
+
+```dart
+expect(exceptions[0].key, "className");
+
+expect(exceptions[1].key, "name");
+expect(exceptions[1].entity, "TeacherModel");
+
+expect(exceptions[2].key, "name");
+expect(exceptions[2].index, 0); // first student
+
+expect(exceptions[3].key, "email");
+expect(exceptions[3].index, 1); // second student
+```
+
+#### Benefits
+
+- **Modular validation** — Each validator handles only its own logic.
+- **Index tracking** — Automatically adds the .index field to help identify which item failed.
+- **Clear error structure** — Ideal for rendering errors in forms or APIs.
+
 ### Default Messages
 
 By default, validation messages are in English, but you can change the language in the global properties of `LucidValidation`.

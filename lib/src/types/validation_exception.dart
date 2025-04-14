@@ -12,8 +12,16 @@ class ValidationException implements Exception {
   /// An optional code that identifies the specific validation error.
   final String code;
 
+  /// The index of the item in a collection, if the validation error occurred within a list.
+  ///
+  /// This is useful when validating collections using `setEach`, allowing errors
+  /// to be associated with the correct item by its position in the list.
   final int? index;
 
+  /// The name of the entity (usually the class name) where the validation error occurred.
+  ///
+  /// This helps to contextualize the error by specifying which entity the error is associated with,
+  /// especially in scenarios involving nested or complex validations.
   final String entity;
 
   /// Constructs a [ValidationException].

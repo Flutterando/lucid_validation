@@ -225,14 +225,14 @@ abstract class LucidValidationBuilder<TProp, Entity> {
     _nestedValidator = validator;
   }
 
-  /// Permite aplicar um validador para cada item de uma coleção de objetos.
+  /// Allows you to apply a validator to each item in a collection of Objects.
   ///
-  /// O método `setEach` é útil para validar listas ou outras coleções de objetos onde
-  /// cada item da coleção deve ser validado individualmente com o mesmo conjunto de regras.
+  /// The `setEach` method is useful for validating lists or other collections of objects where
+  /// each item in the collection must be validated individually with the same set of rules.
   ///
-  /// [itemValidator] é um `LucidValidator` que será aplicado a cada item da lista.
+  /// [itemValidator] is a `LucidValidator` that will be applied to each item in the list.
   ///
-  /// Exemplo:
+  /// Example:
   ///
   /// ```dart
   /// ruleFor((form) => form.addresses, key: 'addresses')
@@ -308,11 +308,37 @@ class _LucidValidationBuilder<TProp, Entity>
   _LucidValidationBuilder(super.key, super.label, super.selector, super.lucid);
 }
 
+/// A wrapper around a `LucidValidator` used for validating each item in a collection of objects.
+///
+/// The `_EachValidatorWrapper` class allows you to apply a single `LucidValidator` instance
+/// to each element of a list or iterable of values. This is useful when validating collections
+/// where each item must be validated using the same set of rules.
+///
+/// This class is typically used internally by the `setEach` method of `LucidValidationBuilder`,
+/// which enables nested validation for list properties.
+///
+/// Example:
+///
+/// ```dart
+/// ruleFor((form) => form.contacts, key: 'contacts')
+///   .setEach(ContactValidator());
+/// ```
+///
+/// In this example, each item in the `contacts` list will be validated using the `ContactValidator`.
 class _EachValidatorWrapper<T> extends LucidValidator<T> {
+  /// The validator that will be applied to each item in the collection.
   final LucidValidator<dynamic> _validator;
 
   _EachValidatorWrapper(this._validator);
 
+  /// Validates each item in the [value] iterable using the wrapped validator.
+  ///
+  /// Iterates over each item in the [value], applies the wrapped validator to it,
+  /// and collects all `ValidationException`s. Each exception is annotated with the
+  /// index of the item in the collection.
+  ///
+  /// Returns a [ValidationResult] containing the list of exceptions and an
+  /// `isValid` flag indicating whether all items are valid.
   @override
   ValidationResult validate(T value) {
     final exceptions = <ValidationException>[];
@@ -336,6 +362,15 @@ class _EachValidatorWrapper<T> extends LucidValidator<T> {
         exceptions: exceptions, isValid: exceptions.isEmpty);
   }
 
+  /// Retrieves the validation message for a specific field from each item in the iterable.
+  ///
+  /// This method searches each item in the [value] collection and returns the first non-null
+  /// validation message for the given [key]. If none are found, `null` is returned.
+  ///
+  /// Optionally, an [overrideCallback] can be provided to customize how the list of
+  /// `ValidationException`s is interpreted.
+  ///
+  /// Returns a function that optionally takes a suffix and returns a validation message string or `null`.
   @override
   String? Function([String?]) byField(
     T value,
