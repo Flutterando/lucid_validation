@@ -53,6 +53,10 @@ class PortugueseBrasillianLanguage extends Language {
           Language.code.inclusiveBetweenDatetime:
               "'{PropertyName}' deve ser maior ou igual à data '{StartValue}' e menor ou igual à data '{EndValue}'.",
           Language.code.exclusiveBetweenDatetime:
-              "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'."
+              "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'.",
+          Language.code.sequentialRepeatedCharacters:
+              "'{PropertyName}' não pode ter caracteres repetidos em sequência.",
+          Language.code.sequentialCharactersNotAllowed:
+              "'{PropertyName}' não pode ter sequências como '123' ou 'abc'."
         });
 }

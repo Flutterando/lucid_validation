@@ -53,6 +53,10 @@ class SpanishLanguage extends Language {
           Language.code.inclusiveBetweenDatetime:
               "'{PropertyName}' debe ser mayor o igual a la fecha '{StartValue}' y menor o igual a la fecha '{EndValue}'.",
           Language.code.exclusiveBetweenDatetime:
-              "'{PropertyName}' debe ser mayor que la fecha '{StartValue}' y menor que la fecha '{EndValue}'."
+              "'{PropertyName}' debe ser mayor que la fecha '{StartValue}' y menor que la fecha '{EndValue}'.",
+          Language.code.sequentialRepeatedCharacters:
+              "'{PropertyName}' no puede tener caracteres repetidos en secuencia.",
+          Language.code.sequentialCharactersNotAllowed:
+              "'{PropertyName}' no puede tener secuencias como '123' o 'abc'."
         });
 }
