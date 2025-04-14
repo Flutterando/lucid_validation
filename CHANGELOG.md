@@ -1,3 +1,7 @@
+## 1.3.0
+
+*  Added support for list validation using `setEach`, allowing nested validators with index-aware error reporting.
+
 ## 1.2.7
 
 * Aded hasNoSequentialRepeatedCharacters and hasNoSequentialCharacters
