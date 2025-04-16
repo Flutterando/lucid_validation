@@ -191,12 +191,7 @@ You can apply CascadeMode to your validation chain using the cascaded method:
     .mustHaveUppercase()
     .mustHaveNumbers()
     .mustHaveSpecialCharacter()
-    .cascade
-(
-CascadeMode
-.
-stopOnFirstFailure
-); // change cascade mode
+    .cascade(CascadeMode.stopOnFirstFailure); // change cascade mode
 ```
 
 ## When condition
@@ -216,9 +211,7 @@ the validation rules should be applied.
 Example:
 
 ```dart
-ruleFor
-(
-(user) => user.phoneNumber, key: 'phoneNumber')
+ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
     .when((user) => user.requiresPhoneNumber)
     .isEmpty()
     .must((value) => value.length == 10, 'Phone number must be 10 digits', 'phone_length');
@@ -302,8 +295,7 @@ var customer = Customer(
 final validator = CustomerValidator();
 
 var result = validator.validate(customer);
-expect
-(result.isValid, isTrue);
+expect(result.isValid, isTrue);
 ```
 
 You can use `byField` using nested params syntax:
@@ -313,12 +305,7 @@ You can use `byField` using nested params syntax:
 final validator = CustomerValidator();
 
 final postCodeValidator = validator.byField(customer, 'address.postcode')();
-expect
-(
-postCodeValidator
-,
-null
-); // is valid
+expect(postCodeValidator, null); // is valid
 
 ```
 
@@ -328,11 +315,8 @@ All validations have the `message` parameter for customization, with the possibi
 message more dynamic.
 
 ```dart
-  ruleFor
-(
-(entity) => entity.name, key: 'name')
-    .isEmpty(message: "'{PropertyName}' can not be empty."
-)
+  ruleFor((entity) => entity.name, key: 'name')
+    .isEmpty(message: "'{PropertyName}' can not be empty.")
 ```
 
 Please note that the `{PropertyName}` is an exclusive parameter of the `isEmpty` validation that will be internally
@@ -427,9 +411,7 @@ final exceptions = result.exceptions;
 The resulting exceptions will contain:
 
 ```dart
-expect
-(
-exceptions[0].key, "className");
+expect(exceptions[0].key, "className");
 expect(exceptions[0].entity, "Classroom");
 
 expect(exceptions[1].key, "name");
@@ -441,8 +423,7 @@ expect(exceptions[2].index, 0); // first student
 
 expect(exceptions[3].key, "email");
 expect(exceptions[3].entity, "StudentModel");
-expect(exceptions[3].index, 1
-); // second student
+expect(exceptions[3].index, 1); // second student
 ```
 
 #### Benefits
@@ -457,14 +438,7 @@ By default, validation messages are in English, but you can change the language 
 of `LucidValidation`.
 
 ```dart
-LucidValidation.global.culture = Culture
-('pt
-'
-,
-'
-BR
-'
-);
+LucidValidation.global.culture = Culture('pt', 'BR');
 ```
 
 If you’d like to contribute a translation of `LucidValidation’s` default messages, please open a pull request that adds
