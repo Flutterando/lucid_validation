@@ -578,7 +578,7 @@ extension CustomValidUrlValidator on SimpleValidationBuilder<String> {
         message: message,
         code: code,
         key: key,
-        entity: extractClassName(entity),
+        entity: extractClassName(entity.toString()),
       );
     });
   }
