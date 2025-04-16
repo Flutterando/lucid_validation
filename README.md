@@ -533,7 +533,7 @@ extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
   }
 }
 
-extension CustomValidUrlValidator on SimpleValidationBuilder<String> {
+extension CustomValidPhoneValidator on SimpleValidationBuilder<String> {
   SimpleValidationBuilder<String> customValidPhone({
     String code = 'validPhone',
     required String message,
