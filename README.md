@@ -592,7 +592,7 @@ Use directly!
 ruleFor((user) => user.phone, key: 'password') //
   .customValidPassword();
 
-ruleFor((user) => user.password, key: 'password') //
+ruleFor((user) => user.phone, key: 'phone') //
   .customValidPhone();
 ```
 
