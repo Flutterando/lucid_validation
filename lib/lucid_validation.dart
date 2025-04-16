@@ -62,6 +62,7 @@ export 'src/lucid_validation_builder.dart';
 export 'src/lucid_validator.dart';
 export 'src/types/types.dart';
 export 'src/validations/validations.dart';
+export 'src/utils/utils.dart';
 
 sealed class LucidValidation {
   static final global = _GlobalConfig(

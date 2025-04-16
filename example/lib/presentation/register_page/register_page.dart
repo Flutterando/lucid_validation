@@ -2,6 +2,7 @@ import 'package:example/domain/dtos/register_param_dto.dart';
 import 'package:example/domain/validations/register_param_validation.dart';
 import 'package:example/main.dart';
 import 'package:flutter/material.dart';
+import 'package:lucid_validation/lucid_validation.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,6 +14,14 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final validator = RegisterParamValidation();
   final registerParamDto = RegisterParamDto.empty();
+  final exceptionsPassword = ValueNotifier<List<String>>([]);
+
+  @override
+  initState() {
+    super.initState();
+
+    _checkPasswordValidation();
+  }
 
   sucessSnackBar() {
     return SnackBar(
@@ -38,6 +47,19 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       content: Text(message),
     );
+  }
+
+  void _checkPasswordValidation() {
+    final exceptionsListPassword = validator.getExceptionsByKey(
+      registerParamDto,
+      'password',
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      exceptionsPassword.value =
+          exceptionsListPassword.map((e) => e.code).toList();
+
+    });
   }
 
   void signIn() {
@@ -107,12 +129,22 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 12),
             TextFormField(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: validator.byField(registerParamDto, 'password'),
+              validator: (value) {
+                _checkPasswordValidation();
+                return null;
+              },
               onChanged: registerParamDto.setPassword,
               obscureText: true,
               decoration: const InputDecoration(
                 hintText: 'Password',
               ),
+            ),
+            const SizedBox(height: 12),
+            ValueListenableBuilder(
+              valueListenable: exceptionsPassword,
+              builder: (context, exceptionsPassword, _) {
+                return PasswordRequirements(errors: exceptionsPassword);
+              },
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -147,6 +179,46 @@ class _RegisterPageState extends State<RegisterPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PasswordRequirements extends StatelessWidget {
+  const PasswordRequirements({super.key, required this.errors});
+
+  final List<String> errors;
+
+  @override
+  Widget build(BuildContext context) {
+    final Map<String, String> requirementsMap = {
+      Language.code.minLength: 'Pelo menos 8 caracteres',
+      Language.code.mustHaveUppercase: 'Pelo menos uma letra maiúscula',
+      Language.code.mustHaveLowercase: 'Pelo menos uma letra minúscula',
+      Language.code.mustHaveNumber: 'Pelo menos um número',
+      Language.code.mustHaveSpecialCharacter:
+          'Pelo menos um caractere especial (@\$!%*#?&)',
+    };
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: requirementsMap.entries.map((entry) {
+        var colorIcon = Colors.lightGreen;
+
+        if (errors.contains(entry.key)) {
+          colorIcon = Colors.red;
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Row(
+            spacing: 4.0,
+            children: [
+              Icon(Icons.warning, size: 12.0, color: colorIcon),
+              Text(entry.value),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

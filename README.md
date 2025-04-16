@@ -1,6 +1,8 @@
 # LucidValidation
 
-**LucidValidation** is a pure Dart package for building strongly typed validation rules, inspired by FluentValidation. Created by the Flutterando community, this package offers a fluent and extensible API for validations, both in frontend (with Flutter) and backend applications.
+**LucidValidation** is a pure Dart package for building strongly typed validation rules, inspired by FluentValidation.
+Created by the Flutterando community, this package offers a fluent and extensible API for validations, both in
+frontend (with Flutter) and backend applications.
 
 ## Features
 
@@ -78,7 +80,7 @@ void main() {
   final validator = UserValidator();
 
   final result = validator.validate(user);
-  
+
   if (result.isValid) {
     print('User is valid');
   } else {
@@ -168,24 +170,33 @@ class LoginForm extends StatelessWidget {
 
 ## Cascate Mode
 
-CascadeMode in LucidValidation controls the behavior of rule execution when a validation failure occurs for a property. By default, the validation rules continue to execute even if a previous rule for the same property fails. However, you can change this behavior using the CascadeMode.
+CascadeMode in LucidValidation controls the behavior of rule execution when a validation failure occurs for a property.
+By default, the validation rules continue to execute even if a previous rule for the same property fails. However, you
+can change this behavior using the CascadeMode.
 
 ### Available Modes
 
-`CascadeMode.continueExecution (Default)`: All validation rules for a property are executed, even if one fails. This mode is useful when you want to collect all validation errors at once.
+`CascadeMode.continueExecution (Default)`: All validation rules for a property are executed, even if one fails. This
+mode is useful when you want to collect all validation errors at once.
 
-`CascadeMode.stopOnFirstFailure`: Stops executing further validation rules for a property as soon as a failure is detected. This is useful when you want to prevent unnecessary validation checks after an error has been found.
+`CascadeMode.stopOnFirstFailure`: Stops executing further validation rules for a property as soon as a failure is
+detected. This is useful when you want to prevent unnecessary validation checks after an error has been found.
 
 You can apply CascadeMode to your validation chain using the cascaded method:
 
 ```dart
  return notEmpty() //
-        .minLength(5, message: 'Must be at least 8 characters long')
-        .mustHaveLowercase()
-        .mustHaveUppercase()
-        .mustHaveNumbers()
-        .mustHaveSpecialCharacter()
-        .cascade(CascadeMode.stopOnFirstFailure); // change cascade mode
+    .minLength(5, message: 'Must be at least 8 characters long')
+    .mustHaveLowercase()
+    .mustHaveUppercase()
+    .mustHaveNumbers()
+    .mustHaveSpecialCharacter()
+    .cascade
+(
+CascadeMode
+.
+stopOnFirstFailure
+); // change cascade mode
 ```
 
 ## When condition
@@ -205,7 +216,9 @@ the validation rules should be applied.
 Example:
 
 ```dart
-ruleFor((user) => user.phoneNumber, key: 'phoneNumber')
+ruleFor
+(
+(user) => user.phoneNumber, key: 'phoneNumber')
     .when((user) => user.requiresPhoneNumber)
     .isEmpty()
     .must((value) => value.length == 10, 'Phone number must be 10 digits', 'phone_length');
@@ -217,7 +230,9 @@ associated rules will not be executed.
 
 ## Complex Validations
 
-When working with complex models that contain nested objects, it’s often necessary to apply validation rules not only to the parent model but also to its nested properties. The `setValidator` method allows you to integrate a nested `LucidValidator` within another validator, enabling a modular and scalable approach to validation.
+When working with complex models that contain nested objects, it’s often necessary to apply validation rules not only to
+the parent model but also to its nested properties. The `setValidator` method allows you to integrate a
+nested `LucidValidator` within another validator, enabling a modular and scalable approach to validation.
 
 See this example:
 
@@ -275,47 +290,64 @@ class CustomerValidator extends LucidValidator<Customer> {
 After that, execute a validation normaly:
 
 ```dart
- var customer = Customer(
-      name: 'John Doe',
-      address: Address(
-        country: 'Brazil',
-        postcode: '12345-678',
-      ),
-    );
 
-  final validator = CustomerValidator();
+var customer = Customer(
+  name: 'John Doe',
+  address: Address(
+    country: 'Brazil',
+    postcode: '12345-678',
+  ),
+);
 
-  var result = validator.validate(customer);
-  expect(result.isValid, isTrue);
+final validator = CustomerValidator();
+
+var result = validator.validate(customer);
+expect
+(result.isValid, isTrue);
 ```
 
 You can use `byField` using nested params syntax:
 
 ```dart
+
 final validator = CustomerValidator();
 
 final postCodeValidator = validator.byField(customer, 'address.postcode')();
-expect(postCodeValidator, null); // is valid
+expect
+(
+postCodeValidator
+,
+null
+); // is valid
 
 ```
 
 There are several ways to customize or internationalize the failure message in validation.
 
-All validations have the `message` parameter for customization, with the possibility of receiving arguments to make the message more dynamic.
+All validations have the `message` parameter for customization, with the possibility of receiving arguments to make the
+message more dynamic.
 
 ```dart
-  ruleFor((entity) => entity.name, key: 'name')
-      .isEmpty(message: "'{PropertyName}' can not be empty." )
+  ruleFor
+(
+(entity) => entity.name, key: 'name')
+    .isEmpty(message: "'{PropertyName}' can not be empty."
+)
 ```
 
-Please note that the `{PropertyName}` is an exclusive parameter of the `isEmpty` validation that will be internally changed to the validation's `key`, which in this case is `name`.
-Each validation can have different parameters such as `{PropertyValue}` or `{ComparisonValue}`, so please check the documentation of each one to know the available parameters.
+Please note that the `{PropertyName}` is an exclusive parameter of the `isEmpty` validation that will be internally
+changed to the validation's `key`, which in this case is `name`.
+Each validation can have different parameters such as `{PropertyValue}` or `{ComparisonValue}`, so please check the
+documentation of each one to know the available parameters.
 
-### Validating Lists with `setEach
+### Validating Lists with `setEach`
 
-When your model contains a list of nested objects—like a list of students or items in a cart—it's essential to validate each element of that list individually. The setEach method allows you to apply a specific validator to every item in a list.
+When your model contains a list of nested objects—like a list of students or items in a cart—it's essential to validate
+each element of that list individually. The setEach method allows you to apply a specific validator to every item in a
+list.
 
-This enables fine-grained error reporting, including support for indexing errors to show exactly which item failed validation.
+This enables fine-grained error reporting, including support for indexing errors to show exactly which item failed
+validation.
 
 ```dart
 class Classroom {
@@ -376,13 +408,14 @@ class ClassroomValidator extends LucidValidator<Classroom> {
 Now we validate a complex model:
 
 ```dart
+
 final model = Classroom(
   className: '', // invalid name
   teacher: TeacherModel(name: ''), // invalid name
   students: [
-    StudentModel(name: '', email: 'valid@email.com'),    // invalid name
-    StudentModel(name: 'Student 2', email: ''),          // invalid email
-    StudentModel(name: 'Student 3', email: 'ok@email'),  // valid
+    StudentModel(name: '', email: 'valid@email.com'), // invalid name
+    StudentModel(name: 'Student 2', email: ''), // invalid email
+    StudentModel(name: 'Student 3', email: 'ok@email'), // valid
   ],
 );
 
@@ -394,7 +427,9 @@ final exceptions = result.exceptions;
 The resulting exceptions will contain:
 
 ```dart
-expect(exceptions[0].key, "className");
+expect
+(
+exceptions[0].key, "className");
 expect(exceptions[0].entity, "Classroom");
 
 expect(exceptions[1].key, "name");
@@ -402,11 +437,12 @@ expect(exceptions[1].entity, "TeacherModel");
 
 expect(exceptions[2].key, "name");
 expect(exceptions[2].entity, "StudentModel");
-expect(exceptions[2].index, 0);  // first student
+expect(exceptions[2].index, 0); // first student
 
 expect(exceptions[3].key, "email");
 expect(exceptions[3].entity, "StudentModel");
-expect(exceptions[3].index, 1); // second student
+expect(exceptions[3].index, 1
+); // second student
 ```
 
 #### Benefits
@@ -417,25 +453,35 @@ expect(exceptions[3].index, 1); // second student
 
 ### Default Messages
 
-By default, validation messages are in English, but you can change the language in the global properties of `LucidValidation`.
+By default, validation messages are in English, but you can change the language in the global properties
+of `LucidValidation`.
 
 ```dart
-LucidValidation.global.culture = Culture('pt', 'BR');
+LucidValidation.global.culture = Culture
+('pt
+'
+,
+'
+BR
+'
+);
 ```
 
-If you’d like to contribute a translation of `LucidValidation’s` default messages, please open a pull request that adds a language file to the project.
+If you’d like to contribute a translation of `LucidValidation’s` default messages, please open a pull request that adds
+a language file to the project.
 
 You can also customize the default messages by overriding the `LanguageManager`:
 
 ```dart
 class CustomLanguageManager extends LanguageManager {
-  CustomLanguageManager(){
+  CustomLanguageManager() {
     addTranslation(Culture('pt', 'PR'), Language.code.equalTo, 'Custom message here');
   }
-}
-...
+}...
 // change manager
-LucidValidation.global.languageManager = CustomLanguageManager();
+LucidValidation.global.languageManager =
+
+CustomLanguageManager();
 
 ```
 
@@ -478,8 +524,8 @@ Now just add it to the `MaterialApp` or `CupertinoApp`:
 
 ```dart
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+Widget build(BuildContext context) {
+  return MaterialApp(
       supportedLocales: const [
         Locale('en', 'US'),
         Locale('pt', 'BR'),
@@ -489,28 +535,19 @@ Now just add it to the `MaterialApp` or `CupertinoApp`:
         //
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-      
+
       ],
       ...
-    );
-  }
+  );
+}
 ```
 
 ## Creating Custom Rules
 
-You can easily extend the functionality of `LucidValidator` by creating your own custom rules using `extensions`. Here’s an example of how to create a validation for phone numbers:
+You can easily extend the functionality of `LucidValidator` by creating your own custom rules using `extensions`. Here’s
+an example of how to create a validation for phone numbers:
 
 ```dart
-extension CustomValidPhoneValidator on SimpleValidationBuilder<String> {
-  SimpleValidationBuilder<String> customValidPhone({String message = 'Invalid phone number format'}) {
-    return matchesPattern(
-      r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}\$',
-      message,
-      'invalid_phone_format',
-    );
-  }
-}
-
 extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
   SimpleValidationBuilder<String> customValidPassword() {
     return notEmpty()
@@ -521,20 +558,48 @@ extension CustomValidPasswordValidator on SimpleValidationBuilder<String> {
         .mustHaveSpecialCharacter();
   }
 }
+
+extension CustomValidUrlValidator on SimpleValidationBuilder<String> {
+  SimpleValidationBuilder<String> customValidPhone({
+    String code = 'validPhone',
+    required String message,
+  }) {
+    return use((value, entity) {
+      final regex = RegExp(
+        r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$',
+        caseSensitive: false,
+      );
+
+      if (regex.hasMatch(value)) {
+        return null;
+      }
+
+      return ValidationException(
+        message: message,
+        code: code,
+        key: key,
+        entity: extractClassName(entity),
+      );
+    });
+  }
+}
 ```
 
 Use directly!
 
 ```dart
 
- ruleFor((user) => user.password, key: 'password')
-        .customValidPassword();
+ruleFor((user) => user.phone, key: 'password') //
+  .customValidPassword();
 
+ruleFor((user) => user.password, key: 'password') //
+  .customValidPhone();
 ```
 
 ## Contributing
 
-Feel free to open issues or pull requests on the [GitHub repository](https://github.com/Flutterando/lucid_validation) if you find any issues or have suggestions for improvements.
+Feel free to open issues or pull requests on the [GitHub repository](https://github.com/Flutterando/lucid_validation) if
+you find any issues or have suggestions for improvements.
 
 ## License
 
