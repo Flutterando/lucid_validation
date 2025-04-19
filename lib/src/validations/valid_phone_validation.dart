@@ -72,7 +72,8 @@ extension ValidPhoneValidation on SimpleValidationBuilder<String> {
   /// final result = validation.validate('(75) 9 9261-9575');
   /// print(result); // null (valid)
   /// ```
-  SimpleValidationBuilder<String> validPhoneBR({String? message, String? code}) {
+  SimpleValidationBuilder<String> validPhoneBR(
+      {String? message, String? code}) {
     return use((value, entity) {
       final regex = RegExp(
         r'''^(\(?[1-9]{2}\)?[\s]?)(9[\s]?)?(\d{4})[\s-]?(\d{4})$''',
@@ -129,11 +130,136 @@ extension ValidPhoneValidation on SimpleValidationBuilder<String> {
   /// final result = validation.validate('+55 (75) 9 9261-9575');
   /// print(result); // null (valid)
   /// ```
-  SimpleValidationBuilder<String> validPhoneWithCountryCodeBR({String? message, String? code}) {
+  SimpleValidationBuilder<String> validPhoneWithCountryCodeBR(
+      {String? message, String? code}) {
     return use((value, entity) {
       final regex = RegExp(r'^\+55 ?\(?[1-9]{2}\)? ?9?[0-9]{4}-?[0-9]{4}$');
 
       if (regex.hasMatch(value)) {
+        return null;
+      }
+
+      final currentCode = code ?? Language.code.validPhoneDdiBr;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': label.isNotEmpty ? label : key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationException(
+        entity: extractClassName(entity.toString()),
+        message: currentMessage,
+        code: currentCode,
+        key: key,
+      );
+    });
+  }
+}
+
+extension ValidPhoneNullableValidation on SimpleValidationBuilder<String?> {
+  /// Validates a nullable Brazilian phone number without country code.
+  ///
+  /// Fails if the value is not null and does not match the standard format.
+  SimpleValidationBuilder<String?> validPhoneBR(
+      {String? message, String? code}) {
+    return use((value, entity) {
+      if (value != null &&
+          RegExp(r'''^(\(?[1-9]{2}\)?[\s]?)(9[\s]?)?(\d{4})[\s-]?(\d{4})$''')
+              .hasMatch(value)) {
+        return null;
+      }
+
+      final currentCode = code ?? Language.code.validPhoneBr;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': label.isNotEmpty ? label : key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationException(
+        entity: extractClassName(entity.toString()),
+        message: currentMessage,
+        code: currentCode,
+        key: key,
+      );
+    });
+  }
+
+  /// Validates a nullable Brazilian phone number with country code `+55`.
+  ///
+  /// Fails if the value is not null and does not match the standard format.
+  SimpleValidationBuilder<String?> validPhoneWithCountryCodeBR(
+      {String? message, String? code}) {
+    return use((value, entity) {
+      if (value != null &&
+          RegExp(r'^\+55 ?\(?[1-9]{2}\)? ?9?[0-9]{4}-?[0-9]{4}$')
+              .hasMatch(value)) {
+        return null;
+      }
+
+      final currentCode = code ?? Language.code.validPhoneDdiBr;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': label.isNotEmpty ? label : key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationException(
+        entity: extractClassName(entity.toString()),
+        message: currentMessage,
+        code: currentCode,
+        key: key,
+      );
+    });
+  }
+}
+
+extension ValidPhoneOrNullableValidation on SimpleValidationBuilder<String?> {
+  /// Validates a Brazilian phone number without country code or allows null values.
+  ///
+  /// Passes if value is null or valid.
+  SimpleValidationBuilder<String?> validPhoneBROrNull(
+      {String? message, String? code}) {
+    return use((value, entity) {
+      if (value == null ||
+          RegExp(r'''^(\(?[1-9]{2}\)?[\s]?)(9[\s]?)?(\d{4})[\s-]?(\d{4})$''')
+              .hasMatch(value)) {
+        return null;
+      }
+
+      final currentCode = code ?? Language.code.validPhoneBr;
+      final currentMessage = LucidValidation.global.languageManager.translate(
+        currentCode,
+        parameters: {
+          'PropertyName': label.isNotEmpty ? label : key,
+        },
+        defaultMessage: message,
+      );
+
+      return ValidationException(
+        entity: extractClassName(entity.toString()),
+        message: currentMessage,
+        code: currentCode,
+        key: key,
+      );
+    });
+  }
+
+  /// Validates a Brazilian phone number with country code `+55` or allows null values.
+  ///
+  /// Passes if value is null or valid.
+  SimpleValidationBuilder<String?> validPhoneWithCountryCodeBROrNull(
+      {String? message, String? code}) {
+    return use((value, entity) {
+      if (value == null ||
+          RegExp(r'^\+55 ?\(?[1-9]{2}\)? ?9?[0-9]{4}-?[0-9]{4}$')
+              .hasMatch(value)) {
         return null;
       }
 

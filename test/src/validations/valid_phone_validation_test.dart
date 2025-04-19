@@ -9,7 +9,7 @@ void main() {
 
     validator
         .ruleFor((e) => e.phone, key: 'phone', label: 'Phone') //
-        .validPhoneBR();
+        .validPhoneBROrNull();
 
     final user = UserModel()..phone = '751234567';
 

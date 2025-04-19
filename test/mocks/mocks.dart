@@ -24,7 +24,7 @@ class UserModel {
   String confirmPassword = '';
   String? description;
   int age = 0;
-  String phone = '';
+  String? phone = '';
   String? cpf = '';
   String? cpfOrCnpj = '';
 }
@@ -78,10 +78,10 @@ class UserValidator extends LucidValidator<UserModel> {
   }
 }
 
-extension CustomValidPhoneValidator on LucidValidationBuilder<String, dynamic> {
-  LucidValidationBuilder<String, dynamic> customValidPhone(String message) {
+extension CustomValidPhoneValidator on LucidValidationBuilder<String?, dynamic> {
+  LucidValidationBuilder<String?, dynamic> customValidPhone(String message) {
     return must(
-      (value) => RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
+      (value) => value == null || RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
       message,
       'invalid_phone_format',
     );
