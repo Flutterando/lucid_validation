@@ -31,10 +31,30 @@ void main() {
         .ruleFor((e) => e.email, key: 'email', label: 'E-mail') //
         .validEmailOrNull();
 
-    final user = UserNullableModel()..email =  null;
+    final user = UserNullableModel()..email = null;
 
     final result = validator.validate(user);
 
     expect(result.isValid, true);
+  });
+
+  test('valid email validation...', () {
+    final validator = TestLucidValidator<UserModel>();
+
+    validator
+        .ruleFor((e) => e.email, key: 'email', label: 'E-mail') //
+        .validEmail();
+
+    final user = UserModel()..email = 'test@.123.com';
+
+    final result = validator.validate(user);
+
+    expect(result.isValid, false);
+
+    expect(result.exceptions.length, 1);
+
+    final error = result.exceptions.first;
+
+    expect(error.message, "'E-mail' is not a valid email address.");
   });
 }
