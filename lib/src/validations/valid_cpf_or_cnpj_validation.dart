@@ -22,59 +22,11 @@ extension ValidCpfOrCnpjValidation on SimpleValidationBuilder<String> {
   ///
   SimpleValidationBuilder<String> validCPFOrCNPJ(
       {String? message, String? code}) {
-    return use((value, entity) {
-      if (_validateCPF(value) || _validateCNPJ(value)) return null;
-
-      if (value.length == 11) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      } else if (value.length == 14) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      }
-
-      final currentCode = code ?? Language.code.validCpfOrCnpj;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => _validateCPF(value) || _validateCNPJ(value),
+      code: code ?? Language.code.validCpfOrCnpj,
+      message: message,
+    );
   }
 }
 
@@ -100,61 +52,12 @@ extension ValidCpfOrCnpjNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> validCPFOrCNPJ(
       {String? message, String? code}) {
-    return use((value, entity) {
-      if (value != null && (_validateCPF(value) || _validateCNPJ(value))) {
-        return null;
-      }
-
-      if (value != null && value.length == 11) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      } else if (value != null && value.length == 14) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      }
-
-      final currentCode = code ?? Language.code.validCpfOrCnpj;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) =>
+          value != null && (_validateCPF(value) || _validateCNPJ(value)),
+      code: code ?? Language.code.validCpfOrCnpj,
+      message: message,
+    );
   }
 }
 
@@ -182,59 +85,11 @@ extension ValidCpfOrCnpjOrNullableValidation
   ///
   SimpleValidationBuilder<String?> validCPFOrCNPJOrNull(
       {String? message, String? code}) {
-    return use((value, entity) {
-      if (value == null) return null;
-      if (_validateCPF(value) || _validateCNPJ(value)) return null;
-
-      if (value.length == 11) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      } else if (value.length == 14) {
-        final currentCode = code ?? Language.code.validCpfOrCnpj;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      }
-
-      final currentCode = code ?? Language.code.validCpfOrCnpj;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) =>
+          value == null || _validateCPF(value) || _validateCNPJ(value),
+      code: code ?? Language.code.validCpfOrCnpj,
+      message: message,
+    );
   }
 }

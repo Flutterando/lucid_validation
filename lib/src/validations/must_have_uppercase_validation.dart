@@ -24,27 +24,10 @@ extension MustHaveUppercaseValidation on SimpleValidationBuilder<String> {
   ///
   SimpleValidationBuilder<String> mustHaveUppercase(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        final isValid = RegExp(r'[A-Z]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveUppercase;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => RegExp(r'[A-Z]').hasMatch(value),
+      code: code ?? Language.code.mustHaveUppercase,
+      message: message,
     );
   }
 }
@@ -70,29 +53,10 @@ extension MustHaveUppercaseNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveUppercase(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null) {
-          final isValid = RegExp(r'[A-Z]').hasMatch(value);
-          if (isValid) return null;
-        }
-
-        final currentCode = code ?? Language.code.mustHaveUppercase;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value != null && RegExp(r'[A-Z]').hasMatch(value),
+      code: code ?? Language.code.mustHaveUppercase,
+      message: message,
     );
   }
 }
@@ -118,28 +82,10 @@ extension MustHaveUppercaseOrNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveUppercaseOrNull(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null) return null;
-        final isValid = RegExp(r'[A-Z]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveUppercase;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value == null || RegExp(r'[A-Z]').hasMatch(value),
+      code: code ?? Language.code.mustHaveUppercase,
+      message: message,
     );
   }
 }

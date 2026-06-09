@@ -31,7 +31,7 @@ void main() {
         .ruleFor((e) => e.email, key: 'email', label: 'E-mail') //
         .validEmailOrNull();
 
-    final user = UserNullableModel()..email =  null;
+    final user = UserNullableModel()..email = null;
 
     final result = validator.validate(user);
 

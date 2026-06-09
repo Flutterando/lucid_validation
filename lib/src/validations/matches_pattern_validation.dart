@@ -25,28 +25,10 @@ extension MatchesPatternValidation on SimpleValidationBuilder<String> {
   ///
   SimpleValidationBuilder<String> matchesPattern(String pattern,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        final isValid = RegExp(pattern).hasMatch(value);
-
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.matchesPattern;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => RegExp(pattern).hasMatch(value),
+      code: code ?? Language.code.matchesPattern,
+      message: message,
     );
   }
 }
@@ -72,30 +54,10 @@ extension MatchesPatternNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> matchesPattern(String pattern,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null) {
-          final isValid = RegExp(pattern).hasMatch(value);
-
-          if (isValid) return null;
-        }
-
-        final currentCode = code ?? Language.code.matchesPattern;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value != null && RegExp(pattern).hasMatch(value),
+      code: code ?? Language.code.matchesPattern,
+      message: message,
     );
   }
 }
@@ -122,30 +84,10 @@ extension MatchesPatternOrNullableValidation
   ///
   SimpleValidationBuilder<String?> matchesPatternOrNull(String pattern,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null) return null;
-
-        final isValid = RegExp(pattern).hasMatch(value);
-
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.matchesPattern;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value == null || RegExp(pattern).hasMatch(value),
+      code: code ?? Language.code.matchesPattern,
+      message: message,
     );
   }
 }

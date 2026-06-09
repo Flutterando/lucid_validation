@@ -23,26 +23,13 @@ extension IsNotNullValidation<T extends Object> on SimpleValidationBuilder<T?> {
   /// - **{PropertyName}**: The name of the property.
   ///
   SimpleValidationBuilder<T> isNotNull({String? message, String? code}) {
+    final ruleCode = code ?? Language.code.isNotNull;
     return useNotNull(
-      (value, entity) {
-        if (value != null) return null;
-
-        final currentCode = code ?? Language.code.isNotNull;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+      (value, entity) => value != null
+          ? null
+          : buildValidationException(entity, code: ruleCode, message: message),
+      code: ruleCode,
+      message: message,
     );
   }
 }

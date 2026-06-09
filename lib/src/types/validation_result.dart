@@ -23,4 +23,30 @@ class ValidationResult {
   List<Map<String, dynamic>> exceptionToJson() {
     return exceptions.map((e) => e.toJson()).toList();
   }
+
+  /// Groups the error messages by their property [key].
+  ///
+  /// This is ideal for building API/form responses, e.g.:
+  /// ```json
+  /// {
+  ///   "email": ["'email' is not a valid email address."],
+  ///   "password": ["'password' must not be empty."]
+  /// }
+  /// ```
+  Map<String, List<String>> get errorsByKey {
+    final map = <String, List<String>>{};
+    for (final exception in exceptions) {
+      map.putIfAbsent(exception.key, () => []).add(exception.message);
+    }
+    return map;
+  }
+
+  /// Returns the first error message associated with the given [key], or `null`
+  /// if there is no error for that property.
+  String? firstErrorFor(String key) {
+    for (final exception in exceptions) {
+      if (exception.key == key) return exception.message;
+    }
+    return null;
+  }
 }

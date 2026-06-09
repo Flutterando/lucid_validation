@@ -23,25 +23,11 @@ extension IsEmptyValidation on SimpleValidationBuilder<String> {
   /// - **{PropertyName}**: The name of the property.
   ///
   SimpleValidationBuilder<String> isEmpty({String? message, String? code}) {
-    return use((value, entity) {
-      if (value.isEmpty) return null;
-
-      final currentCode = code ?? Language.code.isEmpty;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value.isEmpty,
+      code: code ?? Language.code.isEmpty,
+      message: message,
+    );
   }
 }
 
@@ -64,25 +50,11 @@ extension IsEmptyNullableValidation on SimpleValidationBuilder<String?> {
   /// - **{PropertyName}**: The name of the property.
   ///
   SimpleValidationBuilder<String?> isEmpty({String? message, String? code}) {
-    return use((value, entity) {
-      if (value != null && value.isEmpty) return null;
-
-      final currentCode = code ?? Language.code.isEmpty;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value != null && value.isEmpty,
+      code: code ?? Language.code.isEmpty,
+      message: message,
+    );
   }
 }
 
@@ -106,24 +78,10 @@ extension IsEmptyOrNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> isEmptyOrNull(
       {String? message, String? code}) {
-    return use((value, entity) {
-      if (value == null || value.isEmpty) return null;
-
-      final currentCode = code ?? Language.code.isEmpty;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value == null || value.isEmpty,
+      code: code ?? Language.code.isEmpty,
+      message: message,
+    );
   }
 }

@@ -30,28 +30,13 @@ extension LessThanOrEqualToDatetimeValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value.isBefore(comparison) || value.isAtSameMomentAs(comparison)) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.lessThanOrEqualToDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) =>
+          value.isBefore(comparison) || value.isAtSameMomentAs(comparison),
+      code: code ?? Language.code.lessThanOrEqualToDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }
 
@@ -81,29 +66,14 @@ extension LessThanOrEqualToDatetimeNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value != null &&
-          (value.isBefore(comparison) || value.isAtSameMomentAs(comparison))) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.lessThanOrEqualToDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) =>
+          value != null &&
+          (value.isBefore(comparison) || value.isAtSameMomentAs(comparison)),
+      code: code ?? Language.code.lessThanOrEqualToDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }
 
@@ -133,28 +103,13 @@ extension LessThanOrEqualToDatetimeOrNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null ||
-          (value.isBefore(comparison) || value.isAtSameMomentAs(comparison))) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.lessThanOrEqualToDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) =>
+          value == null ||
+          (value.isBefore(comparison) || value.isAtSameMomentAs(comparison)),
+      code: code ?? Language.code.lessThanOrEqualToDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }

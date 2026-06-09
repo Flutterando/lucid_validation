@@ -26,27 +26,11 @@ extension LessThanValidation on SimpleValidationBuilder<num> {
   ///
   SimpleValidationBuilder<num> lessThan(num maxValue,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value < maxValue) return null;
-
-        final currentCode = code ?? Language.code.lessThan;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'ComparisonValue': '$maxValue',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value < maxValue,
+      code: code ?? Language.code.lessThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$maxValue'},
     );
   }
 }
@@ -73,27 +57,11 @@ extension LessThanNullableValidation on SimpleValidationBuilder<num?> {
   ///
   SimpleValidationBuilder<num?> lessThan(num maxValue,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null && value < maxValue) return null;
-
-        final currentCode = code ?? Language.code.lessThan;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'ComparisonValue': '$maxValue',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value != null && value < maxValue,
+      code: code ?? Language.code.lessThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$maxValue'},
     );
   }
 }
@@ -120,27 +88,11 @@ extension LessThanOrNullableValidation on SimpleValidationBuilder<num?> {
   ///
   SimpleValidationBuilder<num?> lessThanOrNull(num maxValue,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null || value < maxValue) return null;
-
-        final currentCode = code ?? Language.code.lessThan;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'ComparisonValue': '$maxValue',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value == null || value < maxValue,
+      code: code ?? Language.code.lessThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$maxValue'},
     );
   }
 }

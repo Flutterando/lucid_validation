@@ -29,26 +29,12 @@ extension GreaterThanValidation on SimpleValidationBuilder<num> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value > minValue) return null;
-
-      final currentCode = code ?? Language.code.greaterThan;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': '$minValue',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value > minValue,
+      code: code ?? Language.code.greaterThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$minValue'},
+    );
   }
 }
 
@@ -77,26 +63,12 @@ extension GreaterThanNullablealidation on SimpleValidationBuilder<num?> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value != null && value > minValue) return null;
-
-      final currentCode = code ?? Language.code.greaterThan;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': '$minValue',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value != null && value > minValue,
+      code: code ?? Language.code.greaterThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$minValue'},
+    );
   }
 }
 
@@ -125,25 +97,11 @@ extension GreaterThanOrNullableValidation on SimpleValidationBuilder<num?> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null || value > minValue) return null;
-
-      final currentCode = code ?? Language.code.greaterThan;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': '$minValue',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value == null || value > minValue,
+      code: code ?? Language.code.greaterThan,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': '$minValue'},
+    );
   }
 }

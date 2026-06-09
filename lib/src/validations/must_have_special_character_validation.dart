@@ -25,27 +25,10 @@ extension MustHaveSpecialCharacterValidation
   ///
   SimpleValidationBuilder<String> mustHaveSpecialCharacter(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        final isValid = RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveSpecialCharacter;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value),
+      code: code ?? Language.code.mustHaveSpecialCharacter,
+      message: message,
     );
   }
 }
@@ -71,29 +54,11 @@ extension MustHaveSpecialCharacterNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveSpecialCharacter(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null) {
-          final isValid = RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value);
-          if (isValid) return null;
-        }
-
-        final currentCode = code ?? Language.code.mustHaveSpecialCharacter;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) =>
+          value != null && RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value),
+      code: code ?? Language.code.mustHaveSpecialCharacter,
+      message: message,
     );
   }
 }
@@ -119,28 +84,11 @@ extension MustHaveSpecialCharacterOrNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveSpecialCharacterOrNull(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null) return null;
-        final isValid = RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveSpecialCharacter;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) =>
+          value == null || RegExp(r'[!@#\$%\^&\*(),.?":{}|<>]').hasMatch(value),
+      code: code ?? Language.code.mustHaveSpecialCharacter,
+      message: message,
     );
   }
 }

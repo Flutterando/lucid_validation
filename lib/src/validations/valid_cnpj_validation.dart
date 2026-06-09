@@ -23,25 +23,11 @@ extension ValidCnpjValidation on SimpleValidationBuilder<String> {
   /// - **{PropertyName}**: The name of the property.
   ///
   SimpleValidationBuilder<String> validCNPJ({String? message, String? code}) {
-    return use((value, entity) {
-      if (_validateCNPJ(value)) return null;
-
-      final currentCode = code ?? Language.code.validCNPJ;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => _validateCNPJ(value),
+      code: code ?? Language.code.validCNPJ,
+      message: message,
+    );
   }
 }
 
@@ -68,25 +54,11 @@ extension ValidCnpjNullableValidation on SimpleValidationBuilder<String?> {
   /// - **{PropertyName}**: The name of the property.
   ///
   SimpleValidationBuilder<String?> validCNPJ({String? message, String? code}) {
-    return use((value, entity) {
-      if (value != null && _validateCNPJ(value)) return null;
-
-      final currentCode = code ?? Language.code.validCNPJ;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value != null && _validateCNPJ(value),
+      code: code ?? Language.code.validCNPJ,
+      message: message,
+    );
   }
 }
 
@@ -114,26 +86,11 @@ extension ValidCnpjOrNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> validCNPJOrNull(
       {String? message, String? code}) {
-    return use((value, entity) {
-      if (value == null) return null;
-      if (_validateCNPJ(value)) return null;
-
-      final currentCode = code ?? Language.code.validCNPJ;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value == null || _validateCNPJ(value),
+      code: code ?? Language.code.validCNPJ,
+      message: message,
+    );
   }
 }
 

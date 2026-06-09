@@ -33,31 +33,18 @@ extension InclusiveBetweenDatetimeValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value.isAfter(start) ||
+    return useValidation(
+      (value, entity) =>
+          value.isAfter(start) ||
           value.isAtSameMomentAs(start) && value.isBefore(end) ||
-          value.isAtSameMomentAs(end)) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.inclusiveBetweenDatetime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'StartValue': start.toString(),
-          'EndValue': end.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+          value.isAtSameMomentAs(end),
+      code: code ?? Language.code.inclusiveBetweenDatetime,
+      message: message,
+      parameters: (value, entity) => {
+        'StartValue': start.toString(),
+        'EndValue': end.toString(),
+      },
+    );
   }
 }
 
@@ -90,32 +77,19 @@ extension InclusiveBetweenDatetimeNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value != null &&
+    return useValidation(
+      (value, entity) =>
+          value != null &&
           (value.isAfter(start) ||
               value.isAtSameMomentAs(start) && value.isBefore(end) ||
-              value.isAtSameMomentAs(end))) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.inclusiveBetweenDatetime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'StartValue': start.toString(),
-          'EndValue': end.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+              value.isAtSameMomentAs(end)),
+      code: code ?? Language.code.inclusiveBetweenDatetime,
+      message: message,
+      parameters: (value, entity) => {
+        'StartValue': start.toString(),
+        'EndValue': end.toString(),
+      },
+    );
   }
 }
 
@@ -148,31 +122,18 @@ extension InclusiveBetweenDatetimeOrNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null ||
+    return useValidation(
+      (value, entity) =>
+          value == null ||
           (value.isAfter(start) ||
               value.isAtSameMomentAs(start) && value.isBefore(end) ||
-              value.isAtSameMomentAs(end))) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.inclusiveBetweenDatetime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'StartValue': start.toString(),
-          'EndValue': end.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+              value.isAtSameMomentAs(end)),
+      code: code ?? Language.code.inclusiveBetweenDatetime,
+      message: message,
+      parameters: (value, entity) => {
+        'StartValue': start.toString(),
+        'EndValue': end.toString(),
+      },
+    );
   }
 }
