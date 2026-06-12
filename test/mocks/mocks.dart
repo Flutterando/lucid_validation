@@ -44,15 +44,13 @@ class StudentValidator extends LucidValidator<StudentModel> {
     ruleFor((user) => user.email, key: 'email') //
         .validEmail();
 
-    ruleFor((user) => user.name, key: 'name')
-      .notEmpty();
+    ruleFor((user) => user.name, key: 'name').notEmpty();
   }
 }
 
 class TeacherModelValidator extends LucidValidator<TeacherModel> {
   TeacherModelValidator() {
-    ruleFor((user) => user.name, key: 'name')
-        .notEmpty();
+    ruleFor((user) => user.name, key: 'name').notEmpty();
   }
 }
 
@@ -78,10 +76,13 @@ class UserValidator extends LucidValidator<UserModel> {
   }
 }
 
-extension CustomValidPhoneValidator on LucidValidationBuilder<String?, dynamic> {
+extension CustomValidPhoneValidator
+    on LucidValidationBuilder<String?, dynamic> {
   LucidValidationBuilder<String?, dynamic> customValidPhone(String message) {
     return must(
-      (value) => value == null || RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
+      (value) =>
+          value == null ||
+          RegExp(r'^\(?(\d{2})\)?\s?9?\d{4}-?\d{4}$').hasMatch(value),
       message,
       'invalid_phone_format',
     );

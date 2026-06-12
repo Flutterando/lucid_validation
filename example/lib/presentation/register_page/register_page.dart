@@ -58,7 +58,6 @@ class _RegisterPageState extends State<RegisterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       exceptionsPassword.value =
           exceptionsListPassword.map((e) => e.code).toList();
-
     });
   }
 
@@ -83,15 +82,16 @@ class _RegisterPageState extends State<RegisterPage> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Is English'),
+              const Text('Is English'),
               ValueListenableBuilder<Locale>(
                   valueListenable: globalLocale,
                   builder: (context, _, __) {
                     return Switch(
                       value: globalLocale.value.languageCode == 'en',
                       onChanged: (value) {
-                        globalLocale.value =
-                            value ? Locale('en', 'US') : Locale('pt', 'BR');
+                        globalLocale.value = value
+                            ? const Locale('en', 'US')
+                            : const Locale('pt', 'BR');
                       },
                     );
                   }),

@@ -28,28 +28,14 @@ extension RangeValidation on SimpleValidationBuilder<num> {
   ///
   SimpleValidationBuilder<num> range(num min, num max,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value >= min && value <= max) return null;
-
-        final currentCode = code ?? Language.code.range;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'From': '$min',
-            'To': '$max',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value >= min && value <= max,
+      code: code ?? Language.code.range,
+      message: message,
+      parameters: (value, entity) => {
+        'From': '$min',
+        'To': '$max',
+        'PropertyValue': '$value',
       },
     );
   }
@@ -79,28 +65,14 @@ extension RangeNullableValidation on SimpleValidationBuilder<num?> {
   ///
   SimpleValidationBuilder<num?> range(num min, num max,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null && value >= min && value <= max) return null;
-
-        final currentCode = code ?? Language.code.range;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'From': '$min',
-            'To': '$max',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value != null && value >= min && value <= max,
+      code: code ?? Language.code.range,
+      message: message,
+      parameters: (value, entity) => {
+        'From': '$min',
+        'To': '$max',
+        'PropertyValue': '$value',
       },
     );
   }
@@ -130,29 +102,14 @@ extension RangeOrNullableValidation on SimpleValidationBuilder<num?> {
   ///
   SimpleValidationBuilder<num?> rangeOrNull(num min, num max,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null) return null;
-        if (value >= min && value <= max) return null;
-
-        final currentCode = code ?? Language.code.range;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'From': '$min',
-            'To': '$max',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value == null || (value >= min && value <= max),
+      code: code ?? Language.code.range,
+      message: message,
+      parameters: (value, entity) => {
+        'From': '$min',
+        'To': '$max',
+        'PropertyValue': '$value',
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:example/domain/dtos/login_param_dto.dart';
 import 'package:example/domain/validations/login_param_validation.dart';
 import 'package:example/main.dart';
+import 'package:example/presentation/profile_page/profile_page.dart';
 import 'package:example/presentation/register_page/register_page.dart';
 import 'package:flutter/material.dart';
 
@@ -42,15 +43,16 @@ class _LoginPageState extends State<LoginPage> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Is English'),
+              const Text('Is English'),
               ValueListenableBuilder<Locale>(
                   valueListenable: globalLocale,
                   builder: (context, _, __) {
                     return Switch(
                       value: globalLocale.value.languageCode == 'en',
                       onChanged: (value) {
-                        globalLocale.value =
-                            value ? Locale('en', 'US') : Locale('pt', 'BR');
+                        globalLocale.value = value
+                            ? const Locale('en', 'US')
+                            : const Locale('pt', 'BR');
                       },
                     );
                   }),
@@ -103,6 +105,17 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
                 child: const Text('Sign up'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfilePage()),
+                  );
+                },
+                child: const Text('Company profile (async + lists)'),
               ),
               const Spacer(),
             ],

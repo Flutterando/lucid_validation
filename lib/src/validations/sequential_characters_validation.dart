@@ -27,52 +27,15 @@ extension SequentialCharactersValidator on SimpleValidationBuilder<String> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value.isEmpty || value.length < sequenceLength) return null;
-
-      bool hasSequential(String input, int length) {
-        for (int i = 0; i <= input.length - length; i++) {
-          final slice = input.substring(i, i + length);
-          if (_isSequential(slice, ascending: true) ||
-              _isSequential(slice, ascending: false)) {
-            return true;
-          }
-        }
-        return false;
-      }
-
-      if (!hasSequential(value, sequenceLength)) return null;
-
-      final currentCode = code ?? Language.code.sequentialCharactersNotAllowed;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'Length': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
-  }
-
-  bool _isSequential(String input, {required bool ascending}) {
-    for (int i = 0; i < input.length - 1; i++) {
-      final current = input.codeUnitAt(i);
-      final next = input.codeUnitAt(i + 1);
-      if (ascending) {
-        if (next != current + 1) return false;
-      } else {
-        if (next != current - 1) return false;
-      }
-    }
-    return true;
+    return useValidation(
+      (value, entity) {
+        if (value.isEmpty || value.length < sequenceLength) return true;
+        return !_hasSequential(value, sequenceLength);
+      },
+      code: code ?? Language.code.sequentialCharactersNotAllowed,
+      message: message,
+      parameters: (value, entity) => {'Length': '$sequenceLength'},
+    );
   }
 }
 
@@ -104,52 +67,15 @@ extension SequentialCharactersNullableValidator
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null || value.length < sequenceLength) return null;
-
-      bool hasSequential(String input, int length) {
-        for (int i = 0; i <= input.length - length; i++) {
-          final slice = input.substring(i, i + length);
-          if (_isSequential(slice, ascending: true) ||
-              _isSequential(slice, ascending: false)) {
-            return true;
-          }
-        }
-        return false;
-      }
-
-      if (!hasSequential(value, sequenceLength)) return null;
-
-      final currentCode = code ?? Language.code.sequentialCharactersNotAllowed;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'Length': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
-  }
-
-  bool _isSequential(String input, {required bool ascending}) {
-    for (int i = 0; i < input.length - 1; i++) {
-      final current = input.codeUnitAt(i);
-      final next = input.codeUnitAt(i + 1);
-      if (ascending) {
-        if (next != current + 1) return false;
-      } else {
-        if (next != current - 1) return false;
-      }
-    }
-    return true;
+    return useValidation(
+      (value, entity) {
+        if (value == null || value.length < sequenceLength) return true;
+        return !_hasSequential(value, sequenceLength);
+      },
+      code: code ?? Language.code.sequentialCharactersNotAllowed,
+      message: message,
+      parameters: (value, entity) => {'Length': '$sequenceLength'},
+    );
   }
 }
 
@@ -182,51 +108,38 @@ extension SequentialCharactersOrNullValidator
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null) return null;
-
-      bool hasSequential(String input, int length) {
-        for (int i = 0; i <= input.length - length; i++) {
-          final slice = input.substring(i, i + length);
-          if (_isSequential(slice, ascending: true) ||
-              _isSequential(slice, ascending: false)) {
-            return true;
-          }
-        }
-        return false;
-      }
-
-      if (!hasSequential(value, sequenceLength)) return null;
-
-      final currentCode = code ?? Language.code.sequentialCharactersNotAllowed;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'Length': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) {
+        if (value == null) return true;
+        return !_hasSequential(value, sequenceLength);
+      },
+      code: code ?? Language.code.sequentialCharactersNotAllowed,
+      message: message,
+      parameters: (value, entity) => {'Length': '$sequenceLength'},
+    );
   }
+}
 
-  bool _isSequential(String input, {required bool ascending}) {
-    for (int i = 0; i < input.length - 1; i++) {
-      final current = input.codeUnitAt(i);
-      final next = input.codeUnitAt(i + 1);
-      if (ascending) {
-        if (next != current + 1) return false;
-      } else {
-        if (next != current - 1) return false;
-      }
+bool _hasSequential(String input, int length) {
+  for (int i = 0; i <= input.length - length; i++) {
+    final slice = input.substring(i, i + length);
+    if (_isSequential(slice, ascending: true) ||
+        _isSequential(slice, ascending: false)) {
+      return true;
     }
-    return true;
   }
+  return false;
+}
+
+bool _isSequential(String input, {required bool ascending}) {
+  for (int i = 0; i < input.length - 1; i++) {
+    final current = input.codeUnitAt(i);
+    final next = input.codeUnitAt(i + 1);
+    if (ascending) {
+      if (next != current + 1) return false;
+    } else {
+      if (next != current - 1) return false;
+    }
+  }
+  return true;
 }

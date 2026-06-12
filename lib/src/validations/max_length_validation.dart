@@ -27,27 +27,13 @@ extension MaxLengthValidation on SimpleValidationBuilder<String> {
   ///
   SimpleValidationBuilder<String> maxLength(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value.length <= num) return null;
-
-        final currentCode = code ?? Language.code.maxLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxLength': '$num',
-            'TotalLength': '${value.length}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value.length <= num,
+      code: code ?? Language.code.maxLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxLength': '$num',
+        'TotalLength': '${value.length}',
       },
     );
   }
@@ -76,27 +62,13 @@ extension MaxLengthNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> maxLength(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null && value.length <= num) return null;
-
-        final currentCode = code ?? Language.code.maxLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxLength': '$num',
-            'TotalLength': '${value != null ? value.length : 0}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value != null && value.length <= num,
+      code: code ?? Language.code.maxLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxLength': '$num',
+        'TotalLength': '${value != null ? value.length : 0}',
       },
     );
   }
@@ -125,27 +97,13 @@ extension MaxLengthOrNullableValidation on SimpleValidationBuilder<String?> {
   ///
   SimpleValidationBuilder<String?> maxLengthOrNull(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null || value.length <= num) return null;
-
-        final currentCode = code ?? Language.code.maxLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxLength': '$num',
-            'TotalLength': '${value.length}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value == null || value.length <= num,
+      code: code ?? Language.code.maxLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxLength': '$num',
+        'TotalLength': '${value?.length ?? 0}',
       },
     );
   }

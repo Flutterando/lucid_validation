@@ -50,7 +50,8 @@ void main() {
       expect(result.exceptions.first.code, 'sequentialRepeatedCharacters');
     });
 
-    test('should pass when nullable string has no repeated character sequence', () {
+    test('should pass when nullable string has no repeated character sequence',
+        () {
       final validator = TestLucidValidator<UserNullableModel>();
       validator
           .ruleFor((user) => user.password, key: 'password')

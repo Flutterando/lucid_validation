@@ -24,27 +24,10 @@ extension MustHaveNumbersValidation on SimpleValidationBuilder<String> {
   ///
   SimpleValidationBuilder<String> mustHaveNumber(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        final isValid = RegExp(r'[0-9]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveNumber;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => RegExp(r'[0-9]').hasMatch(value),
+      code: code ?? Language.code.mustHaveNumber,
+      message: message,
     );
   }
 }
@@ -70,29 +53,10 @@ extension MustHaveNumbersNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveNumber(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null) {
-          final isValid = RegExp(r'[0-9]').hasMatch(value);
-          if (isValid) return null;
-        }
-
-        final currentCode = code ?? Language.code.mustHaveNumber;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value != null && RegExp(r'[0-9]').hasMatch(value),
+      code: code ?? Language.code.mustHaveNumber,
+      message: message,
     );
   }
 }
@@ -118,28 +82,10 @@ extension MustHaveNumbersOrNullableValidation
   ///
   SimpleValidationBuilder<String?> mustHaveNumberOrNull(
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null) return null;
-        final isValid = RegExp(r'[0-9]').hasMatch(value);
-        if (isValid) return null;
-
-        final currentCode = code ?? Language.code.mustHaveNumber;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
-      },
+    return useValidation(
+      (value, entity) => value == null || RegExp(r'[0-9]').hasMatch(value),
+      code: code ?? Language.code.mustHaveNumber,
+      message: message,
     );
   }
 }

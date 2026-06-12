@@ -34,6 +34,39 @@ abstract class Language {
     validPhoneDdiBr: 'validPhoneDdiBr',
     sequentialRepeatedCharacters: 'sequentialRepeatedCharacters',
     sequentialCharactersNotAllowed: 'sequentialCharactersNotAllowed',
+    inclusiveBetween: 'inclusiveBetween',
+    exclusiveBetween: 'exclusiveBetween',
+    validUrl: 'validUrl',
+    length: 'length',
+    isInEnum: 'isInEnum',
+    precisionScale: 'precisionScale',
+    alphanumeric: 'alphanumeric',
+    isNumeric: 'isNumeric',
+    isUppercase: 'isUppercase',
+    isLowercase: 'isLowercase',
+    contains: 'contains',
+    startsWith: 'startsWith',
+    endsWith: 'endsWith',
+    validUuid: 'validUuid',
+    validIpv4: 'validIpv4',
+    validIpv6: 'validIpv6',
+    httpUrl: 'httpUrl',
+    isPositive: 'isPositive',
+    isNegative: 'isNegative',
+    isNonNegative: 'isNonNegative',
+    isNonZero: 'isNonZero',
+    multipleOf: 'multipleOf',
+    isEven: 'isEven',
+    isOdd: 'isOdd',
+    isTrue: 'isTrue',
+    isFalse: 'isFalse',
+    minItems: 'minItems',
+    maxItems: 'maxItems',
+    listContains: 'listContains',
+    inPast: 'inPast',
+    inFuture: 'inFuture',
+    afterField: 'afterField',
+    beforeField: 'beforeField',
   );
 
   Language([Map<String, String> translations = const {}]) {
@@ -89,12 +122,61 @@ abstract class Language {
         "'{PropertyName}' must be greater than the '{StartValue}' date and less than the '{EndValue}' date.",
     code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ.",
     code.validPhoneBr: "'{PropertyName}' is not a valid phone number.",
-    code.validPhoneDdiBr: "'{PropertyName}' is not a valid phone number with DDI.",
-    code.validCpfOrCnpj: "'{PropertyName}' is not a valid CPF or CNPJ.",
+    code.validPhoneDdiBr:
+        "'{PropertyName}' is not a valid phone number with DDI.",
     code.sequentialRepeatedCharacters:
         "'{PropertyName}' cannot have repeated characters in sequence.",
     code.sequentialCharactersNotAllowed:
         "'{PropertyName}' cannot have sequences like '123' or 'abc'.",
+    code.inclusiveBetween:
+        "'{PropertyName}' must be between {From} and {To} (inclusive). You entered {PropertyValue}.",
+    code.exclusiveBetween:
+        "'{PropertyName}' must be between {From} and {To} (exclusive). You entered {PropertyValue}.",
+    code.validUrl: "'{PropertyName}' is not a valid URL.",
+    code.length:
+        "'{PropertyName}' must be between {MinLength} and {MaxLength} characters. You entered {TotalLength} characters.",
+    code.isInEnum:
+        "'{PropertyName}' has a range of values which does not include '{PropertyValue}'.",
+    code.precisionScale:
+        "'{PropertyName}' must not be more than {ExpectedPrecision} digits in total, with allowance for {ExpectedScale} decimals. {Digits} digits and {ActualScale} decimals were found.",
+    code.alphanumeric:
+        "'{PropertyName}' must contain only letters and digits.",
+    code.isNumeric: "'{PropertyName}' must contain only digits.",
+    code.isUppercase: "'{PropertyName}' must be uppercase.",
+    code.isLowercase: "'{PropertyName}' must be lowercase.",
+    code.contains:
+        "'{PropertyName}' must contain '{RequiredSubstring}'.",
+    code.startsWith:
+        "'{PropertyName}' must start with '{Prefix}'.",
+    code.endsWith: "'{PropertyName}' must end with '{Suffix}'.",
+    code.validUuid: "'{PropertyName}' is not a valid UUID.",
+    code.validIpv4: "'{PropertyName}' is not a valid IPv4 address.",
+    code.validIpv6: "'{PropertyName}' is not a valid IPv6 address.",
+    code.httpUrl:
+        "'{PropertyName}' is not a valid HTTP or HTTPS URL.",
+    code.isPositive: "'{PropertyName}' must be a positive number.",
+    code.isNegative: "'{PropertyName}' must be a negative number.",
+    code.isNonNegative:
+        "'{PropertyName}' must be greater than or equal to zero.",
+    code.isNonZero: "'{PropertyName}' must not be zero.",
+    code.multipleOf:
+        "'{PropertyName}' must be a multiple of {Divisor}.",
+    code.isEven: "'{PropertyName}' must be an even number.",
+    code.isOdd: "'{PropertyName}' must be an odd number.",
+    code.isTrue: "'{PropertyName}' must be true.",
+    code.isFalse: "'{PropertyName}' must be false.",
+    code.minItems:
+        "'{PropertyName}' must have at least {MinItems} items. You entered {TotalItems} items.",
+    code.maxItems:
+        "'{PropertyName}' must have at most {MaxItems} items. You entered {TotalItems} items.",
+    code.listContains:
+        "'{PropertyName}' must contain '{RequiredItem}'.",
+    code.inPast: "'{PropertyName}' must be in the past.",
+    code.inFuture: "'{PropertyName}' must be in the future.",
+    code.afterField:
+        "'{PropertyName}' must be after '{ComparisonValue}'.",
+    code.beforeField:
+        "'{PropertyName}' must be before '{ComparisonValue}'.",
   };
 
   String? getTranslation(String key) => _translations[key];

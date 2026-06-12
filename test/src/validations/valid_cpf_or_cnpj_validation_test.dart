@@ -11,7 +11,7 @@ void main() {
         .ruleFor((e) => e.cpfOrCnpj, key: 'cpfOrCnpj', label: 'document') //
         .validCPFOrCNPJ();
 
-    final user = UserModel()..cpfOrCnpj =  null;
+    final user = UserModel()..cpfOrCnpj = null;
 
     final result = validator.validate(user);
 
@@ -31,7 +31,7 @@ void main() {
         .ruleFor((e) => e.cpfOrCnpj, key: 'cpfOrCnpj', label: 'document') //
         .validCPFOrCNPJOrNull();
 
-    final user = UserModel()..cpfOrCnpj =  null;
+    final user = UserModel()..cpfOrCnpj = null;
 
     final result = validator.validate(user);
 

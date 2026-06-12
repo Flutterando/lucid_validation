@@ -1,3 +1,22 @@
+## 1.4.0
+
+* Added `ValidationResult` helpers: `errorsByKey` (errors grouped by field) and `firstErrorFor(key)`.
+* Added `validateAndThrow` / `validateAndThrowAsync`, throwing a `LucidValidationException` with all failures.
+* Added numeric `inclusiveBetween` / `exclusiveBetween` validators (previously only available for `DateTime`).
+* Added `validUrl`, `length(min, max)`, `isInEnum` and `precisionScale` validators (each with an `OrNull` variant).
+* Added `withMessage`, `withErrorCode` and `withName` for fluent, chained customization of the previous rule.
+* Added asynchronous validation: `mustAsync`, `mustWithAsync`, `useAsync` and `LucidValidator.validateAsync`.
+* Added `ruleForEach` to validate each item of a collection inline (without a dedicated validator class).
+* Added rule sets via `ruleSet(name, () {...})` and `validate(entity, ruleSets: [...])`.
+* Added `include` to compose/reuse validators of the same entity type.
+* Added `unless` (the inverse of `when`); `when` and `unless` now compose.
+* Added `normalize` to sanitize a value before validation (e.g. trim/lowercase) without mutating the entity.
+* Added `switchOn` for polymorphic/branching validations based on discriminator values (e.g. enums, Strings, ints).
+* Added `LucidValidator.inline` factory constructor to build validators on the fly without subclassing.
+* Added `rulesForField` and `rulesForFieldAsync` to evaluate and inspect the status of all rules on a specific field (e.g. for password checklist widgets).
+* Added `getExceptions` and `getExceptionsByKey` to directly retrieve raw lists of validation exceptions.
+* Added `use` and `useAsync` builders to manually construct custom rules with full control over the created `ValidationException`.
+
 ## 1.3.1
 
 *  Added nullable support for phone number validation

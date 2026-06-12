@@ -26,27 +26,13 @@ extension MaxValidation on SimpleValidationBuilder<num> {
   /// - **{PropertyValue}**: value entered.
   ///
   SimpleValidationBuilder<num> max(num num, {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value <= num) return null;
-
-        final currentCode = code ?? Language.code.max;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxValue': '$num',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value <= num,
+      code: code ?? Language.code.max,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxValue': '$num',
+        'PropertyValue': '$value',
       },
     );
   }
@@ -74,27 +60,13 @@ extension MaxNullableValidation on SimpleValidationBuilder<num?> {
   /// - **{PropertyValue}**: value entered.
   ///
   SimpleValidationBuilder<num?> max(num num, {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null && value <= num) return null;
-
-        final currentCode = code ?? Language.code.max;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxValue': '$num',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value != null && value <= num,
+      code: code ?? Language.code.max,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxValue': '$num',
+        'PropertyValue': '$value',
       },
     );
   }
@@ -123,27 +95,13 @@ extension MaxOrNullableValidation on SimpleValidationBuilder<num?> {
   ///
   SimpleValidationBuilder<num?> maxOrNull(num num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null || value <= num) return null;
-
-        final currentCode = code ?? Language.code.max;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MaxValue': '$num',
-            'PropertyValue': '$value',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value == null || value <= num,
+      code: code ?? Language.code.max,
+      message: message,
+      parameters: (value, entity) => {
+        'MaxValue': '$num',
+        'PropertyValue': '$value',
       },
     );
   }

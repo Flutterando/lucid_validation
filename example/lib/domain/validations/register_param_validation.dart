@@ -5,8 +5,14 @@ import 'package:lucid_validation/lucid_validation.dart';
 class RegisterParamValidation extends LucidValidator<RegisterParamDto> {
   RegisterParamValidation() {
     ruleFor((registerParamDto) => registerParamDto.email, key: 'email') //
+        // `normalize` sanitizes the value before any rule runs (trim + lowercase),
+        // without mutating the original DTO.
+        .normalize((email) => email.trim().toLowerCase())
         .notEmpty()
-        .validEmail();
+        .withMessage('Digite o seu e-mail')
+        .validEmail()
+        // `withErrorCode` customizes the code of the previous rule fluently.
+        .withErrorCode('EMAIL_INVALID');
 
     ruleFor((registerParamDto) => registerParamDto.password, key: 'password') //
         .customValidPassword();

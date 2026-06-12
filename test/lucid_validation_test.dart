@@ -3,7 +3,9 @@ import 'package:test/test.dart';
 import 'mocks/mocks.dart';
 
 void main() {
-  test('when validating [UserEntityMock] should return a list of error messages for the email field', () {
+  test(
+      'when validating [UserEntityMock] should return a list of error messages for the email field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -17,7 +19,9 @@ void main() {
     expect(exceptions.length, 2);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the password field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the password field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 18
@@ -31,7 +35,9 @@ void main() {
     expect(exceptions.length, 6);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the age field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the age field',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()
       ..age = 15
@@ -45,7 +51,9 @@ void main() {
     expect(exceptions.length, 1);
   });
 
-  test('when validating [UserModel] should return a list of error messages for the phone field', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for the phone field',
+      () {
     final validator = UserValidator();
 
     final userEntity = UserModel()
@@ -60,7 +68,9 @@ void main() {
     expect(exceptions.length, 1);
   });
 
-  test('when validating [UserModel] should return a list of error messages for all fields', () {
+  test(
+      'when validating [UserModel] should return a list of error messages for all fields',
+      () {
     final validator = UserValidator();
     final userEntity = UserModel()..age = 15;
 
@@ -129,6 +139,16 @@ void main() {
     expect(exceptions.length, 2);
     expect(codes[0], 'notEmpty');
     expect(codes[1], 'validEmail');
+  });
+
+  test('getExceptions', () {
+    var user = UserModel();
+
+    final validator = UserValidator();
+
+    var exceptions = validator.getExceptions(user);
+
+    expect(exceptions.length, 10);
   });
 
   test('byField with override callback', () {

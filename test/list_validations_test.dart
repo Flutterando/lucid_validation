@@ -5,22 +5,21 @@ import 'mocks/mocks.dart';
 
 void main() {
   test('complex validations', () {
-
     final studentValidator = StudentValidator();
     final validator = TestLucidValidator<Classroom>();
 
     validator.ruleFor((c) => c.className, key: 'className').notEmpty();
 
-    validator.ruleFor((c) => c.teacher, key: 'teacher')
-      .setValidator(TeacherModelValidator());
+    validator
+        .ruleFor((c) => c.teacher, key: 'teacher')
+        .setValidator(TeacherModelValidator());
 
     validator
         .ruleFor((c) => c.students, key: 'students')
         .setEach(studentValidator);
 
     final model = Classroom(
-      teacher: TeacherModel()
-        ..name = '',
+      teacher: TeacherModel()..name = '',
       students: [
         // invalid
         StudentModel()

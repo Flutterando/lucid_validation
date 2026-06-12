@@ -29,26 +29,12 @@ extension LessThanDatetimeValidation on SimpleValidationBuilder<DateTime> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value.isBefore(comparison)) return null;
-
-      final currentCode = code ?? Language.code.lessThanDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value.isBefore(comparison),
+      code: code ?? Language.code.lessThanDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }
 
@@ -78,26 +64,12 @@ extension LessThanDatetimeNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value != null && value.isBefore(comparison)) return null;
-
-      final currentCode = code ?? Language.code.lessThanDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value != null && value.isBefore(comparison),
+      code: code ?? Language.code.lessThanDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }
 
@@ -127,25 +99,11 @@ extension LessThanDatetimeOrNullableValidation
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null || value.isBefore(comparison)) return null;
-
-      final currentCode = code ?? Language.code.lessThanDateTime;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'ComparisonValue': comparison.toString(),
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) => value == null || value.isBefore(comparison),
+      code: code ?? Language.code.lessThanDateTime,
+      message: message,
+      parameters: (value, entity) => {'ComparisonValue': comparison.toString()},
+    );
   }
 }

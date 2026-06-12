@@ -11,7 +11,7 @@ void main() {
         .ruleFor((e) => e.cpf, key: 'cpf') //
         .validCPF();
 
-    final user = UserModel()..cpf =  null;
+    final user = UserModel()..cpf = null;
 
     final result = validator.validate(user);
 
@@ -31,7 +31,7 @@ void main() {
         .ruleFor((e) => e.cpf, key: 'cpf') //
         .validCPFOrNull();
 
-    final user = UserNullableModel()..cpf =  null;
+    final user = UserNullableModel()..cpf = null;
 
     final result = validator.validate(user);
 

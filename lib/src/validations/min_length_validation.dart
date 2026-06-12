@@ -26,27 +26,13 @@ extension MinLengthValidation on SimpleValidationBuilder<String> {
   /// - **{TotalLength}**: total characters entered.
   SimpleValidationBuilder<String> minLength(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value.length >= num) return null;
-
-        final currentCode = code ?? Language.code.minLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MinLength': '$num',
-            'TotalLength': '${value.length}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value.length >= num,
+      code: code ?? Language.code.minLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MinLength': '$num',
+        'TotalLength': '${value.length}',
       },
     );
   }
@@ -74,27 +60,13 @@ extension MinLengthNullableValidation on SimpleValidationBuilder<String?> {
   /// - **{TotalLength}**: total characters entered.
   SimpleValidationBuilder<String?> minLength(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value != null && value.length >= num) return null;
-
-        final currentCode = code ?? Language.code.minLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MinLength': '$num',
-            'TotalLength': '${value != null ? value.length : 0}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value != null && value.length >= num,
+      code: code ?? Language.code.minLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MinLength': '$num',
+        'TotalLength': '${value != null ? value.length : 0}',
       },
     );
   }
@@ -122,27 +94,13 @@ extension MinLengthOrNullableValidation on SimpleValidationBuilder<String?> {
   /// - **{TotalLength}**: total characters entered.
   SimpleValidationBuilder<String?> minLengthOrNull(int num,
       {String? message, String? code}) {
-    return use(
-      (value, entity) {
-        if (value == null || value.length >= num) return null;
-
-        final currentCode = code ?? Language.code.minLength;
-        final currentMessage = LucidValidation.global.languageManager.translate(
-          currentCode,
-          parameters: {
-            'PropertyName': label.isNotEmpty ? label : key,
-            'MinLength': '$num',
-            'TotalLength': '${value.length}',
-          },
-          defaultMessage: message,
-        );
-
-        return ValidationException(
-          entity: extractClassName(entity.toString()),
-          message: currentMessage,
-          code: currentCode,
-          key: key,
-        );
+    return useValidation(
+      (value, entity) => value == null || value.length >= num,
+      code: code ?? Language.code.minLength,
+      message: message,
+      parameters: (value, entity) => {
+        'MinLength': '$num',
+        'TotalLength': '${value?.length ?? 0}',
       },
     );
   }

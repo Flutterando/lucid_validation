@@ -26,31 +26,17 @@ extension RepeatedCharactersValidator on SimpleValidationBuilder<String> {
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value.isEmpty) return null;
-
-      final regex = RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
-      if (!regex.hasMatch(value)) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.sequentialRepeatedCharacters;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'SequenceLength': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) {
+        if (value.isEmpty) return true;
+        final regex =
+            RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
+        return !regex.hasMatch(value);
+      },
+      code: code ?? Language.code.sequentialRepeatedCharacters,
+      message: message,
+      parameters: (value, entity) => {'SequenceLength': '$sequenceLength'},
+    );
   }
 }
 
@@ -81,31 +67,17 @@ extension RepeatedCharactersNullableValidator
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null || value.isEmpty) return null;
-
-      final regex = RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
-      if (!regex.hasMatch(value)) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.sequentialRepeatedCharacters;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'SequenceLength': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) {
+        if (value == null || value.isEmpty) return true;
+        final regex =
+            RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
+        return !regex.hasMatch(value);
+      },
+      code: code ?? Language.code.sequentialRepeatedCharacters,
+      message: message,
+      parameters: (value, entity) => {'SequenceLength': '$sequenceLength'},
+    );
   }
 }
 
@@ -137,30 +109,16 @@ extension RepeatedCharactersOrNullValidator
     String? message,
     String? code,
   }) {
-    return use((value, entity) {
-      if (value == null) return null;
-
-      final regex = RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
-      if (!regex.hasMatch(value)) {
-        return null;
-      }
-
-      final currentCode = code ?? Language.code.sequentialRepeatedCharacters;
-      final currentMessage = LucidValidation.global.languageManager.translate(
-        currentCode,
-        parameters: {
-          'PropertyName': label.isNotEmpty ? label : key,
-          'SequenceLength': '$sequenceLength',
-        },
-        defaultMessage: message,
-      );
-
-      return ValidationException(
-        entity: extractClassName(entity.toString()),
-        message: currentMessage,
-        code: currentCode,
-        key: key,
-      );
-    });
+    return useValidation(
+      (value, entity) {
+        if (value == null) return true;
+        final regex =
+            RegExp(r'(.)\1{' + (sequenceLength - 1).toString() + r',}');
+        return !regex.hasMatch(value);
+      },
+      code: code ?? Language.code.sequentialRepeatedCharacters,
+      message: message,
+      parameters: (value, entity) => {'SequenceLength': '$sequenceLength'},
+    );
   }
 }

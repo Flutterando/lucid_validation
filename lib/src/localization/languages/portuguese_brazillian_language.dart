@@ -54,12 +54,76 @@ class PortugueseBrasillianLanguage extends Language {
               "'{PropertyName}' deve ser maior ou igual à data '{StartValue}' e menor ou igual à data '{EndValue}'.",
           Language.code.exclusiveBetweenDatetime:
               "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'.",
-          Language.code.validPhoneBr: "'{PropertyName}' não é um telefone válido.",
-          Language.code.validPhoneDdiBr: "'{PropertyName}' não é um telefone DDI válido."
-              "'{PropertyName}' deve ser maior que a data '{StartValue}' e menor que a data '{EndValue}'.",
+          Language.code.validPhoneBr:
+              "'{PropertyName}' não é um telefone válido.",
+          Language.code.validPhoneDdiBr:
+              "'{PropertyName}' não é um telefone DDI válido.",
           Language.code.sequentialRepeatedCharacters:
               "'{PropertyName}' não pode ter caracteres repetidos em sequência.",
           Language.code.sequentialCharactersNotAllowed:
-              "'{PropertyName}' não pode ter sequências como '123' ou 'abc'."
+              "'{PropertyName}' não pode ter sequências como '123' ou 'abc'.",
+          Language.code.inclusiveBetween:
+              "'{PropertyName}' deve estar entre {From} e {To} (inclusive). Você digitou {PropertyValue}.",
+          Language.code.exclusiveBetween:
+              "'{PropertyName}' deve estar entre {From} e {To} (exclusive). Você digitou {PropertyValue}.",
+          Language.code.validUrl: "'{PropertyName}' não é uma URL válida.",
+          Language.code.length:
+              "'{PropertyName}' deve ter entre {MinLength} e {MaxLength} caracteres. Você digitou {TotalLength} caracteres.",
+          Language.code.isInEnum:
+              "'{PropertyName}' possui um conjunto de valores que não inclui '{PropertyValue}'.",
+          Language.code.precisionScale:
+              "'{PropertyName}' não pode ter mais que {ExpectedPrecision} dígitos no total, com no máximo {ExpectedScale} casas decimais. Foram encontrados {Digits} dígitos e {ActualScale} casas decimais.",
+          Language.code.alphanumeric:
+              "'{PropertyName}' deve conter apenas letras e dígitos.",
+          Language.code.isNumeric:
+              "'{PropertyName}' deve conter apenas dígitos.",
+          Language.code.isUppercase:
+              "'{PropertyName}' deve estar em maiúsculas.",
+          Language.code.isLowercase:
+              "'{PropertyName}' deve estar em minúsculas.",
+          Language.code.contains:
+              "'{PropertyName}' deve conter '{RequiredSubstring}'.",
+          Language.code.startsWith:
+              "'{PropertyName}' deve começar com '{Prefix}'.",
+          Language.code.endsWith:
+              "'{PropertyName}' deve terminar com '{Suffix}'.",
+          Language.code.validUuid:
+              "'{PropertyName}' não é um UUID válido.",
+          Language.code.validIpv4:
+              "'{PropertyName}' não é um endereço IPv4 válido.",
+          Language.code.validIpv6:
+              "'{PropertyName}' não é um endereço IPv6 válido.",
+          Language.code.httpUrl:
+              "'{PropertyName}' não é uma URL HTTP ou HTTPS válida.",
+          Language.code.isPositive:
+              "'{PropertyName}' deve ser um número positivo.",
+          Language.code.isNegative:
+              "'{PropertyName}' deve ser um número negativo.",
+          Language.code.isNonNegative:
+              "'{PropertyName}' deve ser maior ou igual a zero.",
+          Language.code.isNonZero:
+              "'{PropertyName}' não pode ser zero.",
+          Language.code.multipleOf:
+              "'{PropertyName}' deve ser múltiplo de {Divisor}.",
+          Language.code.isEven:
+              "'{PropertyName}' deve ser um número par.",
+          Language.code.isOdd:
+              "'{PropertyName}' deve ser um número ímpar.",
+          Language.code.isTrue: "'{PropertyName}' deve ser verdadeiro.",
+          Language.code.isFalse: "'{PropertyName}' deve ser falso.",
+          Language.code.minItems:
+              "'{PropertyName}' deve ter pelo menos {MinItems} itens. Você informou {TotalItems} itens.",
+          Language.code.maxItems:
+              "'{PropertyName}' deve ter no máximo {MaxItems} itens. Você informou {TotalItems} itens.",
+          Language.code.listContains:
+              "'{PropertyName}' deve conter '{RequiredItem}'.",
+          Language.code.inPast:
+              "'{PropertyName}' deve ser uma data no passado.",
+          Language.code.inFuture:
+              "'{PropertyName}' deve ser uma data no futuro.",
+          Language.code.afterField:
+              "'{PropertyName}' deve ser posterior a '{ComparisonValue}'.",
+          Language.code.beforeField:
+              "'{PropertyName}' deve ser anterior a '{ComparisonValue}'.",
         });
 }
