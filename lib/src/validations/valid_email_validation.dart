@@ -25,7 +25,7 @@ extension ValidEmailValidation on SimpleValidationBuilder<String> {
   SimpleValidationBuilder<String> validEmail({String? message, String? code}) {
     return useValidation(
       (value, entity) =>
-          RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$').hasMatch(value),
+          RegExp(r'^[\w\.-]+@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$').hasMatch(value),
       code: code ?? Language.code.validEmail,
       message: message,
     );
@@ -54,7 +54,7 @@ extension ValidEmailNullableValidation on SimpleValidationBuilder<String?> {
     return useValidation(
       (value, entity) =>
           value != null &&
-          RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$').hasMatch(value),
+          RegExp(r'^[\w\.-]+@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$').hasMatch(value),
       code: code ?? Language.code.validEmail,
       message: message,
     );
@@ -84,7 +84,7 @@ extension ValidEmailOrNullableValidation on SimpleValidationBuilder<String?> {
     return useValidation(
       (value, entity) =>
           value == null ||
-          RegExp(r'^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$').hasMatch(value),
+          RegExp(r'^[\w\.-]+@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$').hasMatch(value),
       code: code ?? Language.code.validEmail,
       message: message,
     );
