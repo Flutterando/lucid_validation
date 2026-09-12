@@ -79,7 +79,7 @@ extension NotEmptyOrNullableValidation on SimpleValidationBuilder<String?> {
   SimpleValidationBuilder<String?> notEmptyOrNull(
       {String? message, String? code}) {
     return useValidation(
-      (value, entity) => value == null || value.isNotEmpty,
+      (value, entity) => value != null && value.isNotEmpty,
       code: code ?? Language.code.notEmpty,
       message: message,
     );

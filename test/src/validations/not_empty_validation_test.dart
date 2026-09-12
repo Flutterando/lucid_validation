@@ -29,6 +29,43 @@ void main() {
 
     final result = validator.validate(user);
 
-    expect(result.isValid, true);
+    expect(result.isValid, false);
+  });
+
+  group('NotEmptyOrNullableValidation', () {
+    late TestLucidValidator<UserNullableModel> validator;
+
+    setUp(() {
+      validator = TestLucidValidator<UserNullableModel>();
+      validator
+          .ruleFor((user) => user.password, key: 'password')
+          .notEmptyOrNull();
+    });
+
+    test('should fail when string is null', () {
+      final entity = UserNullableModel()..password = null;
+      final result = validator.validate(entity);
+
+      expect(result.isValid, isFalse);
+      expect(result.exceptions, hasLength(1));
+      expect(result.exceptions.first.key, equals('password'));
+    });
+
+    test('should fail when string is empty', () {
+      final entity = UserNullableModel()..password = '';
+      final result = validator.validate(entity);
+
+      expect(result.isValid, isFalse);
+      expect(result.exceptions, hasLength(1));
+      expect(result.exceptions.first.key, equals('password'));
+    });
+
+    test('should pass when string is not null and not empty', () {
+      final entity = UserNullableModel()..password = 'ValidPassword123';
+      final result = validator.validate(entity);
+
+      expect(result.isValid, isTrue);
+      expect(result.exceptions, isEmpty);
+    });
   });
 }
